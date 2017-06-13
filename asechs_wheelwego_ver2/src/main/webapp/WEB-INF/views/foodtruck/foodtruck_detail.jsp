@@ -86,13 +86,13 @@ $(document).ready(function(){
       <div class="row">
          <div class="col-lg-12">
             <div class="w3-text-light-grey intro-text">
-               <h1 class="name" style="color:light-grey">${truckDetailInfo.foodtruckName}</h1>
+               <h1 class="name" style="color:light-grey ;">${truckDetailInfo.foodtruckName}</h1>
                </div>
          </div>
       </div>
    </div>
      <div class="w3-display-bottomright w3-center w3-padding-large">
-    <span class="w3-tag">15 Adr street, 5015</span>
+    <span class="w3-tag">${param.address}</span>
   </div>
 </header>
 

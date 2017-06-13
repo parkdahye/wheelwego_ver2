@@ -29,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 </head>
-<body id="page-top" class="index">
+<body id="page-top" class="index" >
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 	<div id="header">
 		<tiles:insertAttribute name="header" />
@@ -37,12 +37,12 @@
 	<div  class="container">
 	<div class="row">
 	<div id="wrapper" style="float: left;">
-	<div id="map_main" class="col-sm-6" >
+	<div id="map_main" class="col-sm-8" >
 			<tiles:insertAttribute name="main" />
 	</div>
 	</div>
-	<div id="page_right" class="col-sm-5" style="float: right;">
-		<tiles:insertAttribute name="right_map" />
+	<div id="page_right" class="col-sm-3" style="float: right;">
+		<tiles:insertAttribute name="right_detail_truck" />
 	</div>
 	</div>
 	</div>

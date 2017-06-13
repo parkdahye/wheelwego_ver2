@@ -199,7 +199,8 @@ header .intro-text .name {
    font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
    text-transform: uppercase; /*문자를 대문자로 변환*/
    font-weight: 700;
-   font-size: 2em
+   font-size: 2em;
+   text-align: center;
 }
 @media ( min-width :767px) {
 	/*헤더 padding, 폰트 사이즈*/
