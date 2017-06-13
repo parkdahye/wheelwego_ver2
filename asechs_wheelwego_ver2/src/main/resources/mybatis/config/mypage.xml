@@ -35,6 +35,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       <result column="menu_price" property="menuPrice"/>
       <result column="menu_filename" property="fileVO.filepath"/>
    </resultMap>
+   <resultMap type="bookingVO" id="bookingRM">
+   		<result column="booking_number" property="bookingNumber"/>
+   		<result column="customer_id" property="customerId"/>
+   		<result column="menu_id" property="menuId"/>
+   		<result column="booking_quantity" property="bookingQuantity"/>
+   		<result column="booking_date" property="bookingDate"/>
+   		<result column="booking_state" property="bookingState"/>
+   </resultMap>
    <select id="heartWishList" resultMap="wishlistRM">
    select * from wishlist where customer_id=#{value}
    </select>
@@ -141,5 +149,13 @@ from review r, foodtruck t where r.customer_id=#{searchWord}  and r.foodtruck_nu
 <select id="getWishListFlag" resultType="int" parameterType="wishlistVO">
 select count(*) from wishlist where customer_id=#{customerId} and foodtruck_number=#{foodtruckNumber}
 </select>
+<select id="getSellerBookingListByTruckNumber" resultType="bookingVO" parameterType="String" resultMap="bookingRM">
+	select b.booking_number, b.customer_id, b.menu_id, b.booking_quantity, b.booking_state,
+	to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date
+	from booking b, foodtruck f, menu m 
+	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number=#{value} 
+	and m.menu_id=b.menu_id order by b.booking_number desc
+</select>
+
 </mapper>
  

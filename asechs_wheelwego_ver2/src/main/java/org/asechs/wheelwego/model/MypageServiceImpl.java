@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FileManager;
 import org.asechs.wheelwego.model.vo.FileVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
@@ -210,4 +211,19 @@ public class MypageServiceImpl implements MypageService {
       WishlistVO wishlistVO=new WishlistVO(foodtruckNumber,customerId); 
       return mypageDAO.getWishListFlag(wishlistVO);
    }
+@Override
+public List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber) {
+	return mypageDAO.getSellerBookingListByTruckNumber(foodTruckNumber);
+}
+
+
+
+
+
+
+
+
+
+
+
 }
