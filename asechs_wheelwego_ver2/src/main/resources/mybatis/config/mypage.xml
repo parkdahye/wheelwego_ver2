@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mypage">
+<resultMap type="reviewVO" id="reviewRM">
+   <result property="reviewNo" column="review_no"/>
+   <result property="foodtruckNumber" column="foodtruck_number"/>
+   <result property="foodtruckName" column="foodtruck_name"/>
+   <result property="customerId" column="customer_id"/>
+   <result property="reviewContent" column="review_content"/>
+   <result property="reviewTimeposted" column="review_timeposted"/>
+</resultMap>
+<resultMap type="wishlistVO" id="wishlistRM">
+   <result property="foodtruckNumber" column="foodtruck_number"/>
+   <result property="customerId" column="customer_id"/>   
+</resultMap>
+   <resultMap type="truckVO" id="truckRM">
+      <result property="foodtruckNumber" column="foodtruck_number" />
+      <result property="sellerId" column="seller_id" />
+      <result property="foodtruckName" column="foodtruck_name"/>     
+     <result property="registerTimeposted" column="register_timeposted"/>
+     <result property="wishlistCount" column="wishlist_count"/>
+     <result property="avgGrade" column="avg_grade"/>
+     <result property="foodList.fileVO.filepath" column="menu_filename"/>
+   </resultMap>
+   <resultMap type="truckVO" id="truckpageRM" extends="truckRM">
+      <result column="foodtruck_filepath" property="fileVO.filepath"/>
+   </resultMap>
+   <resultMap type="foodVO" id="foodRM">
+      <result column="menu_id" property="menuId"/>
+      <result column="foodtruck_number" property="foodTruckNumber"/>
+      <result column="menu_name" property="menuName"/>
+      <result column="menu_price" property="menuPrice"/>
+      <result column="menu_filename" property="fileVO.filepath"/>
+   </resultMap>
+   <select id="heartWishList" resultMap="wishlistRM">
+   select * from wishlist where customer_id=#{value}
+   </select>
+   <insert id="registerFoodtruck" parameterType="truckVO">
+      insert into foodtruck(foodtruck_number,seller_id,foodtruck_name,introduction,register_timeposted)
+       values(#{foodtruckNumber},#{sellerId},#{foodtruckName},#{introduction},sysdate)
+   </insert>
+   <select id="showMyTruckpage" resultMap="truckRM">
+      select t.foodtruck_number, t.seller_id, t.foodtruck_name, t.introduction,f.foodtruck_filepath,f.wishlist_count,f.avg_grade from(
+      select foodtruck_number,seller_id,foodtruck_name,introduction,wishlist_count,avg_grade from foodtruck where seller_id=#{value}
+      )t, foodtruckfile f where t.foodtruck_number=f.foodtruck_number
+   </select>
+   <select id="findFoodtruckByTruckNumber" resultMap="truckRM">
+      select * from foodtruck where foodtruck_number=#{value}
+   </select>
+      <select id="findtruckInfoByTruckNumber" resultMap="truckpageRM">
+      select t.*, f.foodtruck_filepath
+      from(select * from foodtruck where foodtruck_number=#{value})t, foodtruckfile f
+      where t.foodtruck_number=f.foodtruck_number
+   </select>
+   <select id="findtruckNumberBySellerId" resultType="String">
+      select foodtruck_number from foodtruck where seller_id=#{value}
+   </select>
+   <insert id="saveFilePath" parameterType="fileVO">
+      insert into foodtruckfile values (#{no},#{filepath})
+   </insert>
+   <update id="updateMyfoodtruck" parameterType="truckVO">
+      update foodtruck set foodtruck_name=#{foodtruckName}, introduction=#{introduction} where foodtruck_number=#{foodtruckNumber}
+   </update>
+   <update id="updateFilePath" parameterType="fileVO">
+      update foodtruckfile set foodtruck_filepath=#{filepath} where foodtruck_number=#{no}
+   </update>
+   <select id="showMenuList" resultMap="foodRM">
+      select menu_id,foodtruck_number,menu_name,menu_price,menu_filename from menu where foodtruck_number=#{value} order by menu_id asc
+   </select>
+   <insert id="registerMenu" parameterType="foodVO">
+      <selectKey keyProperty="menuId" order="BEFORE" resultType="String">
+         select menu_seq.nextval from dual
+      </selectKey>
+      insert into menu(menu_id,foodtruck_number,menu_name,menu_price,menu_filename) 
+      values (#{menuId},#{foodTruckNumber},#{menuName},#{menuPrice},#{fileVO.filepath})
+   </insert>
+   <delete id="deleteAllMenu">
+      delete from menu where foodtruck_number=#{value}
+   </delete>
+   <delete id="deleteMenu">
+      delete from menu where menu_id=#{value}
+   </delete>
+   <update id="updateMenu" parameterType="foodVO">
+      update menu set menu_name=#{menuName}, menu_price=#{menuPrice}
+       where menu_id=#{menuId}
+   </update>
+   <select id="findMenuByMenuId" resultMap="foodRM">
+      select * from menu where menu_id=#{value}
+   </select>
+   <update id="updateMenuFilepath" parameterType="fileVO">
+      update menu set menu_filename=#{filepath}
+       where menu_id=#{no}
+   </update>
+   <delete id="deleteMyTruck">
+      delete from foodtruck where foodtruck_number=#{value}
+   </delete>
+   <select id="getWishList" parameterType="pagingBean" resultMap="truckpageRM" resultType="truckVO">
+      SELECT f.foodtruck_filepath, t.* FROM
+      (SELECT fo.*, row_number() over(order by foodtruck_number desc) as rnum 
+      from foodtruck fo where fo.foodtruck_number in (select foodtruck_number from wishlist where customer_id = #{customerId}))t, foodtruckfile f
+      where t.foodtruck_number=f.foodtruck_number and rnum between #{startRowNumber} and #{endRowNumber}
+      order by t.foodtruck_number desc
+   </select>
+
+<delete id="deleteWishList" parameterType="wishListVO">
+   delete from wishlist where customer_id = #{customerId} and foodtruck_number = #{foodtruckNumber}
+</delete>
+<select id="showMyReview" resultMap="reviewRM" parameterType="pagingBean">
+select review_no, foodtruck_number,foodtruck_name, customer_id, review_content, review_timeposted, grade from(
+select row_number() over(order by r.review_timeposted desc) as rnum,r.review_no,t.foodtruck_number,r.customer_id,r.review_content, to_char(r.review_timeposted,'YYYY.MM.DD HH24:MI:SS') as review_timeposted, r.grade, t.foodtruck_name
+from review r, foodtruck t where r.customer_id=#{searchWord}  and r.foodtruck_number=t.foodtruck_number ) where rnum between #{startRowNumber} and #{endRowNumber}
+</select>
+<update id="updateMyReview" parameterType="reviewVO"> 
+   update review set review_content=#{reviewContent}, grade=#{grade} where review_no=#{reviewNo}
+</update>
+<delete id="deleteMyReview" >
+   delete from review where review_no=#{value}
+</delete>
+<select id="findReviewInfoByReviewNo" resultMap="reviewRM">
+   select r.review_no,r.foodtruck_number,r.customer_id,r.review_content, to_char(r.review_timeposted,'YYYY.MM.DD HH24:MI:SS') as review_timeposted, r.grade, t.foodtruck_name
+   from review r, foodtruck t where r.review_no=#{value} and r.foodtruck_number=t.foodtruck_number
+</select>
+<select id = "getGPSInfo" resultType="truckVO">
+   select latitude, longitude from foodtruck where seller_id = #{value}
+</select>
+<update id = "stayFoodtruck" parameterType="truckVO">
+   update foodtruck set latitude=#{latitude}, longitude = #{longitude} where seller_id=#{sellerId}
+</update>
+<update id = "leaveFoodtruck" parameterType="truckVO">
+   update foodtruck set latitude=null, longitude = null where seller_id=#{sellerId}
+</update>
+<select id = "getWishListTotalContentCount" resultType="int">
+   select count(*) from wishlist where customer_id = #{value}
+</select>
+<select id="getTotalReviewCount" resultType="int">
+   select count(*) from review where customer_id=#{value}
+</select>
+<select id="getWishListFlag" resultType="int" parameterType="wishlistVO">
+select count(*) from wishlist where customer_id=#{customerId} and foodtruck_number=#{foodtruckNumber}
+</select>
+</mapper>
+ 
