@@ -29,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 </head>
-<body id="page-top" class="index">
+<body id="page-top" class="index" >
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 	<div id="header">
 		<tiles:insertAttribute name="header" />
