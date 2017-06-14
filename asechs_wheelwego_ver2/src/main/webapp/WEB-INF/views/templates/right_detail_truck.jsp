@@ -22,110 +22,105 @@
 			</c:forEach>
 		</ul>
 	</div>
-	<!--수량 증감 -->
 
-	<form name="form" method="get">
-	<table class="table table-hover" id="testTable" style="width:30%">
-	<thead>
-	<tr>
-	<th>MENU</th>
-	<th>AMOUNT</th>
-	<th>TOTAL</th>
-	</tr>
-	<thead>
-	<tbody>
-	</tbody>
-	</table>
-	</form>
-
+  <form name="form" method="get">
+   <table class="table table-hover" id="testTable" style="width:30%">
+   <thead>
+   <tr>
+   <th>MENU</th>
+   <th>AMOUNT</th>
+   <th>TOTAL</th>
+   <th></th>
+   </tr>
+   <thead>
+   <tbody>
+   </tbody>
+   </table>
+   </form>
 </div>
 
 <script>
 	$(document).ready(function() {
+		var arr = [''];
 		$("ul.dropdown-menu a").click(function(e){
 			var menu = $(this).attr('value');
-			var price = /* $('input[type=hidden]') */$(this).next().val();
-			alert(menu+" "+price);
+			var price = $(this).next().val();
+			var flag = false;
+			for(var i=0; i<arr.length; i++)	{
+				if(arr[i]==menu){
+					flag=true;
+				}
+			}
+			if(flag==false){
+				arr.push(menu);
+			}
+			else{
+				alert("이미 메뉴를 선택하셨습니다. 수량을 체크해주세요.");
+				return false;
+			}
 			e.preventDefault();
-			$("#testTable > tbody:last-child").append("<tr>"+
-				        "<td>"+menu+"</td>"+
-				        "<td>"+
-				        "<input type=hidden name='sell_price' value='"+price+"'>"+
-				        "<input type='button' value='-' onclick='del()'>"+
-				        "<input type='text' name='amount' value='1' size='1' onchange='change();'>"+
-				        "<input type='button' value='+' onclick='add();'>"+
-				        "</td>"+
-				        "<td><input type='text' name='sum' size='4' readonly></td></tr>"
-			);
-			init();
-/* 		$("#selectedMenu").append(
-		"<table class='table table-hover' style='width:30%'>"+
-		"<thead>"+
-	     "<tr>"+
-	        "<th>MENU</th>"+
-	        "<th>AMOUNT</th>"+
-	        "<th>TOTAL</th>"+
-	      "</tr>"+
-	    "</thead>"+
-	    "<tbody>"+
-	      "<tr>"+
-	        "<td>"+menu+"</td>"+
-	        "<td><button onclick='form_btn(-1)' class='btn btn-link'>-</button>"+
-			"<input type='text' id='text' value='1' size='1'/>"+
-			"<button onclick='form_btn(+1)' class='btn btn-link'>+</button></td>"+
-	        "<td><input type='text' name='sum' size='4' value='"+price+"'readonly></td>"+
-	     "</tr>"+
-	    "</tbody>"+
-	  "</table>"); */
+			 $("#testTable > tbody:last-child").append("<tr>"+
+	                    "<td class='menuId'>"+menu+"</td>"+
+	                    "<td>"+
+	                    "<input type=hidden name='sell_price' value='"+price+"'>"+
+	                    "<input type='button' value='-' onclick='del()'>"+
+	                    "<input type='text' name='amount' value='1' size='1' onchange='change();'>"+
+	                    "<input type='button' value='+' onclick='add();'>"+
+	                    "</td>"+
+	                    "<td><input type='text' name='sum' size='4' readonly></td>"+
+	                    "<td>"+
+	                    "<span class='glyphicon glyphicon-remove' role='button'></span></td></tr>");
+	         init();
 		 });
+		
 	});
-	
-	//수량 증감
-/* 	function form_btn(n) {
-		var text = document.getElementById("text"); // 폼 선택
-		text_val = parseInt(text.value); // 폼 값을 숫자열로 변환
-		text_val += n; // 계산
-		text.value = text_val; // 계산된 값을 바꾼다
-		if (text_val <= 0) {
-			text.value = 1; // 만약 값이 0 이하면 1로 되돌려준다, 1보다 작은 수는 나타나지 않게하기 위해   
-		}
-	} */ 
+
 	
 // 수량증감 + 가격
 var sell_price;
 var amount;
 
 function init () {
-	sell_price = document.form.sell_price.value;
-	amount = document.form.amount.value;
-	document.form.sum.value = sell_price;
-	change();
+		priceNo = document.getElementsByName('sell_price').length;
+		price = document.getElementsByName('sell_price')[priceNo-1].value;
+		amountNo = document.getElementsByName('amount').length;
+		amount_val = document.getElementsByName('amount')[amountNo-1].value;
+		sumNo = document.getElementsByName('sum').length;
+		sum_val = document.getElementsByName('sell_price')[sumNo-1].value;
+ 		sell_price=price;
+ 		amount = amount_val;
+ 		sum = sell_price;
+		change();
 }
 
 function add () {
-	hm = document.form.amount;
-	sum = document.form.sum;
-	hm.value ++ ;
-
-	sum.value = parseInt(hm.value) * sell_price;
+	
+ 	amountNo = document.getElementsByName('amount').length;
+ 	hm = document.getElementsByName('amount')[amountNo-1].value;
+	hm ++;
+	document.getElementsByName('amount')[amountNo-1].value=hm;
+	sumNo = document.getElementsByName('sum').length;
+	document.getElementsByName('sum')[sumNo-1].value=parseInt(hm) * sell_price; 
+	document.form.sum.value = document.getElementsByName('sum')[sumNo-1].value;
 }
 
 function del () {
-	hm = document.form.amount;
-	sum = document.form.sum;
-		if (hm.value > 1) {
-			hm.value -- ;
-			sum.value = parseInt(hm.value) * sell_price;
-		}
+ 		amountNo = document.getElementsByName('amount').length;
+		hm = document.getElementsByName('amount')[amountNo-1].value;
+		if(hm>1){
+			hm --;
+			document.getElementsByName('amount')[amountNo-1].value=hm;
+			document.getElementsByName('sum')[sumNo-1].value=parseInt(hm) * sell_price;
+		} 
 }
 
 function change () {
-	hm = document.form.amount;
-	sum = document.form.sum;
-
-		if (hm.value < 0) {
-			hm.value = 0;
+	amountNo = document.getElementsByName('amount').length;
+	hm = document.getElementsByName('amount')[amountNo-1].value;
+    sumNo = document.getElementsByName('sum').length;
+		if (hm < 0) { 
+			hm = 0;
 		}
-	sum.value = parseInt(hm.value) * sell_price;
+	document.getElementsByName('sum')[sumNo-1].value = parseInt(hm) * sell_price;
 }  
 </script>
