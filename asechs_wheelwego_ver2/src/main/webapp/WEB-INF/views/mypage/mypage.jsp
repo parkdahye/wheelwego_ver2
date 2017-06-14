@@ -21,6 +21,7 @@
 <!-- 			<button type="button" id="myTruckBtn"class="btn btn-warning">MY TRUCK PAGE</button>&nbsp;&nbsp; -->
 			
 			<a href="${pageContext.request.contextPath}/afterLogin_mypage/checkTruckGPS.do?sellerId=${sessionScope.memberVO.id}" class="btn btn-warning" role="button">TRUCK 위치 설정</a><br>
+			<span style="float:right"><button type="button" id="sellerBookingListBtn" class="btn btn-warning" >온라인 주문현황</button></span><br>
 			</c:otherwise>
 		</c:choose>
 	</c:when>
@@ -86,5 +87,9 @@ $(document).ready(function(){
 		$("#reviewBtn").click(function(){
 			location.href="${pageContext.request.contextPath}/afterLogin_mypage/showMyReviewList.do?customerId=${sessionScope.memberVO.id}";
 	});
+		$("#sellerBookingListBtn").click(function(){
+			//location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
+			location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=seller01";
+		});
 });
 </script>
