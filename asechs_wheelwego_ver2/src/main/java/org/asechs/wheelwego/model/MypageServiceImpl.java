@@ -220,21 +220,13 @@ public class MypageServiceImpl implements MypageService {
    }
 @Override
 public ListVO showMyContentByFreeList(String id,String contentPageNo) {
-	/*PagingBean pagingBean = null;
-	int totalCount= mypageDAO.getTotalFreeboardCount(id);
-	if (contentPageNo == null)
-		pagingBean = new PagingBean(totalCount, 1, id);
-	else
-		pagingBean = new PagingBean(totalCount, Integer.parseInt(contentPageNo), id);*/
 	 if(contentPageNo==null)
 		 contentPageNo="1";
       PagingBean pagingBean = new PagingBean(Integer.parseInt(contentPageNo), mypageDAO.getTotalFreeboardCount(id), id);
      List<BoardVO> contentList=mypageDAO.showMyContentByFreeList(pagingBean);
-     System.out.println("service 11111111111 :"+contentList);
      ListVO pagingContentList = new ListVO();
      pagingContentList.setBoardList(contentList);
      pagingContentList.setPagingBean(pagingBean);
-     System.out.println("service ;;;;;;;;"+pagingContentList);
      return pagingContentList;
 }
 @Override
@@ -244,6 +236,38 @@ public void freeboardDeleteInMaypage(String contentNo) {
 }
 public List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber) {
 	return mypageDAO.getSellerBookingListByTruckNumber(foodTruckNumber);
+}
+@Override
+public ListVO showMyContentBybusinessList(String id, String contentPageNo) {
+	 if(contentPageNo==null)
+		 contentPageNo="1";
+      PagingBean pagingBean = new PagingBean(Integer.parseInt(contentPageNo), mypageDAO.getTotalbusinessCount(id), id);
+     List<BoardVO> contentList=mypageDAO.showMyContentBybusinessList(pagingBean);
+     ListVO pagingContentList = new ListVO();
+     pagingContentList.setBoardList(contentList);
+     pagingContentList.setPagingBean(pagingBean);
+     return pagingContentList;
+}
+@Override
+public void businessDeleteInMaypage(String contentNo) {
+	mypageDAO.businessDeleteInMaypage(contentNo);
+	
+}
+@Override
+public ListVO showMyContentByqnaList(String id, String contentPageNo) {
+	 if(contentPageNo==null)
+		 contentPageNo="1";
+      PagingBean pagingBean = new PagingBean(Integer.parseInt(contentPageNo), mypageDAO.getTotalqnaCount(id), id);
+     List<BoardVO> contentList=mypageDAO.showMyContentByqnaList(pagingBean);
+     ListVO pagingContentList = new ListVO();
+     pagingContentList.setBoardList(contentList);
+     pagingContentList.setPagingBean(pagingBean);
+     return pagingContentList;
+}
+@Override
+public void qnaDeleteInMaypage(String contentNo) {
+	mypageDAO.qnaDeleteInMaypage(contentNo);
+	
 }
 
 

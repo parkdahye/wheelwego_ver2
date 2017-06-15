@@ -77,4 +77,16 @@ public interface MypageDAO {
 
 	List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber);
 
+	int getTotalbusinessCount(String id);
+
+	List<BoardVO> showMyContentBybusinessList(PagingBean pagingBean);
+
+	void businessDeleteInMaypage(String contentNo);
+
+	int getTotalqnaCount(String id);
+
+	List<BoardVO> showMyContentByqnaList(PagingBean pagingBean);
+
+	void qnaDeleteInMaypage(String contentNo);
+
 }

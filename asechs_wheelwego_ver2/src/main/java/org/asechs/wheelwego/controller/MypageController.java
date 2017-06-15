@@ -247,24 +247,6 @@ public class MypageController {
    public String mypage_content(){
 	   return "mypage/mypage_content.tiles";
    }
-
-   // 자유게시물 에 해당하는 게시글 보기
-  /* public ModelAndView showMyContentList(String id, String contentPageNo, HttpServletRequest request) {
-	      ListVO contentList = mypageService.showMyContentList(id, contentPageNo);
-	      return new ModelAndView("mypage/mypage_content.tiles", "contentList", contentList);
-	   }*/
-/*   // 자유게시물 에 해당하는 게시글 보기
-
-   @RequestMapping("afterLogin_mypage/showMyContentByFreeList.do")
-   @ResponseBody
-   public ListVO showMyContentByFreeList(HttpServletRequest request,String id,String contentPageNo,Model model){
-	   System.out.println("controller  id :"+id+"  "+contentPageNo  );
-	  // List<BoardVO> blist=mypageService.showMyContentByFreeList(id);
-	   ListVO contentList=mypageService.showMyContentByFreeList(id,contentPageNo);
-	   model.addAttribute("contentList", contentList);
-	   System.out.println("controller 에서 온 :  "+contentList);
-	   return contentList;
-   }*/
    // 자유게시물 에 해당하는 게시글 보기2
    @RequestMapping("afterLogin_mypage/showMyContentByFreeList.do")
    public ModelAndView showMyContentByFreeList(HttpServletRequest request,String id,String contentPageNo){
@@ -281,7 +263,38 @@ public class MypageController {
       mypageService.freeboardDeleteInMaypage(contentNo);
       return "deleteOk";
    }
-   
+   //창업게시판 에 해당한 게시글보기
+   @RequestMapping("afterLogin_mypage/showMyContentBybusinessList.do")
+   public ModelAndView showMyContentBybusinessList(HttpServletRequest request,String id,String contentPageNo){
+	  
+	   ModelAndView mv=new ModelAndView("mypage/mypage_content_business.tiles");
+	   ListVO contentList=mypageService.showMyContentBybusinessList(id,contentPageNo);
+	   mv.addObject("contentList", contentList);
+	   return mv;
+   }
+   // 창업 에 해당하는 게시글 삭제
+   @RequestMapping("afterLogin_mypage/businessDeleteInMaypage.do")
+   @ResponseBody
+   public String businessDeleteInMaypage(String contentNo) {
+	   System.out.println("딜리트"+contentNo);
+      mypageService.businessDeleteInMaypage(contentNo);
+      return "deleteOk";
+   }
+   // 규엔에이 게시글 보기
+   @RequestMapping("afterLogin_mypage/showMyContentByqnaList.do")
+   public ModelAndView showMyContentByqnaList(HttpServletRequest request,String id,String contentPageNo){
+	   ModelAndView mv=new ModelAndView("mypage/mypage_content_qna.tiles");
+	   ListVO contentList=mypageService.showMyContentByqnaList(id,contentPageNo);
+	   mv.addObject("contentList", contentList);
+	   return mv;
+   }
+   // 큐ㅜ엔에이 에 해당하는 게시글 삭제
+   @RequestMapping("afterLogin_mypage/qnaDeleteInMaypage.do")
+   @ResponseBody
+   public String qnaDeleteInMaypage(String contentNo) {
+      mypageService.qnaDeleteInMaypage(contentNo);
+      return "deleteOk";
+   }
    /**
     * 강정호. Seller가 받은 주문 내역 확인하는 메서드
     */

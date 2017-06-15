@@ -57,4 +57,12 @@ public interface MypageService {
 
 	List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber);
 
+	ListVO showMyContentBybusinessList(String id, String contentPageNo);
+
+	void businessDeleteInMaypage(String contentNo);
+
+	ListVO showMyContentByqnaList(String id, String contentPageNo);
+
+	void qnaDeleteInMaypage(String contentNo);
+
 }

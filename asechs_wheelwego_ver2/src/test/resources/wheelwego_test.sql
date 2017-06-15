@@ -643,7 +643,9 @@ to_char(freeboard_timePosted,'YYYY.MM.DD.HH.MM HH:MM:SS') as freeboard_timePoste
 order by freeboard_timePosted desc		
 		
 		
-		
+select qna_no, id, qna_title, qna_content, qna_timePosted, qna_hits from(
+select row_number() over(order by f.qna_timePosted desc) as rnum,  f.qna_no, f.id, f.qna_title, f.qna_content, to_char(f.qna_timePosted,'YYYY.MM.DD.HH.MM HH:MM:SS') as qna_timePosted, f.qna_hits
+from qna f, member m where f.id='customer1' and f.id=m.id ) where rnum between 1 and 5 		
 		
 		
 		

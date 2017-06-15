@@ -60,7 +60,7 @@
                       hint)   startPageOfPageGroup-1 하면 됨        
     -->      
    <c:if test="${pb.previousPageGroup}">
-   <a href="${pageContext.request.contextPath}/afterLogin_mypage/showMyContentByFreeList.do?contentPageNo=${pb.startPageOfPageGroup-1}&id=${sessionScope.memberVO.id}">
+   <a href="${pageContext.request.contextPath}/afterLogin_mypage/showMyContentByqnaList.do?contentPageNo=${pb.startPageOfPageGroup-1}&id=${sessionScope.memberVO.id}">
    <!-- <img src="img/left_arrow_btn.gif"> -->
    ◀&nbsp; </a>   
    
@@ -75,7 +75,7 @@
    <c:forEach var="i" begin="${pb.startPageOfPageGroup}" end="${pb.endPageOfPageGroup}">
    <c:choose>
    <c:when test="${pb.nowPage!=i}">
-   <a href="${pageContext.request.contextPath}/afterLogin_mypage/showMyContentByFreeList.do?contentPageNo=${i}&id=${sessionScope.memberVO.id}"">${i}</a> 
+   <a href="${pageContext.request.contextPath}/afterLogin_mypage/showMyContentByqnaList.do?contentPageNo=${i}&id=${sessionScope.memberVO.id}"">${i}</a> 
    </c:when>
    <c:otherwise>
    ${i}
@@ -90,7 +90,7 @@
                       hint)   endPageOfPageGroup+1 하면 됨        
     -->   
    <c:if test="${pb.nextPageGroup}">
-   <a href="${pageContext.request.contextPath}/afterLogin_mypage/showMyContentByFreeList.do?contentPageNo=${pb.endPageOfPageGroup+1}&id=${sessionScope.memberVO.id}">
+   <a href="${pageContext.request.contextPath}/afterLogin_mypage/showMyContentByqnaList.do?contentPageNo=${pb.endPageOfPageGroup+1}&id=${sessionScope.memberVO.id}">
    ▶<!-- <img src="img/right_arrow_btn.gif"> --></a>
    </c:if>
    </p>
@@ -101,20 +101,20 @@
     	   var contentNo=$(this).parent().parent().children(".no").text();
 			   if(confirm("등록된 게시물을 수정하시겠습니까?")){
 				  alert("수정페이지로 넘어간다");
-				  location.href="${pageContext.request.contextPath}/afterLogin_board/freeboard_update_form.do?no="+contentNo;
+				  location.href="${pageContext.request.contextPath}/afterLogin_board/qna_update_form.do?no="+contentNo;
 			  }
        });// click
        $(".deleteBtn").click(function(){
     	   var contentNo=$(this).parent().parent().children(".no").text();
           if(confirm("등록된 리뷰를 삭제하시겠습니까?")){
              $.ajax({
-                url:"${pageContext.request.contextPath}/afterLogin_mypage/freeboardDeleteInMaypage.do",
+                url:"${pageContext.request.contextPath}/afterLogin_mypage/qnaDeleteInMaypage.do",
                 type:"post",
                 data:"contentNo="+contentNo,
 				success:function(data){
 					if(data=="deleteOk"){
 						alert("삭제되었습니다.");
-						location.href="${pageContext.request.contextPath}/afterLogin_mypage/showMyContentByFreeList.do?id=${sessionScope.memberVO.id}";
+						location.href="${pageContext.request.contextPath}/afterLogin_mypage/showMyContentByqnaList.do?id=${sessionScope.memberVO.id}";
 					}
 				}
              });

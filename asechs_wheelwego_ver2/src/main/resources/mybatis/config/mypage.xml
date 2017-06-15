@@ -154,13 +154,18 @@ select count(*) from wishlist where customer_id=#{customerId} and foodtruck_numb
 <select id="getTotalFreeboardCount" resultType="int">
 	select count(*) from freeboard where id=#{value}
 </select>
+<select id="getTotalbusinessCount" resultType="int">
+	select count(*) from information where id=#{value}
+</select>
+<select id="getTotalqnaCount" resultType="int">
+	select count(*) from qna where id=#{value}
+</select>
 <select id="getSellerBookingListByTruckNumber" resultType="bookingVO" parameterType="String" resultMap="bookingRM">
 	select b.booking_number, b.customer_id, b.menu_id, b.booking_quantity, b.booking_state,
 	to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date
 	from booking b, foodtruck f, menu m 
 	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number=#{value} 
 	and m.menu_id=b.menu_id order by b.booking_number desc
-
 </select>
 </mapper>
  
