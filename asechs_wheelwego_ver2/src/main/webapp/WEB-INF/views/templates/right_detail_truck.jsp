@@ -37,6 +37,8 @@
    </tbody>
    </table>
    </form>
+   <hr>
+   TOTAL : <span id="total"></span><span style="padding-left: 150px;"><button type="button" class="btn btn-xs">ORDER</button></span>
 </div>
 
 <script>
@@ -63,16 +65,26 @@
 	                    "<td class='menuId'>"+menu+"</td>"+
 	                    "<td>"+
 	                    "<input type=hidden name='sell_price' value='"+price+"'>"+
-	                    "<input type='button' value='-' onclick='del()'>"+
-	                    "<input type='text' name='amount' value='1' size='1' onchange='change();'>"+
-	                    "<input type='button' value='+' onclick='add();'>"+
+	                    "<input type='number' name='amount' id='countId' value='1' size='1' style='width:30%;' onchange='change();'>"+
 	                    "</td>"+
-	                    "<td><input type='text' name='sum' size='4' readonly></td>"+
+	                    "<td><input type='text' id='sumId' name='sum' size='4' readonly></td>"+
 	                    "<td>"+
 	                    "<span class='glyphicon glyphicon-remove' role='button'></span></td></tr>");
 	         init();
+/*  	         var sum_val=0;
+	         for(var i=0; i<document.getElementsByName('sum').length; i++){
+	        	 sum_val += parseInt(document.getElementsByName('sum')[i].value);
+	         }
+	         $("#total").text(sum_val); */
+/* 			$("#countId").change(function(){
+				alert("change");
+				var sum_val=0;
+		         for(var i=0; i<document.getElementsByName('sum').length; i++){
+		        	 sum_val += parseInt(document.getElementsByName('sum')[i].value);
+		         }
+		         $("#total").text(sum_val);
+			}); */
 		 });
-		
 	});
 
 	
@@ -93,7 +105,7 @@ function init () {
 		change();
 }
 
-function add () {
+/*  function add () {
 	
  	amountNo = document.getElementsByName('amount').length;
  	hm = document.getElementsByName('amount')[amountNo-1].value;
@@ -112,7 +124,7 @@ function del () {
 			document.getElementsByName('amount')[amountNo-1].value=hm;
 			document.getElementsByName('sum')[sumNo-1].value=parseInt(hm) * sell_price;
 		} 
-}
+}  */
 
 function change () {
 	amountNo = document.getElementsByName('amount').length;
