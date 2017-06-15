@@ -47,7 +47,7 @@
 			        	if(paging.nowPage == i){                            //현재페이지가 반복중인 페이지와 같다면
 			                	$(".pagingzone").append("<li class=\"disabled active\"><a>"+i+"</a></li>");    //버튼 비활성화
 			        	}else{
-			        		$(".pagingzone").append("<li class=\"goPage\" data-page=\""+i+"\"><a>"+i+"</a></li>");
+			        			$(".pagingzone").append("<li class=\"goPage\" data-page=\""+i+"\"><a>"+i+"</a></li>");
 
 			        	}
 			        }
@@ -133,6 +133,6 @@
 	<div class="col-sm-2"></div>
 </div>
 <br>
-<p class="paging text-center" style="font-size: 17px; color: black;">
+
 	
 
