@@ -25,10 +25,7 @@
                    </li>
                     <li class="page-scroll">
                         <a href="${pageContext.request.contextPath}/member/register_form.do" >회원가입</a>
-                    </li>            
-                                        <li class="page-scroll">
-                        <a href="${pageContext.request.contextPath}/foodtruck/test.do" >현지 test</a>
-                    </li>   	
+                    </li>             	
                     <li class="page-scroll">
                         <a  href="#myModal" data-toggle="modal" >Login</a>
                     </li>      

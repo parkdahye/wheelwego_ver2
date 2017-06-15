@@ -38,7 +38,7 @@
    </table>
    </form>
    <hr>
-   TOTAL : <span id="total"></span><span style="padding-left: 150px;"><button type="button" class="btn btn-xs">ORDER</button></span>
+   TOTAL : <span id="total"></span><span style="padding-left: 150px; position: fixed;"><button type="button" class="btn btn-xs">ORDER</button></span>
 </div>
 
 <script>
@@ -62,28 +62,35 @@
 			}
 			e.preventDefault();
 			 $("#testTable > tbody:last-child").append("<tr>"+
-	                    "<td class='menuId'>"+menu+"</td>"+
+	                    "<td class='menuId' id='"+menu+"' name='menu'>"+menu+"</td>"+
 	                    "<td>"+
 	                    "<input type=hidden name='sell_price' value='"+price+"'>"+
-	                    "<input type='number' name='amount' id='countId' value='1' size='1' style='width:30%;' onchange='change();'>"+
+	                    "<input type='number' name='amount' id ='"+menu+"' class='countClass' value='1' size='1' style='width:30%;' onchange='change();'>"+
 	                    "</td>"+
-	                    "<td><input type='text' id='sumId' name='sum' size='4' readonly></td>"+
+	                    "<td><input type='text' class='amountClass' name='sum' size='4' readonly></td>"+
 	                    "<td>"+
 	                    "<span class='glyphicon glyphicon-remove' role='button'></span></td></tr>");
 	         init();
-/*  	         var sum_val=0;
+  	         var sum_val=0;
 	         for(var i=0; i<document.getElementsByName('sum').length; i++){
 	        	 sum_val += parseInt(document.getElementsByName('sum')[i].value);
 	         }
-	         $("#total").text(sum_val); */
-/* 			$("#countId").change(function(){
+	         $("#total").text(sum_val); 
+	 			$("input[type='number']").change(function(){
+					var sum_val=0;
+			         for(var i=0; i<document.getElementsByName('sum').length; i++){
+			        	 sum_val += parseInt(document.getElementsByName('sum')[i].value);
+			         }
+			         $("#total").text(sum_val);
+				}); 
+/*  			$(".countClass").change(function(){
 				alert("change");
 				var sum_val=0;
 		         for(var i=0; i<document.getElementsByName('sum').length; i++){
 		        	 sum_val += parseInt(document.getElementsByName('sum')[i].value);
 		         }
 		         $("#total").text(sum_val);
-			}); */
+			});  */
 		 });
 	});
 
