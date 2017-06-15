@@ -18,17 +18,18 @@
 				 <a href="" name="menu" value="${foodList.menuName}"><input type="hidden" value="${foodList.menuPrice}">
 				 ${foodList.menuName}</a>
 				<input type="hidden" value="${foodList.menuPrice}">
+				<input type="hidden" value="${foodList.menuId}">
 				</li>
 			</c:forEach>
 		</ul>
 	</div>
 
-  <form name="form" method="get">
+  <form name="form" method="post" id="orderform" action="${pageContext.request.contextPath}/foodtruck/foodtruck_booking_confirm.do">
    <table class="table table-hover" id="testTable" style="width:30%">
    <thead>
    <tr>
    <th>MENU</th>
-   <th>AMOUNT</th>
+   <th style="width:30%;">AMOUNT</th>
    <th>TOTAL</th>
    <th></th>
    </tr>
@@ -36,17 +37,28 @@
    <tbody>
    </tbody>
    </table>
-   </form>
    <hr>
-   TOTAL : <span id="total"></span><span style="padding-left: 150px; position: fixed;"><button type="button" class="btn btn-xs">ORDER</button></span>
+   TOTAL : <span id="total"></span><span style="padding-left: 150px;"><input type="button" id="orderBtn" class="btn btn-xs" value="order" style="position: fixed; right:30px"></span>
+   </form>
 </div>
+<script>
+$(document).ready(function(){
+    $("#orderBtn").click(function(){
+        if(confirm("주문하시겠습니까?")){
+        	$("#orderform").submit();
+        } 
+     });  
+}); // ready
 
+</script>
 <script>
 	$(document).ready(function() {
+		var cnt=0;
 		var arr = [''];
 		$("ul.dropdown-menu a").click(function(e){
 			var menu = $(this).attr('value');
 			var price = $(this).next().val();
+			var menuId = $(this).next().next().val();
 			var flag = false;
 			for(var i=0; i<arr.length; i++)	{
 				if(arr[i]==menu){
@@ -62,84 +74,35 @@
 			}
 			e.preventDefault();
 			 $("#testTable > tbody:last-child").append("<tr>"+
-	                    "<td class='menuId' id='"+menu+"' name='menu'>"+menu+"</td>"+
+	                    "<td><input type='hidden' name='bookingDetail["+cnt+"].menuName' value='"+menu+"'>"+menu+"</td>"+
+	                    "<input type='hidden' name='bookingDetail["+cnt+"].menuId' value='"+menuId+"'>"+
 	                    "<td>"+
-	                    "<input type=hidden name='sell_price' value='"+price+"'>"+
-	                    "<input type='number' name='amount' id ='"+menu+"' class='countClass' value='1' size='1' style='width:30%;' onchange='change();'>"+
+	                    "<input type='hidden' class='menuPrice' name='bookingDetail["+cnt+"].menuPrice' value='"+price+"'>"+
+	                    "<input type='number' name='bookingDetail["+cnt+"].bookingQuantity' class='countId' value='1' size='1' style='width:30%;' onclick='change()' min='1'>"+
 	                    "</td>"+
-	                    "<td><input type='text' class='amountClass' name='sum' size='4' readonly></td>"+
+	                    "<td><input type='text' class='sumId' name='sum' size='4' readonly value="+price+"></td>"+
 	                    "<td>"+
 	                    "<span class='glyphicon glyphicon-remove' role='button'></span></td></tr>");
-	         init();
-  	         var sum_val=0;
+
+	        
+   	         var sum_val=0;
 	         for(var i=0; i<document.getElementsByName('sum').length; i++){
 	        	 sum_val += parseInt(document.getElementsByName('sum')[i].value);
 	         }
-	         $("#total").text(sum_val); 
-	 			$("input[type='number']").change(function(){
-					var sum_val=0;
-			         for(var i=0; i<document.getElementsByName('sum').length; i++){
-			        	 sum_val += parseInt(document.getElementsByName('sum')[i].value);
-			         }
-			         $("#total").text(sum_val);
-				}); 
-/*  			$(".countClass").change(function(){
-				alert("change");
-				var sum_val=0;
-		         for(var i=0; i<document.getElementsByName('sum').length; i++){
-		        	 sum_val += parseInt(document.getElementsByName('sum')[i].value);
-		         }
-		         $("#total").text(sum_val);
-			});  */
-		 });
-	});
+	         $("#total").text(sum_val);  
+				cnt++;
+		 }); //dropdown
+		$("#testTable").on("change",":input[type=number]",function(){
+			var unitPrice=$(this).parent().find(".menuPrice").val();
+			var price=$(this).parent().next().find(":input[name=sum]");
+			var amount=$(this).val();
+			price.val(parseInt(unitPrice)*parseInt(amount));
+			var sum_val=0;
+	         for(var i=0; i<document.getElementsByName("sum").length; i++){
+	        	 sum_val += parseInt(document.getElementsByName("sum")[i].value);
+	         }
+	         $("#total").text(sum_val);
+		});	
+	}); //ready
 
-	
-// 수량증감 + 가격
-var sell_price;
-var amount;
-
-function init () {
-		priceNo = document.getElementsByName('sell_price').length;
-		price = document.getElementsByName('sell_price')[priceNo-1].value;
-		amountNo = document.getElementsByName('amount').length;
-		amount_val = document.getElementsByName('amount')[amountNo-1].value;
-		sumNo = document.getElementsByName('sum').length;
-		sum_val = document.getElementsByName('sell_price')[sumNo-1].value;
- 		sell_price=price;
- 		amount = amount_val;
- 		sum = sell_price;
-		change();
-}
-
-/*  function add () {
-	
- 	amountNo = document.getElementsByName('amount').length;
- 	hm = document.getElementsByName('amount')[amountNo-1].value;
-	hm ++;
-	document.getElementsByName('amount')[amountNo-1].value=hm;
-	sumNo = document.getElementsByName('sum').length;
-	document.getElementsByName('sum')[sumNo-1].value=parseInt(hm) * sell_price; 
-	document.form.sum.value = document.getElementsByName('sum')[sumNo-1].value;
-}
-
-function del () {
- 		amountNo = document.getElementsByName('amount').length;
-		hm = document.getElementsByName('amount')[amountNo-1].value;
-		if(hm>1){
-			hm --;
-			document.getElementsByName('amount')[amountNo-1].value=hm;
-			document.getElementsByName('sum')[sumNo-1].value=parseInt(hm) * sell_price;
-		} 
-}  */
-
-function change () {
-	amountNo = document.getElementsByName('amount').length;
-	hm = document.getElementsByName('amount')[amountNo-1].value;
-    sumNo = document.getElementsByName('sum').length;
-		if (hm < 0) { 
-			hm = 0;
-		}
-	document.getElementsByName('sum')[sumNo-1].value = parseInt(hm) * sell_price;
-}  
 </script>
