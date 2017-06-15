@@ -247,11 +247,14 @@ public class MypageController {
    public String mypage_content(){
 	   return "mypage/mypage_content.tiles";
    }
+
+   // 자유게시물 에 해당하는 게시글 보기
   /* public ModelAndView showMyContentList(String id, String contentPageNo, HttpServletRequest request) {
 	      ListVO contentList = mypageService.showMyContentList(id, contentPageNo);
 	      return new ModelAndView("mypage/mypage_content.tiles", "contentList", contentList);
 	   }*/
 /*   // 자유게시물 에 해당하는 게시글 보기
+
    @RequestMapping("afterLogin_mypage/showMyContentByFreeList.do")
    @ResponseBody
    public ListVO showMyContentByFreeList(HttpServletRequest request,String id,String contentPageNo,Model model){

@@ -119,4 +119,5 @@ public class FoodTruckDAOImpl implements FoodTruckDAO {
 	public int findWishlistCountByTruckNumber(String foodtruckNumber) {
 		return sqlSessionTemplate.selectOne("foodtruck.findWishlistCountByTruckNumber", foodtruckNumber);
 	}
+
 }
