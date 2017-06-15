@@ -17,13 +17,15 @@
         <c:set value="0" var="total"/>
     <tbody>
     <c:forEach items="${requestScope.bvo.bookingDetail}" var="bookingList">
-      <tr>
-        <td>${bookingList.menuName}</td>
-        <td>${bookingList.menuPrice}</td>
-        <td>${bookingList.bookingQuantity}</td>
-        <td>${bookingList.bookingQuantity*bookingList.menuPrice}</td>
-        <c:set value="${total+bookingList.bookingQuantity*bookingList.menuPrice}" var="total"/>
-      </tr>
+    	<c:if test="${bookingList.menuName != ''&&bookingList.menuName!=null}">
+	      <tr>
+	        <td>${bookingList.menuName}</td>
+	        <td>${bookingList.menuPrice}</td>
+	        <td>${bookingList.bookingQuantity}</td>
+	        <td>${bookingList.bookingQuantity*bookingList.menuPrice}</td>
+	        <c:set value="${total+bookingList.bookingQuantity*bookingList.menuPrice}" var="total"/>
+	      </tr>
+    	</c:if>
       </c:forEach>
     </tbody>
   </table>
@@ -38,7 +40,7 @@
 	보유 포인트 : ${myPoint} <br>
 	<input type="radio" name="pointOption" value="uncheck" checked>선택안함&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="pointOption" value="check">포인트차감<br>
-	<input type="text" value="" size="10" disabled="disabled">p
+	<input type="text" value="" size="10" disabled="disabled" onkeydown="return showKeyCode(event)">p
 <br><br>
 </div>
 </div><br><br>
@@ -55,11 +57,37 @@
 <div class="col-sm-3"></div>
 </div>
 <script>
-$("input:radio[name=pointOption]").click(function() {
-    if($(this).val()=="uncheck"){
-    	$("input:text").val("");
-		$("input:text").attr("disabled", true);
-    }else if($(this).val()=="check")
-    	$("input:text").attr("disabled", false);
+$(document).ready(function(){
+	$(":input[name=pointOption]").click(function() {
+	    if($(this).val()=="uncheck"){
+	    	$("input:text").val("");
+			$("input:text").attr("disabled", true);
+	    }else if($(this).val()=="check")
+	    	$("input:text").attr("disabled", false);
+	});
+	$(":input[type=text]").keyup(function() {
+	  	var myPoint="${myPoint}";
+	  	var point=$(this).val();
+	  	if(point>parseInt(myPoint)){
+	  		alert("보유하신 포인트를 확인해주세요");
+	  		$(this).val("");
+	  	}
+	  	if(point<0){
+	  		alert("포인트는 ");
+	  	}
+	});
 });
+
+function showKeyCode(event) {
+	event = event || window.event;
+	var keyID = (event.which) ? event.which : event.keyCode;
+	if( ( keyID >=48 && keyID <= 57 ) || ( keyID >=96 && keyID <= 105 ) )
+	{
+		return;
+	}
+	else
+	{
+		return false;
+	}
+}
 </script>
