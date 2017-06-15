@@ -15,6 +15,7 @@ import org.asechs.wheelwego.model.vo.ReviewVO;
 import org.asechs.wheelwego.model.vo.TruckVO;
 import org.asechs.wheelwego.model.vo.WishlistVO;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -239,5 +240,33 @@ public class MypageController {
          return false;
       else
          return true;
+   }
+   // 내가 슨 게시물 보기로 가기
+   @RequestMapping("afterLogin_mypage/showMyContentList.do")
+   public String mypage_content(){
+	   return "mypage/mypage_content.tiles";
+   }
+  /* public ModelAndView showMyContentList(String id, String contentPageNo, HttpServletRequest request) {
+	      ListVO contentList = mypageService.showMyContentList(id, contentPageNo);
+	      return new ModelAndView("mypage/mypage_content.tiles", "contentList", contentList);
+	   }*/
+   // 자유게시물 에 해당하는 게시글 보기
+   @RequestMapping("afterLogin_mypage/showMyContentByFreeList.do")
+   @ResponseBody
+   public ListVO showMyContentByFreeList(HttpServletRequest request,String id,String contentPageNo,Model model){
+	   System.out.println("controller  id :"+id+"  "+contentPageNo  );
+	  // List<BoardVO> blist=mypageService.showMyContentByFreeList(id);
+	   ListVO contentList=mypageService.showMyContentByFreeList(id,contentPageNo);
+	   model.addAttribute("contentList", contentList);
+	   System.out.println("controller 에서 온 :  "+contentList);
+	   return contentList;
+   }
+   // 자유게시물 에 해당하는 게시글 삭제
+   @RequestMapping("afterLogin_mypage/freeboardDeleteInMaypage.do")
+   @ResponseBody
+   public String freeboardDeleteInMaypage(String contentNo) {
+	   System.out.println("딜리트"+contentNo);
+      mypageService.freeboardDeleteInMaypage(contentNo);
+      return "deleteOk";
    }
 }

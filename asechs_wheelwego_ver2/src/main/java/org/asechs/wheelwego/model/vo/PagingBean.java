@@ -58,6 +58,13 @@ public class PagingBean {
 	
 	private String customerId;
 
+	@Override
+	public String toString() {
+		return "PagingBean [nowPage=" + nowPage + ", contentNumberPerPage=" + contentNumberPerPage
+				+ ", pageNumberPerPageGroup=" + pageNumberPerPageGroup + ", totalContents=" + totalContents
+				+ ", searchWord=" + searchWord + ", gpsInfo=" + gpsInfo + ", customerId=" + customerId + "]";
+	}
+
 	public String getCustomerId() {
 		return customerId;
 	}

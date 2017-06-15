@@ -27,6 +27,7 @@
 	<c:otherwise>
 				<button type="button" id="wishlistBtn"class="btn btn-warning">단골트럭</button>&nbsp;&nbsp;
 			<button type="button" id="reviewBtn"class="btn btn-warning">MY REVIEW</button>&nbsp;&nbsp;
+			<button type="button" id="contentBtn"class="btn btn-warning">MY CONTENT</button>&nbsp;&nbsp;
 	</c:otherwise>
 </c:choose>
 </div>
@@ -85,6 +86,9 @@ $(document).ready(function(){
 	});
 		$("#reviewBtn").click(function(){
 			location.href="${pageContext.request.contextPath}/afterLogin_mypage/showMyReviewList.do?customerId=${sessionScope.memberVO.id}";
+	});
+		$("#contentBtn").click(function(){
+			location.href="${pageContext.request.contextPath}/afterLogin_mypage/showMyContentList.do?customerId=${sessionScope.memberVO.id}";
 	});
 });
 </script>

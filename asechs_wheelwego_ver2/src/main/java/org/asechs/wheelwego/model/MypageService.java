@@ -2,6 +2,7 @@ package org.asechs.wheelwego.model;
 
 import java.util.List;
 
+import org.asechs.wheelwego.model.vo.BoardVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
 import org.asechs.wheelwego.model.vo.ListVO;
 import org.asechs.wheelwego.model.vo.ReviewVO;
@@ -49,4 +50,8 @@ public interface MypageService {
 	public ListVO getWishList(String pageNo, String id);
 	
 	public int getWishListFlag(String customerId, String foodtruckNumber);
+
+	ListVO showMyContentByFreeList(String id, String contentPageNo);
+
+	void freeboardDeleteInMaypage(String contentNo);
 }

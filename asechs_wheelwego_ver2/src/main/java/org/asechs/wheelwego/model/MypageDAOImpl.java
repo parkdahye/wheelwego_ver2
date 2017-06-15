@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.asechs.wheelwego.model.vo.BoardVO;
 import org.asechs.wheelwego.model.vo.FileVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
 import org.asechs.wheelwego.model.vo.PagingBean;
@@ -158,5 +159,19 @@ public class MypageDAOImpl implements MypageDAO {
 	@Override
 	public int getWishListFlag(WishlistVO wishlistVO) {
 		return sqlSessionTemplate.selectOne("mypage.getWishListFlag", wishlistVO);
+	}
+	@Override
+	public int getTotalFreeboardCount(String id) {
+		return sqlSessionTemplate.selectOne("mypage.getTotalFreeboardCount", id);
+	}
+	
+	@Override
+	public void freeboardDeleteInMaypage(String contentNo) {
+		sqlSessionTemplate.delete("board.freeboardDelete", contentNo);
+		
+	}
+	@Override
+	public List<BoardVO> showMyContentByFreeList(PagingBean pagingBean) {
+		return sqlSessionTemplate.selectList("board.showMyContentByFreeList", pagingBean);
 	}
 }

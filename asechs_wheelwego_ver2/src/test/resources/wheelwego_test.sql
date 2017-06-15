@@ -582,4 +582,50 @@ update foodtruck set latitude=37.660587,longitude=126.767573 where foodtruck_num
 update foodtruck set latitude=37.659398,longitude=126.768700 where foodtruck_number='80나0054';
 update foodtruck set latitude=37.659729,longitude=126.770449 where foodtruck_number='80나0056';
 
---------------------------------------------------------------------------------------------------------일산----------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------일산----------------------------------------
+
+select count(*) from freeboard where id='customer1'
+
+select freeboard_no,id,freeboard_title,freeboard_content,freeboard_timeposted,freeboard_hits
+from freeboard where id='customer1'
+
+select review_no, foodtruck_number,foodtruck_name, customer_id, review_content, review_timeposted, grade from(
+select row_number() over(order by r.review_timeposted desc) as rnum,r.review_no,t.foodtruck_number,r.customer_id,r.review_content, to_char(r.review_timeposted,'YYYY.MM.DD HH24:MI:SS') as review_timeposted, r.grade, t.foodtruck_name
+from review r, foodtruck t where r.customer_id=#{searchWord}  and r.foodtruck_number=t.foodtruck_number ) where rnum between #{startRowNumber} and #{endRowNumber}
+
+select freeboard_no,id,freeboard_title,freeboard_content,freeboard_timeposted,freeboard_hits from(
+select row_number() over(order by r.freeboard_timeposted desc) as rnum,r.review_no,t.foodtruck_number,r.customer_id,r.review_content, to_char(r.review_timeposted,'YYYY.MM.DD HH24:MI:SS') as review_timeposted, r.grade, t.foodtruck_name
+from review r, foodtruck t where r.customer_id=#{searchWord}  and r.foodtruck_number=t.foodtruck_number ) where rnum between #{startRowNumber} and #{endRowNumber}
+------------------------------------------------------------------------------
+
+
+select review_no, foodtruck_number,foodtruck_name, customer_id, review_content, review_timeposted, grade from(
+select row_number() over(order by r.review_timeposted desc) as rnum,r.review_no,t.foodtruck_number,r.customer_id,r.review_content, to_char(r.review_timeposted,'YYYY.MM.DD HH24:MI:SS') as review_timeposted, r.grade, t.foodtruck_name
+from review r, foodtruck t where r.customer_id=#{searchWord}  and r.foodtruck_number=t.foodtruck_number ) where rnum between #{startRowNumber} and #{endRowNumber}
+
+select freeboard_no, id, freeboard_title, freeboard_content, freeboard_timePosted, freeboard_hits from(
+select row_number() over(order by f.freeboard_timePosted desc) as rnum,  f.freeboard_no, f.id, f.freeboard_title, f.freeboard_content, to_char(f.freeboard_timePosted,'YYYY.MM.DD.HH.MM HH:MM:SS') as freeboard_timePosted, f.freeboard_hits
+from freeboard f, member m where f.id='customer1' and f.id=m.id ) where rnum between 1 and 4
+
+
+
+
+SELECT f.freeboard_no, f.id, f.freeboard_title, f.freeboard_content, f.freeboard_timePosted, f.freeboard_hits, m.id FROM(
+SELECT row_number() over(order by freeboard_timeposted desc) as rnum, freeboard_no, id, freeboard_title, freeboard_content,
+to_char(freeboard_timePosted,'YYYY.MM.DD.HH.MM HH:MM:SS') as freeboard_timePosted, freeboard_hits from freeboard
+)f, member m where f.id='customer1' and f.id=m.id and rnum between 1 and 4
+order by freeboard_timePosted desc
+		
+		
+SELECT f.freeboard_no, f.id, f.freeboard_title, f.freeboard_content, f.freeboard_timePosted, f.freeboard_hits, m.id FROM(
+SELECT row_number() over(order by freeboard_timeposted desc) as rnum, freeboard_no, id, freeboard_title, freeboard_content,
+to_char(freeboard_timePosted,'YYYY.MM.DD.HH.MM HH:MM:SS') as freeboard_timePosted, freeboard_hits from freeboard
+)f, member m where f.id=#{searchWord} and f.id=m.id and rnum between #{startRowNumber} and #{endRowNumber}
+order by freeboard_timePosted desc		
+		
+		
+		
+		
+		
+		
+		

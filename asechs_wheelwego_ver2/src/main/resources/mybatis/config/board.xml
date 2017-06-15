@@ -319,6 +319,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateqnaComment" parameterType="commentVO">
 		update qnacomment set qnacomment_content=#{comment} where qnacomment_no=#{commentNo} and qna_no=#{contentNo}
 	</update>
+	
+	<!-- -호겸 마이페이지에서 게시물 보기 sql -->
+	<select id="showMyContentByFreeList" resultMap="freeBoardListRM" parameterType="pagingBean">
+	<!-- select freeboard_no,id,freeboard_title,freeboard_content,freeboard_timeposted,freeboard_hits
+	from freeboard where id=#{value} -->
+select freeboard_no, id, freeboard_title, freeboard_content, freeboard_timePosted, freeboard_hits from(
+select row_number() over(order by f.freeboard_timePosted desc) as rnum,  f.freeboard_no, f.id, f.freeboard_title, f.freeboard_content, to_char(f.freeboard_timePosted,'YYYY.MM.DD.HH.MM HH:MM:SS') as freeboard_timePosted, f.freeboard_hits
+from freeboard f, member m where f.id=#{searchWord} and f.id=m.id ) where rnum between #{startRowNumber} and #{endRowNumber} 
+	</select>
+
 </mapper>
  
  

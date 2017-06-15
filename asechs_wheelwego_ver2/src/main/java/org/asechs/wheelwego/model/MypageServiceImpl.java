@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.asechs.wheelwego.model.vo.BoardVO;
 import org.asechs.wheelwego.model.vo.FileManager;
 import org.asechs.wheelwego.model.vo.FileVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
@@ -210,4 +211,29 @@ public class MypageServiceImpl implements MypageService {
       WishlistVO wishlistVO=new WishlistVO(foodtruckNumber,customerId); 
       return mypageDAO.getWishListFlag(wishlistVO);
    }
+@Override
+public ListVO showMyContentByFreeList(String id,String contentPageNo) {
+	/*PagingBean pagingBean = null;
+	int totalCount= mypageDAO.getTotalFreeboardCount(id);
+	if (contentPageNo == null)
+		pagingBean = new PagingBean(totalCount, 1, id);
+	else
+		pagingBean = new PagingBean(totalCount, Integer.parseInt(contentPageNo), id);*/
+	 if(contentPageNo==null)
+		 contentPageNo="1";
+      PagingBean pagingBean = new PagingBean(Integer.parseInt(contentPageNo), mypageDAO.getTotalFreeboardCount(id), id);
+     List<BoardVO> contentList=mypageDAO.showMyContentByFreeList(pagingBean);
+     System.out.println("service 11111111111 :"+contentList);
+     ListVO pagingContentList = new ListVO();
+     pagingContentList.setBoardList(contentList);
+     pagingContentList.setPagingBean(pagingBean);
+     System.out.println("service ;;;;;;;;"+pagingContentList);
+     return pagingContentList;
+}
+@Override
+public void freeboardDeleteInMaypage(String contentNo) {
+	mypageDAO.freeboardDeleteInMaypage(contentNo);
+	
+}
+
 }

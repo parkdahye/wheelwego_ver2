@@ -141,5 +141,10 @@ from review r, foodtruck t where r.customer_id=#{searchWord}  and r.foodtruck_nu
 <select id="getWishListFlag" resultType="int" parameterType="wishlistVO">
 select count(*) from wishlist where customer_id=#{customerId} and foodtruck_number=#{foodtruckNumber}
 </select>
+<!--  내가 슨 게시물 보기 -->
+<select id="getTotalFreeboardCount" resultType="int">
+	select count(*) from freeboard where id=#{value}
+</select>
+
 </mapper>
  
