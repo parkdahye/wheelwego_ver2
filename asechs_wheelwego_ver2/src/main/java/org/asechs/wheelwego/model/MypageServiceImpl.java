@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class MypageServiceImpl implements MypageService {
    @Resource
    private MypageDAO mypageDAO;
+   @Resource
+   private FoodTruckDAO foodtruckDAO;
    
    @Override
    public List<BookingVO> getBookingList(int bookingNumber) {
@@ -115,7 +117,10 @@ public class MypageServiceImpl implements MypageService {
 
    @Override
    public TruckVO findtruckInfoByTruckNumber(String truckNumber) {
-      return mypageDAO.findtruckInfoByTruckNumber(truckNumber);
+       TruckVO truckVO=mypageDAO.findtruckInfoByTruckNumber(truckNumber);
+       truckVO.setAvgGrade(foodtruckDAO.findAvgGradeByTruckNumber(truckNumber));
+       truckVO.setWishlistCount(foodtruckDAO.findWishlistCountByTruckNumber(truckNumber));
+       return truckVO;
    }
    /**
     * 푸드트럭 설정을 업데이트한다.
