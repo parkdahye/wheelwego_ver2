@@ -67,7 +67,7 @@ public class MypageServiceImpl implements MypageService {
       {
          usePoint = -usePoint;
          HashMap<String, Integer> pointInfo = new HashMap<String, Integer>();
-         pointInfo.put("bookingNumber", bookingVO.getBookingNumber());
+         pointInfo.put("bookingNumber", Integer.parseInt(bookingVO.getBookingNumber()));
          pointInfo.put("point", usePoint);
          mypageDAO.calPoint(pointInfo);
          return "성공";

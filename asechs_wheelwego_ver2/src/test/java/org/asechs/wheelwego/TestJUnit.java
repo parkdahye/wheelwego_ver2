@@ -96,6 +96,6 @@ public class TestJUnit {
    
    @Test
    public void test(){
-      registerCustomer();
+	   registerSeller();
    }
 }

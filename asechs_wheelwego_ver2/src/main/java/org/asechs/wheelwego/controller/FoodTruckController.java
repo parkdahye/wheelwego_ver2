@@ -182,6 +182,44 @@ public class FoodTruckController {
 		mv.addObject("bvo",bvo);
 		return mv;
 	}
+	/**
+	 * 다혜 : 메뉴 예약하기
+	 * @param bookingVO
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST, value="foodtruck/bookingMenu.do")
+	public ModelAndView bookingMenu(BookingVO bookingVO,HttpServletRequest request){
+		ModelAndView mv=new ModelAndView("foodtruck/foodtruck_booking_confirm_result.tiles");
+		foodTruckService.bookingMenu(bookingVO);
+		String bookingNumber=bookingVO.getBookingNumber();
+		request.getSession(false).setAttribute("bookingNumber", bookingNumber);
+		mv.addObject("bookingVO", bookingVO);
+		return mv;
+	}
 	
+	@RequestMapping("foodtruck/getRecentlyBookingNumberBySellerId.do")
+	@ResponseBody
+	public Object getRecentlybookingNumberBySellerId(String id){
+		int bookingNumber=foodTruckService.getRecentlyBookingNumberBySellerId(id);
+		return bookingNumber;
+	}
+	@RequestMapping("foodtruck/getPreviousBookingNumberBySellerId.do")
+	@ResponseBody
+	public Object getPreviousbookingNumberBySellerId(String id){
+		int bookingNumber=foodTruckService.getPreviousBookingNumberBySellerId(id);
+		return bookingNumber;
+	}
+	@RequestMapping("foodtruck/getBookingStateBybookingNumber.do")
+	@ResponseBody
+	public String getBookingStateBybookingNumber(String bookingNumber,HttpServletRequest request){
+		String state=foodTruckService.getBookingStateBybookingNumber(bookingNumber);
+		if(state.equals("조리완료")){
+			request.getSession(false).removeAttribute("bookingNumber");
+			return "ok";
+		}
+		else
+			return "fail";
+	}
 	
 }
