@@ -34,7 +34,7 @@
 <br><br>
 </div>
 <div>
-<h4>나의 포인트</h4>
+<h4>MY POINT</h4>
 <div style="border:1px solid lightgray; text-align: center;">
 <br>
 	보유 포인트 : ${myPoint} <br>
