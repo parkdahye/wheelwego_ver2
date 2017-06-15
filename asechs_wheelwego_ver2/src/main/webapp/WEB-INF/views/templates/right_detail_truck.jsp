@@ -38,7 +38,7 @@
    </table>
    </form>
    <hr>
-   TOTAL : <span id="total"></span><span style="padding-left: 150px;"><button type="button" class="btn btn-xs" style="position: fixed; right:20px">ORDER</button></span>
+   TOTAL : <span id="total">0</span><span style="padding-left: 150px;"><button type="button" class="btn btn-xs" style="position: fixed; right:20px">ORDER</button></span>
 </div>
 
 <script>
@@ -71,11 +71,7 @@
 	                    "<td>"+
 	                    "<span class='glyphicon glyphicon-remove' role='button'></span></td></tr>");
 	        
-   	         var sum_val=0;
-	         for(var i=0; i<document.getElementsByName('sum').length; i++){
-	        	 sum_val += parseInt(document.getElementsByName('sum')[i].value);
-	         }
-	         $("#total").text(sum_val);  
+			 totalPrcie();
 
 		 }); //dropdown
 		$("#testTable").on("change",":input[type=number]",function(){
@@ -83,14 +79,22 @@
 			var price=$(this).parent().next().find(":input[name=sum]");
 			var amount=$(this).val();
 			price.val(parseInt(unitPrice)*parseInt(amount));
-			var sum_val=0;
-	         for(var i=0; i<document.getElementsByName("sum").length; i++){
-	        	 sum_val += parseInt(document.getElementsByName("sum")[i].value);
-	         }
-	         $("#total").text(sum_val);
+			totalPrcie();
+		});//수량 및 총액계산
+		
+		$("#testTable").on("click",".glyphicon",function(){
+			if(confirm("메뉴를 삭제하시겠습니까?")){
+				$(this).parent().parent().remove();
+				totalPrcie();
+			}
 		});
-
 	
 	}); //ready
-
+function totalPrcie(){
+	var sum_val=0;
+    for(var i=0; i<document.getElementsByName("sum").length; i++){
+   	 sum_val += parseInt(document.getElementsByName("sum")[i].value);
+    }
+    $("#total").text(sum_val);
+	}
 </script>
