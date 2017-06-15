@@ -84,25 +84,33 @@ $(document).ready(function(){
 	                    "<td>"+
 	                    "<span class='glyphicon glyphicon-remove' role='button'></span></td></tr>");
 
-	        
-   	         var sum_val=0;
-	         for(var i=0; i<document.getElementsByName('sum').length; i++){
-	        	 sum_val += parseInt(document.getElementsByName('sum')[i].value);
-	         }
-	         $("#total").text(sum_val);  
+	       
 				cnt++;
+			 totalPrcie();
+
 		 }); //dropdown
 		$("#testTable").on("change",":input[type=number]",function(){
 			var unitPrice=$(this).parent().find(".menuPrice").val();
 			var price=$(this).parent().next().find(":input[name=sum]");
 			var amount=$(this).val();
 			price.val(parseInt(unitPrice)*parseInt(amount));
-			var sum_val=0;
-	         for(var i=0; i<document.getElementsByName("sum").length; i++){
-	        	 sum_val += parseInt(document.getElementsByName("sum")[i].value);
-	         }
-	         $("#total").text(sum_val);
-		});	
-	}); //ready
 
+			totalPrcie();
+		});//수량 및 총액계산
+		
+		$("#testTable").on("click",".glyphicon",function(){
+			if(confirm("메뉴를 삭제하시겠습니까?")){
+				$(this).parent().parent().remove();
+				totalPrcie();
+			}
+		});
+	
+	}); //ready
+function totalPrcie(){
+	var sum_val=0;
+    for(var i=0; i<document.getElementsByName("sum").length; i++){
+   	 sum_val += parseInt(document.getElementsByName("sum")[i].value);
+    }
+    $("#total").text(sum_val);
+	}
 </script>

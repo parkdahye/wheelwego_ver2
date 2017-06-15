@@ -51,7 +51,10 @@ public interface MypageService {
 	
 	public int getWishListFlag(String customerId, String foodtruckNumber);
 
-	List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber);
+	ListVO showMyContentByFreeList(String id, String contentPageNo);
 
+	void freeboardDeleteInMaypage(String contentNo);
+
+	List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber);
 
 }

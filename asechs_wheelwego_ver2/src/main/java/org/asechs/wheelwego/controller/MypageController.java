@@ -242,6 +242,45 @@ public class MypageController {
       else
          return true;
    }
+   // 내가 슨 게시물 보기로 가기
+   @RequestMapping("afterLogin_mypage/showMyContentList.do")
+   public String mypage_content(){
+	   return "mypage/mypage_content.tiles";
+   }
+
+   // 자유게시물 에 해당하는 게시글 보기
+  /* public ModelAndView showMyContentList(String id, String contentPageNo, HttpServletRequest request) {
+	      ListVO contentList = mypageService.showMyContentList(id, contentPageNo);
+	      return new ModelAndView("mypage/mypage_content.tiles", "contentList", contentList);
+	   }*/
+/*   // 자유게시물 에 해당하는 게시글 보기
+
+   @RequestMapping("afterLogin_mypage/showMyContentByFreeList.do")
+   @ResponseBody
+   public ListVO showMyContentByFreeList(HttpServletRequest request,String id,String contentPageNo,Model model){
+	   System.out.println("controller  id :"+id+"  "+contentPageNo  );
+	  // List<BoardVO> blist=mypageService.showMyContentByFreeList(id);
+	   ListVO contentList=mypageService.showMyContentByFreeList(id,contentPageNo);
+	   model.addAttribute("contentList", contentList);
+	   System.out.println("controller 에서 온 :  "+contentList);
+	   return contentList;
+   }*/
+   // 자유게시물 에 해당하는 게시글 보기2
+   @RequestMapping("afterLogin_mypage/showMyContentByFreeList.do")
+   public ModelAndView showMyContentByFreeList(HttpServletRequest request,String id,String contentPageNo){
+	   ModelAndView mv=new ModelAndView("mypage/mypage_content_freeboard.tiles");
+	   ListVO contentList=mypageService.showMyContentByFreeList(id,contentPageNo);
+	   mv.addObject("contentList", contentList);
+	   return mv;
+   }
+   // 자유게시물 에 해당하는 게시글 삭제
+   @RequestMapping("afterLogin_mypage/freeboardDeleteInMaypage.do")
+   @ResponseBody
+   public String freeboardDeleteInMaypage(String contentNo) {
+	   System.out.println("딜리트"+contentNo);
+      mypageService.freeboardDeleteInMaypage(contentNo);
+      return "deleteOk";
+   }
    
    /**
     * 강정호. Seller가 받은 주문 내역 확인하는 메서드
@@ -254,22 +293,5 @@ public class MypageController {
 	   model.addAttribute("bookingList", bookingList);
 	   return "mypage/mypage_seller_booking_list.tiles";
    }
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
+
 }
