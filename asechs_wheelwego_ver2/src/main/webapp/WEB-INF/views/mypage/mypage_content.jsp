@@ -15,7 +15,7 @@
 <script>
 	$(document).ready(function(){
 		$("#freeboardBtn").click(function(){
-			var id=$("#id").val();
+			/* var id=$("#id").val();
 			var contentPageNo=1;
 			var newInfo="";
 			  $.ajax({
@@ -52,7 +52,8 @@
 			        	}
 			        }
 				}
-			})//ajax 
+			})//ajax  */
+			location.href="${pageContext.request.contextPath}/afterLogin_mypage/showMyContentByFreeList.do?id=${sessionScope.memberVO.id}";
 		})//click
 		//클릭된 페이지로 가기 이벤트
 		$(document).on('cilck','.goPage',function(){
@@ -92,9 +93,7 @@
 
 <input type="hidden" value="${sessionScope.memberVO.id}" id="id">
 
-<div class=" text-center">
-	<h1 class="page-header">MY Page</h1>
-</div>
+<jsp:include page="./mypage.jsp"/><br>
 <div align="center">
 
 	<button type="button" id="freeboardBtn" class="btn btn-warning">자유
@@ -109,7 +108,7 @@
 </div>
 <br>
 
-<div class="row">
+<!-- <div class="row">
 	<div class="col-sm-2"></div>
 	<div class="container col-sm-8">
 		<table class="table table-hover">
@@ -136,3 +135,4 @@
 
 	
 
+ -->
