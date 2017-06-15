@@ -1,7 +1,7 @@
 package org.asechs.wheelwego.model;
 
+import java.util.HashMap;
 import java.util.List;
-
 
 import org.asechs.wheelwego.model.vo.BoardVO;
 import org.asechs.wheelwego.model.vo.BookingVO;
@@ -13,6 +13,12 @@ import org.asechs.wheelwego.model.vo.TruckVO;
 import org.asechs.wheelwego.model.vo.WishlistVO;
 
 public interface MypageDAO {
+	public List<BookingVO> getBookingList(int bookingNumber);
+	
+	void calPoint(HashMap<String, Integer> pointInfo);
+	
+	public int getMyPoint(String customerId);
+	
 	List<WishlistVO> heartWishList(String id);
 	
 	public List<TruckVO> myWishList(String id);

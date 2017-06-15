@@ -1,10 +1,10 @@
 package org.asechs.wheelwego.model;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
-
 
 import org.asechs.wheelwego.model.vo.BoardVO;
 import org.asechs.wheelwego.model.vo.BookingVO;
@@ -23,6 +23,55 @@ import org.springframework.web.multipart.MultipartFile;
 public class MypageServiceImpl implements MypageService {
    @Resource
    private MypageDAO mypageDAO;
+   
+   @Override
+   public List<BookingVO> getBookingList(int bookingNumber) {
+      return mypageDAO.getBookingList(bookingNumber);
+   }
+   @Override
+   public int getMyPoint(String customerId) {
+      return mypageDAO.getMyPoint(customerId);
+   }
+
+
+   @Override
+   public void addPoint(int bookingNumber) {
+      List<BookingVO> bookingList = mypageDAO.getBookingList(bookingNumber);
+      int savingPoint = 0;
+      
+      for (int i = 0; i < bookingList.size(); i++)
+      {
+         int quantity = bookingList.get(i).getBookingDetail().get(i).getBookingQuantity();
+         int price = bookingList.get(i).getBookingDetail().get(i).getMenuPrice();
+         savingPoint += (quantity * price * 0.05);
+      }
+      
+      HashMap<String, Integer> pointInfo = new HashMap<String, Integer>();
+      pointInfo.put("bookingNumber", bookingNumber);
+      pointInfo.put("point", savingPoint);
+      
+      mypageDAO.calPoint(pointInfo);
+   }
+
+   @Override
+   public String minusPoint(BookingVO bookingVO, int usePoint) {
+      int myPoint = getMyPoint(bookingVO.getCustomerId());
+      
+      if (usePoint <= 0)
+         return "0이하 불가";
+      else if (usePoint > myPoint)
+         return "포인트 한도 초과";
+      else
+      {
+         usePoint = -usePoint;
+         HashMap<String, Integer> pointInfo = new HashMap<String, Integer>();
+         pointInfo.put("bookingNumber", bookingVO.getBookingNumber());
+         pointInfo.put("point", usePoint);
+         mypageDAO.calPoint(pointInfo);
+         return "성공";
+      }
+   }
+
    
    @Override
    public List<WishlistVO> heartWishList(String id){

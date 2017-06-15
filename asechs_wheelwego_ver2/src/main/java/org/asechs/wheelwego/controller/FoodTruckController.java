@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import org.asechs.wheelwego.model.FoodTruckService;
 import org.asechs.wheelwego.model.MypageService;
-import org.asechs.wheelwego.model.vo.BookingDetailVO;
 import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.ListVO;
 import org.asechs.wheelwego.model.vo.MemberVO;
@@ -175,8 +174,13 @@ public class FoodTruckController {
 	 * 현지: 주문하기 btn 클릭 후 주문폼으로 넘어가기
 	 */
 	@RequestMapping("foodtruck/foodtruck_booking_confirm.do")
-	public ModelAndView foodtruck_booking_confirm(BookingVO bvo){
-		return new ModelAndView("foodtruck/foodtruck_booking_confirm.tiles","bvo",bvo);
+	public ModelAndView foodtruck_booking_confirm(BookingVO bvo,HttpServletRequest request){
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("foodtruck/foodtruck_booking_confirm.tiles");
+		MemberVO memberVO=(MemberVO)request.getSession(false).getAttribute("memberVO");
+		mv.addObject("myPoint", mypageService.getMyPoint(memberVO.getId()));   
+		mv.addObject("bvo",bvo);
+		return mv;
 	}
 	
 	

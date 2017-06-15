@@ -1,9 +1,9 @@
 package org.asechs.wheelwego.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
-
 
 import org.asechs.wheelwego.model.vo.BoardVO;
 import org.asechs.wheelwego.model.vo.BookingVO;
@@ -20,6 +20,30 @@ import org.springframework.stereotype.Repository;
 public class MypageDAOImpl implements MypageDAO {
 	@Resource
 	private SqlSessionTemplate sqlSessionTemplate;
+	
+	@Override
+	   public List<BookingVO> getBookingList(int bookingNumber) {
+	      return sqlSessionTemplate.selectList("mypage.getBookingList", bookingNumber);
+	   }
+	@Override
+	   public int getMyPoint(String customerId) {
+	      return sqlSessionTemplate.selectOne("mypage.getMyPoint", customerId);
+	   }
+
+	@Override
+	   public void calPoint(HashMap<String, Integer> pointInfo) {
+	      if (pointInfo.get("point") > 0)
+	      {
+	         System.out.println("양수");
+	         System.out.println(pointInfo);
+	         sqlSessionTemplate.insert("mypage.addPoint", pointInfo);
+	      }
+	      else{
+	         System.out.println("음수");
+	         System.out.println(pointInfo);
+	         sqlSessionTemplate.insert("mypage.minusPoint", pointInfo);
+	      }
+	   }
 
 	@Override
 	public List<WishlistVO> heartWishList(String id){

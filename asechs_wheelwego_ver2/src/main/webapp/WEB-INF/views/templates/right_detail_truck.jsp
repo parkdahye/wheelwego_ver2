@@ -15,7 +15,7 @@
 		<ul class="dropdown-menu">
 			<c:forEach items="${requestScope.truckDetailInfo.foodList}" var="foodList">
 				<li>
-				 <a href="" name="menu" value="${foodList.menuName}"><input type="hidden" value="${foodList.menuPrice}">
+				 <a href="" name="menu" value="${foodList.menuName}">
 				 ${foodList.menuName}</a>
 				<input type="hidden" value="${foodList.menuPrice}">
 				<input type="hidden" value="${foodList.menuId}">
@@ -38,13 +38,14 @@
    </tbody>
    </table>
    <hr>
-   TOTAL : <span id="total"></span><span style="padding-left: 150px;"><input type="button" id="orderBtn" class="btn btn-xs" value="order" style="position: fixed; right:30px"></span>
+   TOTAL  <span id="total" style="font-weight: bold;"></span><span style="padding-left: 150px;"><input type="button" id="orderBtn" class="btn btn-xs" value="order" style="position: fixed; right:30px"></span>
    </form>
 </div>
 <script>
 $(document).ready(function(){
     $("#orderBtn").click(function(){
         if(confirm("주문하시겠습니까?")){
+        	alert("주문페이지로 이동합니다.");
         	$("#orderform").submit();
         } 
      });  
@@ -86,7 +87,7 @@ $(document).ready(function(){
 
 	       
 				cnt++;
-			 totalPrcie();
+			 totalPrice();
 
 		 }); //dropdown
 		$("#testTable").on("change",":input[type=number]",function(){
@@ -95,18 +96,18 @@ $(document).ready(function(){
 			var amount=$(this).val();
 			price.val(parseInt(unitPrice)*parseInt(amount));
 
-			totalPrcie();
+			totalPrice();
 		});//수량 및 총액계산
 		
 		$("#testTable").on("click",".glyphicon",function(){
 			if(confirm("메뉴를 삭제하시겠습니까?")){
 				$(this).parent().parent().remove();
-				totalPrcie();
+				totalPrice();
 			}
 		});
 	
 	}); //ready
-function totalPrcie(){
+function totalPrice(){
 	var sum_val=0;
     for(var i=0; i<document.getElementsByName("sum").length; i++){
    	 sum_val += parseInt(document.getElementsByName("sum")[i].value);
