@@ -181,7 +181,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select m.member_name as memberName from information f, member m where m.id=f.id and f.id=#{id} and f.information_no=#{no}
 	</select>
 	
-	
 	<resultMap type="commentVO" id="businessCommentRM">
 		<result property="commentNo" column="informationcomment_no"/>
 		<result property="id" column="id"/>
@@ -322,11 +321,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- -호겸 마이페이지에서 게시물 보기 sql -->
 	<select id="showMyContentByFreeList" resultMap="freeBoardListRM" parameterType="pagingBean">
-	<!-- select freeboard_no,id,freeboard_title,freeboard_content,freeboard_timeposted,freeboard_hits
-	from freeboard where id=#{value} -->
 select freeboard_no, id, freeboard_title, freeboard_content, freeboard_timePosted, freeboard_hits from(
 select row_number() over(order by f.freeboard_timePosted desc) as rnum,  f.freeboard_no, f.id, f.freeboard_title, f.freeboard_content, to_char(f.freeboard_timePosted,'YYYY.MM.DD.HH.MM HH:MM:SS') as freeboard_timePosted, f.freeboard_hits
 from freeboard f, member m where f.id=#{searchWord} and f.id=m.id ) where rnum between #{startRowNumber} and #{endRowNumber} 
+	</select>
+	<!-- -호겸 마이페이지에서 게시물 보기 sql -->
+	<select id="showMyContentBybusinessList" resultMap="businessInfoBoardListRM" parameterType="pagingBean">
+select information_no, id, information_title, information_content, information_timePosted, information_hits from(
+select row_number() over(order by f.information_timePosted desc) as rnum,  f.information_no, f.id, f.information_title, f.information_content, to_char(f.information_timePosted,'YYYY.MM.DD.HH.MM HH:MM:SS') as information_timePosted, f.information_hits
+from information f, member m where f.id=#{searchWord} and f.id=m.id ) where rnum between #{startRowNumber} and #{endRowNumber} 
+	</select>
+	<!-- -호겸 마이페이지에서 게시물 보기 sql -->
+	<select id="showMyContentByqnaList" resultMap="QnABoardListRM" parameterType="pagingBean">
+select qna_no, id, qna_title, qna_content, qna_timePosted, qna_hits from(
+select row_number() over(order by f.qna_timePosted desc) as rnum,  f.qna_no, f.id, f.qna_title, f.qna_content, to_char(f.qna_timePosted,'YYYY.MM.DD.HH.MM HH:MM:SS') as qna_timePosted, f.qna_hits 
+from qna f, member m where f.id=#{searchWord} and f.id=m.id ) where rnum between #{startRowNumber} and #{endRowNumber} 
 	</select>
 
 </mapper>
