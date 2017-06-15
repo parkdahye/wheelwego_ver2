@@ -2,7 +2,9 @@ package org.asechs.wheelwego.model;
 
 import java.util.List;
 
+
 import org.asechs.wheelwego.model.vo.BoardVO;
+import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FileVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
 import org.asechs.wheelwego.model.vo.PagingBean;
@@ -72,4 +74,7 @@ public interface MypageDAO {
 	List<BoardVO> showMyContentByFreeList(PagingBean pagingBean);
 
 	void freeboardDeleteInMaypage(String contentNo);
+
+	List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber);
+
 }

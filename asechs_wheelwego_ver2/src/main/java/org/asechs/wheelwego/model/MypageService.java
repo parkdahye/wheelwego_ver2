@@ -2,7 +2,7 @@ package org.asechs.wheelwego.model;
 
 import java.util.List;
 
-import org.asechs.wheelwego.model.vo.BoardVO;
+import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
 import org.asechs.wheelwego.model.vo.ListVO;
 import org.asechs.wheelwego.model.vo.ReviewVO;
@@ -54,4 +54,7 @@ public interface MypageService {
 	ListVO showMyContentByFreeList(String id, String contentPageNo);
 
 	void freeboardDeleteInMaypage(String contentNo);
+
+	List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber);
+
 }

@@ -517,6 +517,25 @@ select row_number() over(order by review_timeposted desc) as rnum,review_no,food
 	from review where customer_id='customer02' ) where rnum between 10 and 18
 
 	select count(*) from review where customer_id='customer02'
+	
+	select * from menu
+	select * from customer
+	
+	insert into booking(booking_number, customer_id, menu_id, booking_quantity, booking_date, booking_state)
+	values(1,'customer01','1',2,sysdate,'결제완료')
+	insert into booking(booking_number, customer_id, menu_id, booking_quantity, booking_date, booking_state)
+	values(1,'customer01','2',2,sysdate,'결제완료')
+	insert into booking(booking_number, customer_id, menu_id, booking_quantity, booking_date, booking_state)
+	values(1,'customer01','3',2,sysdate,'결제완료')
+	insert into booking(booking_number, customer_id, menu_id, booking_quantity, booking_date, booking_state)
+	values(1,'customer02','4',2,sysdate,'결제완료')
+	insert into booking(booking_number, customer_id, menu_id, booking_quantity, booking_date, booking_state)
+	values(1,'customer02','5',2,sysdate,'결제완료')
+	insert into booking(booking_number, customer_id, menu_id, booking_quantity, booking_date, booking_state)
+	values(1,'customer02','6',2,sysdate,'결제완료')
+	select booking_number, customer_id, menu_id, booking_quantity, booking_date, booking_state from booking where booking_number=1
+	select b.* from booking b, foodtruck f, menu m where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number='80나0001' and m.menu_id=b.menu_id;
+	select * from member
 -------------------------------------------------------------------------------
 
 update foodtruck set latitude=37.402403,longitude=127.106248 where foodtruck_number='80나0001';

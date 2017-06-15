@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.asechs.wheelwego.model.MemberService;
 import org.asechs.wheelwego.model.MypageService;
+import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
 import org.asechs.wheelwego.model.vo.ListVO;
 import org.asechs.wheelwego.model.vo.MemberVO;
@@ -269,4 +270,17 @@ public class MypageController {
       mypageService.freeboardDeleteInMaypage(contentNo);
       return "deleteOk";
    }
+   
+   /**
+    * 강정호. Seller가 받은 주문 내역 확인하는 메서드
+    */
+   @RequestMapping("afterLogin_mypage/sellerBookingList.do")
+   public String sellerBookingList(Model model, HttpServletRequest request){
+	   String sellerId=request.getParameter("sellerId");
+	   String foodTruckNumber=mypageService.findtruckNumberBySellerId(sellerId);
+	   List<BookingVO> bookingList=mypageService.getSellerBookingListByTruckNumber(foodTruckNumber);
+	   model.addAttribute("bookingList", bookingList);
+	   return "mypage/mypage_seller_booking_list.tiles";
+   }
+
 }

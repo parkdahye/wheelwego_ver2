@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+
 import org.asechs.wheelwego.model.vo.BoardVO;
+import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FileVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
 import org.asechs.wheelwego.model.vo.PagingBean;
@@ -173,5 +175,8 @@ public class MypageDAOImpl implements MypageDAO {
 	@Override
 	public List<BoardVO> showMyContentByFreeList(PagingBean pagingBean) {
 		return sqlSessionTemplate.selectList("board.showMyContentByFreeList", pagingBean);
+	}
+	public List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber) {
+		return sqlSessionTemplate.selectList("mypage.getSellerBookingListByTruckNumber",foodTruckNumber);
 	}
 }
