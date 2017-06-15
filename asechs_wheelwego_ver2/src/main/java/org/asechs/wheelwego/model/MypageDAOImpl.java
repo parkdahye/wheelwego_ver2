@@ -170,7 +170,6 @@ public class MypageDAOImpl implements MypageDAO {
 	@Override
 	public void freeboardDeleteInMaypage(String contentNo) {
 		sqlSessionTemplate.delete("board.freeboardDelete", contentNo);
-		
 	}
 	@Override
 	public List<BoardVO> showMyContentByFreeList(PagingBean pagingBean) {
@@ -178,5 +177,29 @@ public class MypageDAOImpl implements MypageDAO {
 	}
 	public List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber) {
 		return sqlSessionTemplate.selectList("mypage.getSellerBookingListByTruckNumber",foodTruckNumber);
+	}
+	@Override
+	public int getTotalbusinessCount(String id) {
+		return sqlSessionTemplate.selectOne("mypage.getTotalbusinessCount", id);
+	}
+	@Override
+	public List<BoardVO> showMyContentBybusinessList(PagingBean pagingBean) {
+		return sqlSessionTemplate.selectList("board.showMyContentBybusinessList", pagingBean);
+	}
+	@Override
+	public void businessDeleteInMaypage(String contentNo) {
+		sqlSessionTemplate.delete("board.businessDelete", contentNo);
+	}
+	@Override
+	public int getTotalqnaCount(String id) {
+		return sqlSessionTemplate.selectOne("mypage.getTotalqnaCount", id);
+	}
+	@Override
+	public List<BoardVO> showMyContentByqnaList(PagingBean pagingBean) {
+		return sqlSessionTemplate.selectList("board.showMyContentByqnaList", pagingBean);
+	}
+	@Override
+	public void qnaDeleteInMaypage(String contentNo) {
+		sqlSessionTemplate.delete("board.qnaDelete", contentNo);
 	}
 }
