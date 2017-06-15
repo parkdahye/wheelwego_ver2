@@ -251,7 +251,7 @@ public class MypageController {
 	      ListVO contentList = mypageService.showMyContentList(id, contentPageNo);
 	      return new ModelAndView("mypage/mypage_content.tiles", "contentList", contentList);
 	   }*/
-   // 자유게시물 에 해당하는 게시글 보기
+/*   // 자유게시물 에 해당하는 게시글 보기
    @RequestMapping("afterLogin_mypage/showMyContentByFreeList.do")
    @ResponseBody
    public ListVO showMyContentByFreeList(HttpServletRequest request,String id,String contentPageNo,Model model){
@@ -261,6 +261,14 @@ public class MypageController {
 	   model.addAttribute("contentList", contentList);
 	   System.out.println("controller 에서 온 :  "+contentList);
 	   return contentList;
+   }*/
+   // 자유게시물 에 해당하는 게시글 보기2
+   @RequestMapping("afterLogin_mypage/showMyContentByFreeList.do")
+   public ModelAndView showMyContentByFreeList(HttpServletRequest request,String id,String contentPageNo){
+	   ModelAndView mv=new ModelAndView("mypage/mypage_content_freeboard.tiles");
+	   ListVO contentList=mypageService.showMyContentByFreeList(id,contentPageNo);
+	   mv.addObject("contentList", contentList);
+	   return mv;
    }
    // 자유게시물 에 해당하는 게시글 삭제
    @RequestMapping("afterLogin_mypage/freeboardDeleteInMaypage.do")
