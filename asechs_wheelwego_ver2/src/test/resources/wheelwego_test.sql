@@ -4,6 +4,17 @@ select * from WISHLIST where customer_id='customer01'
 select * from foodtruck where foodtruck_name='현지트럭'
 select * from foodtruck
 select * from wishlist
+select * from BOOKING where customer_id='customer01'
+select * from BOOKING_DETAIL
+select f.foodtruck_name
+from (select * from menu)fn, foodtruck f
+where fn.foodtruck_number = f.foodtruck_number and fn.menu_id='76'
+
+select foodtruck_name from foodtruck where foodtruck_number='80나0035'
+select t.*, f.foodtruck_filepath, m.menu_filename
+		from(select * from foodtruck)t, foodtruckfile f, menu m
+		where t.foodtruck_number=f.foodtruck_number and t.foodtruck_number=m.foodtruck_number and t.foodtruck_number='80나0001'
+
 ----------dbTEST---------------------
 		select id from member where member_name='정현지' and
 		phonenumber='01022552716'

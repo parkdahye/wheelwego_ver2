@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.asechs.wheelwego.model.FoodTruckService;
 import org.asechs.wheelwego.model.MemberService;
 import org.asechs.wheelwego.model.MypageService;
 import org.asechs.wheelwego.model.vo.BookingDetailVO;
@@ -29,6 +30,8 @@ public class MypageController {
    private MypageService mypageService;
    @Resource
    private MemberService memberService;
+   @Resource
+   private FoodTruckService foodtruckService;
 
    /**
     * 현지: myWishList 푸드트럭 리스트에서 heart 표시
@@ -305,7 +308,6 @@ public class MypageController {
 	   String foodTruckNumber=mypageService.findtruckNumberBySellerId(sellerId);
 	   List<BookingVO> bookingNumberList=mypageService.getBookingVO(foodTruckNumber);
 
-	   
 	   if(bookingNumberList.isEmpty()==false){
 		   for(int i=0; i<bookingNumberList.size(); i++){
 			   List<BookingDetailVO> bookingDetailVO=mypageService.getBookingDetailVO(bookingNumberList.get(i));
@@ -316,8 +318,27 @@ public class MypageController {
 	   return "mypage/mypage_seller_booking_list.tiles";
 	   
    }
-   
+
+   /**
+    * 정현지 : 사용자 마이페이지 - 나의 주문내역 리스트
+    */
    @RequestMapping("afterLogin_mypage/customerBookingList.do")
+   public String customerBookingList(Model model, HttpServletRequest request){
+	 String customerId = request.getParameter("customerId");
+	 List<BookingVO> myBookingList = mypageService.customerBookingList(customerId);
+	 if(myBookingList.isEmpty()==false){
+		 for(int i=0; i<myBookingList.size(); i++){
+			 List<BookingDetailVO> myBookingDetailList = mypageService.getBookingDetailVO(myBookingList.get(i));
+			 myBookingList.get(i).setBookingDetail(myBookingDetailList);
+		 }
+	 }	 
+	 model.addAttribute("myBookingList", myBookingList);
+	 System.out.println(myBookingList);
+	 return "mypage/mypage_customer_order_list.tiles";
+   }
+
+   //강정호가 만든 customerBookingList 임시로 주석처리함. 왜냐하면 현지가 위에 먼저 만들어놓았음.
+   /*@RequestMapping("afterLogin_mypage/customerBookingList.do")
    public String customerBookingList(Model model, HttpServletRequest request){
 	   String customerId=request.getParameter("customerId");
 	   List<BookingVO> customerBookingNumberList=mypageService.getCustomerBookingVO(customerId);
@@ -330,7 +351,7 @@ public class MypageController {
 	   System.out.println("adslfkjasdfasd0"+customerBookingNumberList);
 	   model.addAttribute("customerBookingList",customerBookingNumberList);
 	   return "mypage/mypage_customer_booking_list.tiles";
-   }
+   }*/
 
    /**
     * 강정호. 조리 상태 업데이트 해주는 메서드

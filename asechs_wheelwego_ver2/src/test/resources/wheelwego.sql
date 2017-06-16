@@ -15,7 +15,7 @@ drop sequence freeboardcomment_seq;
 
 create sequence survey_seq;
 create sequence customerpoint_seq;
-create sequence booking_seq;
+create sequence booking_seq start with 150;
 create sequence review_seq start with 201;
 create sequence menu_seq start with 123;
 

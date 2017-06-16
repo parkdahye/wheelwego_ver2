@@ -32,7 +32,7 @@
                     	</c:when>
                     	<c:otherwise>
                     		<li class="page-scroll">
-                        <a href="${pageContext.request.contextPath}/afterLogin_mypage/mypage.do" >${sessionScope.memberVO.memberName}님의 MyPage</a>
+                        <a href="${pageContext.request.contextPath}/afterLogin_mypage/mypage.do">${sessionScope.memberVO.memberName}님의 MyPage</a>
                    </li>
                     	<li class="page-scroll">
                          <a href="${pageContext.request.contextPath}/board/boardSelectList.do">커뮤니티</a>

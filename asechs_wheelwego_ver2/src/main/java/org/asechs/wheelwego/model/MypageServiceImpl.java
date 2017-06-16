@@ -29,7 +29,12 @@ public class MypageServiceImpl implements MypageService {
    private MypageDAO mypageDAO;
    @Resource
    private FoodTruckDAO foodtruckDAO;
-   
+  
+   @Override
+   public List<BookingVO> customerBookingList(String customerId){
+	   return mypageDAO.customerBookingList(customerId);
+   }
+  
    @Override
    public List<BookingVO> getBookingList(int bookingNumber) {
       return mypageDAO.getBookingList(bookingNumber);
@@ -39,45 +44,33 @@ public class MypageServiceImpl implements MypageService {
       return mypageDAO.getMyPoint(customerId);
    }
 
+   @Override
+   public void calPoint(String usePoint, String totalAmount, int bookingNumber) {
+	   System.out.println("service : "+usePoint);
+      int _usePoint = 0;
+      if (usePoint!=null)
+      {
+         _usePoint = Integer.parseInt(usePoint);
+         minusPoint(_usePoint, bookingNumber);
+      }
+      addPoint(Integer.parseInt(totalAmount), bookingNumber);
+   }
 
    @Override
-   public void addPoint(int bookingNumber) {
-      List<BookingVO> bookingList = mypageDAO.getBookingList(bookingNumber);
-      int savingPoint = 0;
-      
-      for (int i = 0; i < bookingList.size(); i++)
-      {
-         int quantity = bookingList.get(i).getBookingDetail().get(i).getBookingQuantity();
-         int price = bookingList.get(i).getBookingDetail().get(i).getMenuPrice();
-         savingPoint += (quantity * price * 0.05);
-      }
-      
-      HashMap<String, Integer> pointInfo = new HashMap<String, Integer>();
+   public void addPoint(int totalAmount, int bookingNumber) {
+      HashMap<String, Object> pointInfo = new HashMap<String, Object>();
+      pointInfo.put("point", Math.round(totalAmount * 0.05));
       pointInfo.put("bookingNumber", bookingNumber);
-      pointInfo.put("point", savingPoint);
-      
-      mypageDAO.calPoint(pointInfo);
+      mypageDAO.addPoint(pointInfo);
    }
-
    @Override
-   public String minusPoint(BookingVO bookingVO, int usePoint) {
-      int myPoint = getMyPoint(bookingVO.getCustomerId());
-      
-      if (usePoint <= 0)
-         return "0이하 불가";
-      else if (usePoint > myPoint)
-         return "포인트 한도 초과";
-      else
-      {
-         usePoint = -usePoint;
-         HashMap<String, Integer> pointInfo = new HashMap<String, Integer>();
-         pointInfo.put("bookingNumber", Integer.parseInt(bookingVO.getBookingNumber()));
-         pointInfo.put("point", usePoint);
-         mypageDAO.calPoint(pointInfo);
-         return "성공";
-      }
+   public void minusPoint(int usePoint, int bookingNumber) {
+      usePoint = -usePoint;
+      HashMap<String, Integer> pointInfo = new HashMap<String, Integer>();
+      pointInfo.put("point", usePoint);
+      pointInfo.put("bookingNumber", bookingNumber);
+      mypageDAO.minusPoint(pointInfo);
    }
-
    
    @Override
    public List<WishlistVO> heartWishList(String id){
@@ -109,7 +102,7 @@ public class MypageServiceImpl implements MypageService {
             tvo.setFileVO(new FileVO(tvo.getFoodtruckName(), renamedFile));
             mypageDAO.registerFoodtruck(tvo);  //트럭정보 등록
             mypageDAO.saveFilePath(new FileVO(tvo.getFoodtruckNumber(), renamedFile));
-            fm.uploadFile(truckFile,/*uploadPath+*/renamedFile);
+            fm.uploadFile(truckFile,uploadPath+renamedFile);
          } catch (IOException e) {
             e.printStackTrace();
          } //서버에 전송
@@ -141,7 +134,7 @@ public class MypageServiceImpl implements MypageService {
          truckVO.setFileVO(new FileVO(truckVO.getFoodtruckNumber(), renamedFile));
          mypageDAO.updateMyfoodtruck(truckVO);  //트럭정보 등록
          mypageDAO.updateFilePath(truckVO.getFileVO()); //파일경로 등록
-            fm.uploadFile(truckFile, /*uploadPath+*/renamedFile);
+            fm.uploadFile(truckFile, uploadPath+renamedFile);
          } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -171,7 +164,7 @@ public class MypageServiceImpl implements MypageService {
             MultipartFile foodFile=foodList.get(i).getMenuFile(); //메뉴사진받아와서
             String renamedFile=fm.rename(foodFile,truckNumber+"_"+foodList.get(i).getMenuId()); //파일 이름 수정
             mypageDAO.updateMenuFilepath(new FileVO(foodList.get(i).getMenuId(), renamedFile)); //파일 경로 수정
-            fm.uploadFile(foodFile, /*uploadPath+*/renamedFile); //서버에 파일 업로드
+            fm.uploadFile(foodFile, uploadPath+renamedFile); //서버에 파일 업로드
          }catch (Exception e) {
             e.printStackTrace();
          }
@@ -194,7 +187,7 @@ public class MypageServiceImpl implements MypageService {
             foodList.get(i).setFileVO(new FileVO(foodList.get(i).getMenuId(),renamedFile));
             mypageDAO.updateMenu(foodList.get(i)); //메뉴정보 수정
             mypageDAO.updateMenuFilepath(foodList.get(i).getFileVO()); //파일 경로 수정
-            fm.uploadFile(foodFile, /*uploadPath+*/renamedFile);
+            fm.uploadFile(foodFile, uploadPath+renamedFile);
          }
          }catch (Exception e) {
             e.printStackTrace();
@@ -333,9 +326,8 @@ public ListVO showMyContentByqnaList(String id, String contentPageNo) {
 @Override
 public void qnaDeleteInMaypage(String contentNo) {
 	mypageDAO.qnaDeleteInMaypage(contentNo);
-	
-
 }
+
 @Override
 public List<BookingVO> getCustomerBookingVO(String customerId) {
 	return mypageDAO.getCustomerBookingVO(customerId);
@@ -344,16 +336,5 @@ public List<BookingVO> getCustomerBookingVO(String customerId) {
 public List<BookingDetailVO> getCustomerBookingDetailVO(BookingVO bookingVO) {
 	return mypageDAO.getCustomerBookingDetailVO(bookingVO);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 }

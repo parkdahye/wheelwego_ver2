@@ -20,16 +20,21 @@
 			<button type="button" id="menuBtn"class="btn btn-warning">MENU</button>&nbsp;&nbsp;
 <!-- 			<button type="button" id="myTruckBtn"class="btn btn-warning">MY TRUCK PAGE</button>&nbsp;&nbsp; -->
 			
-			<a href="${pageContext.request.contextPath}/afterLogin_mypage/checkTruckGPS.do?sellerId=${sessionScope.memberVO.id}" class="btn btn-warning" role="button">TRUCK 위치 설정</a><br>
-			<span style="float:right"><button type="button" id="sellerBookingListBtn" class="btn btn-warning" >온라인 주문현황</button></span><br>
+			<a href="${pageContext.request.contextPath}/afterLogin_mypage/checkTruckGPS.do?sellerId=${sessionScope.memberVO.id}" class="btn btn-warning" role="button">TRUCK 위치 설정</a>&nbsp;&nbsp;
+			<button type="button" id="sellerBookingListBtn" class="btn btn-warning" >온라인 주문현황</button><br>
 			</c:otherwise>
 		</c:choose>
 	</c:when>
 	<c:otherwise>
 				<button type="button" id="wishlistBtn"class="btn btn-warning">단골트럭</button>&nbsp;&nbsp;
 			<button type="button" id="reviewBtn"class="btn btn-warning">MY REVIEW</button>&nbsp;&nbsp;
+			<!-- 강정호가 만든 버튼 잠시 주석처리. 밑에 현지가 만든 버튼 사용할 것임 -->
+			<!-- <button type="button" id="contentBtn"class="btn btn-warning">MY CONTENT</button>&nbsp;&nbsp;
+			<button type="button" id="customerBookingListBtn" class="btn btn-warning">나의 주문 내역</button>  -->
+
 			<button type="button" id="contentBtn"class="btn btn-warning">MY CONTENT</button>&nbsp;&nbsp;
-			<button type="button" id="customerBookingListBtn" class="btn btn-warning">나의 주문 내역</button> 
+			<button type="button" id="orderBtn" class="btn btn-warning">MY ORDER</button>&nbsp;&nbsp;
+
 	</c:otherwise>
 </c:choose>
 </div>
@@ -97,8 +102,11 @@ $(document).ready(function(){
 			//location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
 			location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
 		});
-		
-		$("#customerBookingListBtn").click(function(){
+		//강정호가 만든 소비자 주문 확인 내역 보는 버튼 잠시 주석. 밑에 만든 현지것으로 대신함
+		/* $("#customerBookingListBtn").click(function(){
+			location.href="${pageContext.request.contextPath}/afterLogin_mypage/customerBookingList.do?customerId=${sessionScope.memberVO.id}"; */
+
+		$("#orderBtn").click(function(){
 			location.href="${pageContext.request.contextPath}/afterLogin_mypage/customerBookingList.do?customerId=${sessionScope.memberVO.id}";
 		});
 

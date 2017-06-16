@@ -30,75 +30,9 @@ public class TestJUnit {
    private MypageDAO mypageDAO;
    @Resource
    private MypageService mypageService;
-   
-   public void registerSeller(){
-      String id;
-      String _id = "seller";
-      String password = "1234";
-      String member_name;
-      String _member_name = "판매자";
-      String postcode = "13494";
-      String address = "경기 성남시 분당구 삼평동 682";
-      String addressdetail = "유스페이스2";
-      String phonenumber = "01012345678";
-      String member_type = "seller";
-      String businessNumber = "1111111111";
-      
-      MemberVO memberVO;
-      
-      for (int i = 1; i <= 56; i++)
-      {
-         if (i >=1 && i <= 9)
-         {
-            id = String.format("%s", _id + 0 + i);
-            member_name = String.format("%s", _member_name + 0 + i);
-         }
-         else
-         {
-            id = String.format("%s", _id + i);
-            member_name = String.format("%s", _member_name + i);            
-         }
-         memberVO = new MemberVO(id, password, member_name, postcode, address, addressdetail, phonenumber, member_type);
-         service.registerMember(memberVO, businessNumber);
-      }   
-   }
-   
-   public void registerCustomer(){
-      String id;
-      String _id = "customer";
-      String password = "1234";
-      String member_name;
-      String _member_name = "일반회원";
-      String postcode = "13494";
-      String address = "경기 성남시 분당구 삼평동 682";
-      String addressdetail = "유스페이스2";
-      String phonenumber = "01012345678";
-      String member_type = "customer";
-      String businessNumber = null;
-      
-      MemberVO memberVO;
-      
-      for (int i = 1; i <= 50; i++)
-      {
-         if (i >=1 && i <= 9)
-         {
-            id = String.format("%s", _id + 0 + i);
-            member_name = String.format("%s", _member_name + 0 + i);
-         }
-         else
-         {
-            id = String.format("%s", _id + i);
-            member_name = String.format("%s", _member_name + i);            
-         }
-         memberVO = new MemberVO(id, password, member_name, postcode, address, addressdetail, phonenumber, member_type);
-         service.registerMember(memberVO, businessNumber);
-      }   
-   }
-   @Resource
-   private SqlSessionTemplate sqlSessionTemplate;
-   
+
    @Test
    public void test(){
-	   registerSeller();
+	  System.out.println(foodtruckService.findFoodtruckNameByMenuId("75"));
    }
 }

@@ -28,7 +28,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result property="reviewContent" column="review_content"/>
 	<result property="reviewTimeposted" column="review_timeposted"/>
 </resultMap>
-
+<select id="findFoodtruckNameByMenuId" resultMap="truckRM">
+select f.foodtruck_name
+from (select * from menu)fn, foodtruck f
+where fn.foodtruck_number = f.foodtruck_number and fn.menu_id=#{value}
+</select>
 <select id="foodtruckList" resultMap="truckRM">
 		select t.*, f.foodtruck_filepath
 		from(select * from foodtruck)t, foodtruckfile f
@@ -198,11 +202,12 @@ and f.seller_id=#{value} and b.booking_state='결제완료'
 select nvl(max(b.booking_number),0)
 from booking b, foodtruck f, menu m, booking_detail bd
 where bd.menu_id=m.menu_id and m.foodtruck_number=f.foodtruck_number 
-and f.seller_id=#{value} and b.booking_state='조리완료'
+and f.seller_id=#{value} <!-- and b.booking_state='조리완료' -->
 </select>
 <select id="getBookingStateBybookingNumber" resultType="string">
 	select booking_state from booking where booking_number=#{value}
 </select>
+
 </mapper>
  
 

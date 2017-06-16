@@ -57,10 +57,18 @@ $(document).ready(function(){
 		var cnt=0;
 		var arr = [''];
 		$("ul.dropdown-menu a").click(function(e){
+		    var id = "${sessionScope.memberVO.id}";
 			var menu = $(this).attr('value');
 			var price = $(this).next().val();
 			var menuId = $(this).next().next().val();
 			var flag = false;
+			if(id==""){
+		        alert("로그인 후 주문해주세요.");
+			}
+			else if(${sessionScope.memberVO.memberType=='seller'}){
+		    	alert("일반회원 전용 서비스입니다.");
+		    }
+			else{
 			for(var i=0; i<arr.length; i++)	{
 				if(arr[i]==menu){
 					flag=true;
@@ -79,16 +87,14 @@ $(document).ready(function(){
 	                    "<input type='hidden' name='bookingDetail["+cnt+"].menuId' value='"+menuId+"'>"+
 	                    "<td>"+
 	                    "<input type='hidden' class='menuPrice' name='bookingDetail["+cnt+"].menuPrice' value='"+price+"'>"+
-	                    "<input type='number' name='bookingDetail["+cnt+"].bookingQuantity' class='countId' value='1' size='1' style='width:30%;' onclick='change()' min='1'>"+
+	                    "<input type='number' name='bookingDetail["+cnt+"].bookingQuantity' class='countId' value='1' size='1' style='width:50%;' onclick='change()' min='1'>"+
 	                    "</td>"+
-	                    "<td><input type='text' class='sumId' name='sum' size='4' readonly value="+price+"></td>"+
+	                    "<td><input type='text' class='sumId' name='sum' size='6' readonly value="+price+"></td>"+
 	                    "<td>"+
-	                    "<span class='glyphicon glyphicon-remove' role='button'></span></td></tr>");
-
-	       
+	                    "<span class='glyphicon glyphicon-trash' role='button'></span></td></tr>");     
 				cnt++;
 			 totalPrice();
-
+			}
 		 }); //dropdown
 		$("#testTable").on("change",":input[type=number]",function(){
 			var unitPrice=$(this).parent().find(".menuPrice").val();

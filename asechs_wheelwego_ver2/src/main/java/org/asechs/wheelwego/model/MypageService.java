@@ -11,13 +11,17 @@ import org.asechs.wheelwego.model.vo.TruckVO;
 import org.asechs.wheelwego.model.vo.WishlistVO;
 
 public interface MypageService {
+	List<BookingVO> customerBookingList(String customerId);
+	
 	List<BookingVO> getBookingList(int bookingNumber);
 	
-	public void addPoint(int bookingNumber);
-	
+    public void calPoint(String usePoint, String totalAmount, int bookingNumber);
+
+	public void minusPoint(int usePoint, int bookingNumber);
+	   
+	public void addPoint(int totalAmount, int bookingNumber);
+	   
 	public int getMyPoint(String customerId);
-	
-	String minusPoint(BookingVO bookingVO, int usePoint);
 	
 	List<WishlistVO> heartWishList(String id);
 	

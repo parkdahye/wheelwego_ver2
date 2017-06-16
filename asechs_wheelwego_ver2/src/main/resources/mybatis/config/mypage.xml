@@ -49,6 +49,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		<result column="menu_price" property="menuPrice"/>
    		<result column="menu_quantity" property="bookingQuantity"/>
    </resultMap>
+<select id="customerBookingList" resultMap="bookingRM">
+  select b.*, bd.menu_id, bd.menu_quantity, m.menu_price
+   from booking b, booking_detail bd, menu m
+   where b.booking_number = bd.booking_number and bd.menu_id = m.menu_id
+   and b.customer_id = #{value}
+</select>
    <select  id = "getBookingList" resultMap="bookingRM">
    select b.*, bd.menu_id, bd.menu_quantity, m.menu_price
    from booking b, booking_detail bd, menu m
@@ -59,12 +65,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    select nvl(sum(point), 0) from customerpoint where booking_number in 
    (select booking_number from booking where customer_id = #{value})
 </select>
-<insert id = "addPoint" parameterType="hashmap">
-   insert into customerpoint values (#{bookingNumber}, 'add', #{point}, sysdate)
-</insert>
-<insert id = "minusPoint" parameterType="hashmap">
-   insert into customerpoint values (#{bookingNumber}, 'minus', #{point}, sysdate)
-</insert>
+
+   <insert id="addPoint" parameterType="hashmap">
+      insert into customerpoint values (#{bookingNumber}, 'add', #{point}, sysdate)
+   </insert>
+   <insert id="minusPoint" parameterType="hashmap">
+      insert into customerpoint values(#{bookingNumber}, 'minus', #{point}, sysdate)
+   </insert>
    <select id="heartWishList" resultMap="wishlistRM">
    select * from wishlist where customer_id=#{value}
    </select>

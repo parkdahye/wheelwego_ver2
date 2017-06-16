@@ -17,7 +17,11 @@ import org.springframework.stereotype.Service;
 public class FoodTruckServiceImpl implements FoodTruckService {
 	@Resource
 	private FoodTruckDAO foodTruckDAO;
-
+	@Override
+	public String findFoodtruckNameByMenuId(String menuId){
+		return foodTruckDAO.findFoodtruckNameByMenuId(menuId);
+	}
+	
 	@Override
 	public List<TruckVO> foodtruckList() {
 		List<TruckVO> truckList=foodTruckDAO.foodtruckList();

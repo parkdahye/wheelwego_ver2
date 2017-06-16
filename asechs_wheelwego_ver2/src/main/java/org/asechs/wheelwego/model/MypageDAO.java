@@ -17,9 +17,13 @@ import org.asechs.wheelwego.model.vo.TruckVO;
 import org.asechs.wheelwego.model.vo.WishlistVO;
 
 public interface MypageDAO {
+	List<BookingVO> customerBookingList(String customerId);
+	
 	public List<BookingVO> getBookingList(int bookingNumber);
 	
-	void calPoint(HashMap<String, Integer> pointInfo);
+	public void minusPoint(HashMap<String, Integer> pointInfo);
+
+	 public void addPoint(HashMap<String, Object> pointInfo);
 	
 	public int getMyPoint(String customerId);
 	
@@ -104,9 +108,13 @@ public interface MypageDAO {
 	List<BoardVO> showMyContentByqnaList(PagingBean pagingBean);
 
 	void qnaDeleteInMaypage(String contentNo);
-
+	
+	/*강정호가 만든 customerBookingList 받아오는 메서드. 잠시 안씀. 현지가 만든걸로 사용*/
 	public List<BookingVO> getCustomerBookingVO(String customerId);
 
 	public List<BookingDetailVO> getCustomerBookingDetailVO(BookingVO bookingVO);
+
+	public String getBookingNumberByCustomerId(String id);
+
 
 }

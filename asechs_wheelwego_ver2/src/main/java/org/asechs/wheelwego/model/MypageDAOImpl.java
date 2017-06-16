@@ -24,7 +24,12 @@ import org.springframework.stereotype.Repository;
 public class MypageDAOImpl implements MypageDAO {
 	@Resource
 	private SqlSessionTemplate sqlSessionTemplate;
-	
+	//현지
+	@Override
+	public List<BookingVO> customerBookingList(String customerId){
+		return sqlSessionTemplate.selectList("mypage.customerBookingList",customerId);
+	}
+	//현지
 	@Override
 	   public List<BookingVO> getBookingList(int bookingNumber) {
 	      return sqlSessionTemplate.selectList("mypage.getBookingList", bookingNumber);
@@ -34,19 +39,14 @@ public class MypageDAOImpl implements MypageDAO {
 	      return sqlSessionTemplate.selectOne("mypage.getMyPoint", customerId);
 	   }
 
-	@Override
-	   public void calPoint(HashMap<String, Integer> pointInfo) {
-	      if (pointInfo.get("point") > 0)
-	      {
-	         System.out.println("양수");
-	         System.out.println(pointInfo);
-	         sqlSessionTemplate.insert("mypage.addPoint", pointInfo);
-	      }
-	      else{
-	         System.out.println("음수");
-	         System.out.println(pointInfo);
-	         sqlSessionTemplate.insert("mypage.minusPoint", pointInfo);
-	      }
+	   @Override
+	   public void minusPoint(HashMap<String, Integer> pointInfo) {
+	      sqlSessionTemplate.insert("mypage.minusPoint", pointInfo);
+	   }
+
+	   @Override
+	   public void addPoint(HashMap<String, Object> pointInfo) {
+	      sqlSessionTemplate.insert("mypage.addPoint", pointInfo);
 	   }
 
 	@Override
@@ -245,11 +245,16 @@ public class MypageDAOImpl implements MypageDAO {
 
 	}
 	@Override
+
 	public List<BookingVO> getCustomerBookingVO(String customerId) {
 		return sqlSessionTemplate.selectList("mypage.getCustomerBookingVO",customerId);
 	}
 	@Override
 	public List<BookingDetailVO> getCustomerBookingDetailVO(BookingVO bookingVO) {
 		return sqlSessionTemplate.selectList("mypage.getCustomerBookingDetailVO", bookingVO);
+	}
+	public String getBookingNumberByCustomerId(String id) {
+		return sqlSessionTemplate.selectOne("mypage.getBookingNumberListByCustomerId", id);
+
 	}
 }

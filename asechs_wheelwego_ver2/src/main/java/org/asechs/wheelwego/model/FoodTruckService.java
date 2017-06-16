@@ -9,6 +9,7 @@ import org.asechs.wheelwego.model.vo.TruckVO;
 import org.asechs.wheelwego.model.vo.WishlistVO;
 
 public interface FoodTruckService {
+	String findFoodtruckNameByMenuId(String menuId);
 	List<TruckVO> foodtruckList();
 	List<TruckVO> searchFoodTruckList(String name);
 	List<TruckVO> searchFoodTruckByGPS(TruckVO gpsInfo);
