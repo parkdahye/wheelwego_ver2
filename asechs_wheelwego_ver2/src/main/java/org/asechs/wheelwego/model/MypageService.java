@@ -84,4 +84,6 @@ public interface MypageService {
 
 	void qnaDeleteInMaypage(String contentNo);
 
+	int checkBookingState(String id);
+
 }

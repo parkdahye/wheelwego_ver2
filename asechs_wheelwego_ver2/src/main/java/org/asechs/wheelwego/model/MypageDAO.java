@@ -111,4 +111,6 @@ public interface MypageDAO {
 
 	public String getBookingNumberByCustomerId(String id);
 
+	int checkBookingState(String customerId);
+
 }
