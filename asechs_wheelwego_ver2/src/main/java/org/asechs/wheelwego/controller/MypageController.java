@@ -325,7 +325,7 @@ public class MypageController {
    @ResponseBody
    public BookingVO updateBookingState(HttpServletRequest request){
 	   String bookingState=request.getParameter("bookingState");
-	   int bookingNumber=Integer.parseInt(request.getParameter("bookingNumber"));
+	   String bookingNumber=request.getParameter("bookingNumber");
 	   BookingVO bookingVO=new BookingVO();
 	   bookingVO.setBookingState(bookingState);
 	   bookingVO.setBookingNumber(bookingNumber);
