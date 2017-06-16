@@ -5,6 +5,8 @@
 <div class="col-sm-3"></div>
 <div class="container col-sm-6">
  <h2>주문 내역</h2><br>
+ <form id="bookingForm" action="${pageContext.request.contextPath}/foodtruck/bookingMenu.do" method="post">
+ <input type="hidden" name="customerId" value="${sessionScope.memberVO.id}">
   <table class="table table-hover">
     <thead>
       <tr>
@@ -16,19 +18,23 @@
     </thead>
         <c:set value="0" var="total"/>
     <tbody>
-    <c:forEach items="${requestScope.bvo.bookingDetail}" var="bookingList">
+   <c:set value="0" var="i"/>
+    <c:forEach items="${requestScope.bvo.bookingDetail}" var="bookingList" >
     	<c:if test="${bookingList.menuName != ''&&bookingList.menuName!=null}">
 	      <tr>
-	        <td>${bookingList.menuName}</td>
+	        <td>${bookingList.menuName}
+	        <input type="hidden" name="bookingDetail[${i}].menuId" value="${bookingList.menuId}"></td>
 	        <td>${bookingList.menuPrice}</td>
-	        <td>${bookingList.bookingQuantity}</td>
+	        <td>${bookingList.bookingQuantity}<input type="hidden" name="bookingDetail[${i}].bookingQuantity" value="${bookingList.bookingQuantity}"></td>
 	        <td>${bookingList.bookingQuantity*bookingList.menuPrice}</td>
 	        <c:set value="${total+bookingList.bookingQuantity*bookingList.menuPrice}" var="total"/>
+	        <c:set value="${i+1}" var="i"/>
 	      </tr>
     	</c:if>
       </c:forEach>
     </tbody>
   </table>
+ </form>
 <div align="right">
 <span style="font-weight: bold;">총 주문금액 : ${total}</span>
 <br><br>
@@ -49,8 +55,8 @@
 <br><br>
 </div>
 <div align="right">
-<button type="button" class="btn btn-primary btn-sm">
-<span class="glyphicon glyphicon-credit-card"></span> 결제하기
+<button type="button" class="btn btn-primary btn-sm orderBtn">
+<span class="glyphicon glyphicon-credit-card "></span> 결제하기
 </button>
 </div>
 </div>
@@ -75,6 +81,9 @@ $(document).ready(function(){
 	  	if(point<0){
 	  		alert("포인트는 ");
 	  	}
+	});
+	$(".orderBtn").click(function(){
+		$("#bookingForm").submit();
 	});
 });
 

@@ -2,6 +2,7 @@ package org.asechs.wheelwego.model;
 
 import java.util.List;
 
+import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
 import org.asechs.wheelwego.model.vo.PagingBean;
 import org.asechs.wheelwego.model.vo.ReviewVO;
@@ -29,5 +30,11 @@ public interface FoodTruckDAO {
 	List<TruckVO> filteringByAvgGrade(PagingBean pagingbean);
 	double findAvgGradeByTruckNumber(String truckNumber);
 	int findWishlistCountByTruckNumber(String foodtruckNumber);
+	void bookingMenu(BookingVO bookingVO);
+	List<BookingVO> getBookingListBySellerId(String id);
+	int getRecentlyBookingNumberBySellerId(String id);
+	int getPreviousBookingNumberBySellerId(String id);
+	String getBookingStateBybookingNumber(int bookingNumber);
+
 
 }
