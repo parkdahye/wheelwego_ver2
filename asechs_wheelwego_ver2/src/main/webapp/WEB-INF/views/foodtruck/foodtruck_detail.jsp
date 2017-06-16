@@ -55,7 +55,11 @@ $(document).ready(function(){
      
     if(id==""){
        alert("로그인이 필요합니다.");
-    }else{
+    }
+    else if(${sessionScope.memberVO.memberType=='seller'}){
+    	alert("회원 전용 서비스입니다.");
+    }
+    else{
      $.ajax({
       type:"post",
       url:"${pageContext.request.contextPath}/afterLogin_foodtruck/registerBookMark.do",
