@@ -5,7 +5,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+
+import org.asechs.wheelwego.model.vo.BookingDetailVO;
+
 import org.asechs.wheelwego.model.vo.BoardVO;
+
 import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FileVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
@@ -192,6 +196,19 @@ public class MypageDAOImpl implements MypageDAO {
 	}
 	
 	@Override
+
+	public void updateBookingState(BookingVO bookingVO) {
+		sqlSessionTemplate.update("mypage.updateBookingState",bookingVO);
+		
+	}
+	@Override
+	public List<BookingVO> getBookingVO(String foodTruckNumber) {
+		return sqlSessionTemplate.selectList("mypage.getBookingVO", foodTruckNumber);
+	}
+	@Override
+	public List<BookingDetailVO> getBookingDetailVO(BookingVO bookingVO) {
+		return sqlSessionTemplate.selectList("mypage.getBookingDetailVO",bookingVO);
+	}
 	public void freeboardDeleteInMaypage(String contentNo) {
 		sqlSessionTemplate.delete("board.freeboardDelete", contentNo);
 	}
@@ -225,5 +242,6 @@ public class MypageDAOImpl implements MypageDAO {
 	@Override
 	public void qnaDeleteInMaypage(String contentNo) {
 		sqlSessionTemplate.delete("board.qnaDelete", contentNo);
+
 	}
 }

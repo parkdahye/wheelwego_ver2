@@ -6,7 +6,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+
+import org.asechs.wheelwego.model.vo.BookingDetailVO;
+
 import org.asechs.wheelwego.model.vo.BoardVO;
+
 import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FileManager;
 import org.asechs.wheelwego.model.vo.FileVO;
@@ -279,6 +283,19 @@ public ListVO showMyContentByFreeList(String id,String contentPageNo) {
      return pagingContentList;
 }
 @Override
+public void updateBookingState(BookingVO bookingVO) {
+	mypageDAO.updateBookingState(bookingVO);
+	
+}
+@Override
+public List<BookingVO> getBookingVO(String foodTruckNumber) {
+	return mypageDAO.getBookingVO(foodTruckNumber);
+}
+@Override
+public List<BookingDetailVO> getBookingDetailVO(BookingVO bookingVO) {
+	return mypageDAO.getBookingDetailVO(bookingVO);
+}
+@Override
 public void freeboardDeleteInMaypage(String contentNo) {
 	mypageDAO.freeboardDeleteInMaypage(contentNo);
 	
@@ -317,6 +334,7 @@ public ListVO showMyContentByqnaList(String id, String contentPageNo) {
 public void qnaDeleteInMaypage(String contentNo) {
 	mypageDAO.qnaDeleteInMaypage(contentNo);
 	
+
 }
 
 

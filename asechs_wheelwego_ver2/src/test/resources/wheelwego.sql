@@ -126,7 +126,7 @@ create table booking_detail(
    menu_quantity number not null,
    constraint bookingdetail_bookingnumber_fk foreign key(booking_number) references booking(booking_number) on delete cascade,
    constraint bookingdetail_menuid_fk foreign key(menu_id) references menu(menu_id) on delete cascade,
-   CONSTRAINT bookingdetail_PK PRIMARY KEY(booking_number,menu_id)
+   CONSTRAINT bookingdetail_PK PRIMARY KEY(booking_number, menu_id)
 );
 -------------------------------------------------------------------------------
 drop table booking_detail;

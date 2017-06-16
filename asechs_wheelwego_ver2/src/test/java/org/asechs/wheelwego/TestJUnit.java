@@ -11,6 +11,7 @@ import org.asechs.wheelwego.model.MypageService;
 import org.asechs.wheelwego.model.vo.MemberVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -93,6 +94,8 @@ public class TestJUnit {
          service.registerMember(memberVO, businessNumber);
       }   
    }
+   @Resource
+   private SqlSessionTemplate sqlSessionTemplate;
    
    @Test
    public void test(){

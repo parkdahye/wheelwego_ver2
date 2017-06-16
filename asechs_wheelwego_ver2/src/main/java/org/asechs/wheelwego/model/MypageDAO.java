@@ -3,7 +3,11 @@ package org.asechs.wheelwego.model;
 import java.util.HashMap;
 import java.util.List;
 
+
+import org.asechs.wheelwego.model.vo.BookingDetailVO;
+
 import org.asechs.wheelwego.model.vo.BoardVO;
+
 import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FileVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
@@ -76,6 +80,12 @@ public interface MypageDAO {
 	public int getWishListFlag(WishlistVO wishlistVO);
 
 	int getTotalFreeboardCount(String id);
+
+	void updateBookingState(BookingVO bookingVO);
+
+	List<BookingVO> getBookingVO(String foodTruckNumber);
+
+	List<BookingDetailVO> getBookingDetailVO(BookingVO bookingVO);
 
 	List<BoardVO> showMyContentByFreeList(PagingBean pagingBean);
 

@@ -95,7 +95,7 @@ $(document).ready(function(){
 
 		$("#sellerBookingListBtn").click(function(){
 			//location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
-			location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=seller01";
+			location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
 		});
 		$("#orderBtn").click(function(){
 			alert("주문내역 확인 페이지");

@@ -468,7 +468,8 @@ select count(*) from wishlist where foodtruck_number = '80나0003' and customer_
 select count(*) from wishlist where foodtruck_number = '80나0003' and customer_id = 'customer01';
 
 select * from menu;
-
+drop table bookingdetail
+drop table booking_detail;
 --해당 푸드트럭의 평점찾기
 select nvl(trunc(avg(r.grade),1),0) as grade
 from(select * from foodtruck)f, review r
@@ -520,7 +521,13 @@ select row_number() over(order by review_timeposted desc) as rnum,review_no,food
 	
 	select * from menu
 	select * from customer
-	
+	update booking set booking_state='결제완료' where booking_number=1
+	select * from booking
+	select * from menu
+	select * from member
+	select * from seller
+	select * from foodtruck
+	-- 강정호.작성
 	insert into booking(booking_number, customer_id, menu_id, booking_quantity, booking_date, booking_state)
 	values(1,'customer01','1',2,sysdate,'결제완료')
 	insert into booking(booking_number, customer_id, menu_id, booking_quantity, booking_date, booking_state)
@@ -536,6 +543,102 @@ select row_number() over(order by review_timeposted desc) as rnum,review_no,food
 	select booking_number, customer_id, menu_id, booking_quantity, booking_date, booking_state from booking where booking_number=1
 	select b.* from booking b, foodtruck f, menu m where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number='80나0001' and m.menu_id=b.menu_id;
 	select * from member
+	
+	--강정호 작성. 임시 예약
+	insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(1,'customer',sysdate, '결제완료');
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(1,'123',5)
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(1,'124',3)
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(1,'125',2)
+		insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(2,'customer02',sysdate, '결제완료');
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(2,'123',10)
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(2,'124',20)
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(2,'125',30)
+			insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(3,'customer03',sysdate, '결제완료');
+		insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(3,'123',8)
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(3,'124',8)
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(3,'125',8)
+				insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(4,'customer04',sysdate, '결제완료');
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(4,'123',4)
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(4,'124',4)
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(4,'125',4)
+					insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(5,'customer05',sysdate, '결제완료');
+		insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(5,'123',5)
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(5,'124',5)
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(5,'125',5)
+						insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(6,'customer06',sysdate, '결제완료');
+		insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(6,'123',6)
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(6,'124',6)
+	insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(6,'125',6)
+	 select foodtruck_number from foodtruck where seller_id='seller'
+	select menu_id from booking b, booking_detail bd where b.booking_number=bd.booking_number
+		
+	select b.booking_number, b.customer_id, bd.menu_id, bd.menu_quantity, b.booking_state,
+	to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date
+	from booking b, booking_detail bd, foodtruck f, menu m 
+	where b.booking_number=bd.booking_number and f.foodtruck_number=m.foodtruck_number and f.foodtruck_number='80나0061'
+	and m.menu_id=bd.menu_id order by b.booking_number desc
+	
+	select DISTINCT b.booking_number, b.customer_id, b.booking_state,
+	to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date
+	from booking b, foodtruck f, menu m 
+	where  f.foodtruck_number=m.foodtruck_number and f.foodtruck_number='80나0061'
+	order by b.booking_number desc
+	
+	select m.menu_id, bd.menu_quantity, m.menu_name, m.menu_price from booking b, booking_detail bd, menu m 
+	where b.booking_number=bd.booking_number and bd.booking_number=1
+	and bd.menu_id=m.menu_id
+	
+	select  b.booking_number, b.customer_id, b.booking_state,
+	to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date, bd.menu_id, bd.menu_quantity, m.menu_name 
+	from booking b, booking_detail bd, foodtruck f, menu m 
+	where  f.foodtruck_number=m.foodtruck_number and f.foodtruck_number='80나0061'
+	and b.booking_number=bd.booking_number and bd.menu_id=m.menu_id
+	order by b.booking_number desc
+	
+	select booking_number as bd.bookingNumber , menu_id as bd.menuId , menu_quantity as bd.bookingQuantity, m.menu_price 
+   		from booking_detail bd, menu m where bd.booking_number=1 and bd.menu_id=m.menu_id
+   	
+   		-- bookingNumber 가져오는 sql 구문
+   	select distinct b.booking_number
+   	from booking b, foodtruck f, menu m
+   	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number='80나0008'
+   	
+   	--bookingNumber를 이용해서 메뉴 내역 가져오는 메서드
+   	select b.customer_id, b.booking_date, b.booking_state, bd.menu_id, bd.menu_quantity
+   	, m.menu_name, m.menu_price 
+   	from booking b, booking_detail bd, menu m
+   	where b.booking_number=bd.booking_number and 
+   	b.booking_number=2 and m.menu_id=bd.menu_id
+   	
+   	-- booking_detail과 menu 테이블 이용해서 bookingDetailVO 가져오기
+   	select bd.menu_id, m.menu_name, m.menu_price, bd.menu_quantity 
+   	from booking_detail bd, menu m
+   	where bd.menu_id=m.menu_id and bd.booking_number=2
+	
 -------------------------------------------------------------------------------
 
 update foodtruck set latitude=37.402403,longitude=127.106248 where foodtruck_number='80나0001';
