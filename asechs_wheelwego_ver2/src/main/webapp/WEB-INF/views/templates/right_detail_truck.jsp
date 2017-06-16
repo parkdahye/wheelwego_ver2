@@ -24,7 +24,7 @@
 		</ul>
 	</div>
 
-  <form name="form" method="post" id="orderform" action="${pageContext.request.contextPath}/foodtruck/foodtruck_booking_confirm.do">
+  <form name="form" method="post" id="orderform" action="${pageContext.request.contextPath}/afterLogin_foodtruck/foodtruck_booking_confirm.do">
    <table class="table table-hover" id="testTable" style="width:30%">
    <thead>
    <tr>
