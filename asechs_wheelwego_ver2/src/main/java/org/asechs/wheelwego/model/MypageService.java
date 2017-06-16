@@ -11,6 +11,13 @@ import org.asechs.wheelwego.model.vo.TruckVO;
 import org.asechs.wheelwego.model.vo.WishlistVO;
 
 public interface MypageService {
+	List<BookingVO> getBookingList(int bookingNumber);
+	
+	public void addPoint(int bookingNumber);
+	
+	public int getMyPoint(String customerId);
+	
+	String minusPoint(BookingVO bookingVO, int usePoint);
 	
 	List<WishlistVO> heartWishList(String id);
 	
@@ -52,11 +59,25 @@ public interface MypageService {
 	
 	public int getWishListFlag(String customerId, String foodtruckNumber);
 
+	ListVO showMyContentByFreeList(String id, String contentPageNo);
+
 	void updateBookingState(BookingVO bookingVO);
 
 	List<BookingVO> getBookingVO(String foodTruckNumber);
 
 	List<BookingDetailVO> getBookingDetailVO(BookingVO bookingVO);
 
+	void freeboardDeleteInMaypage(String contentNo);
+
+	List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber);
+
+
+	ListVO showMyContentBybusinessList(String id, String contentPageNo);
+
+	void businessDeleteInMaypage(String contentNo);
+
+	ListVO showMyContentByqnaList(String id, String contentPageNo);
+
+	void qnaDeleteInMaypage(String contentNo);
 
 }

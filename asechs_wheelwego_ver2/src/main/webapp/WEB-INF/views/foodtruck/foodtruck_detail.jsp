@@ -86,7 +86,7 @@ $(document).ready(function(){
       <div class="row">
          <div class="col-lg-12">
             <div class="w3-text-light-grey intro-text">
-               <h1 class="name" style="color:light-grey ;">${truckDetailInfo.foodtruckName}</h1>
+               <h1 class="name" style="color:light-grey; padding-right: 7cm;">${truckDetailInfo.foodtruckName}</h1>
                </div>
          </div>
       </div>

@@ -49,6 +49,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		<result column="menu_price" property="menuPrice"/>
    		<result column="menu_quantity" property="bookingQuantity"/>
    </resultMap>
+   <select  id = "getBookingList" resultMap="bookingRM">
+   select b.*, bd.menu_id, bd.menu_quantity, m.menu_price
+   from booking b, booking_detail bd, menu m
+   where b.booking_number = bd.booking_number and bd.menu_id = m.menu_id
+   and b.booking_number = #{value}
+</select>
+<select id = "getMyPoint" resultType="int" >
+   select nvl(sum(point), 0) from customerpoint where booking_number in 
+   (select booking_number from booking where customer_id = #{value})
+</select>
+<insert id = "addPoint" parameterType="hashmap">
+   insert into customerpoint values (#{bookingNumber}, 'add', #{point}, sysdate)
+</insert>
+<insert id = "minusPoint" parameterType="hashmap">
+   insert into customerpoint values (#{bookingNumber}, 'minus', #{point}, sysdate)
+</insert>
    <select id="heartWishList" resultMap="wishlistRM">
    select * from wishlist where customer_id=#{value}
    </select>
@@ -177,5 +193,22 @@ select count(*) from wishlist where customer_id=#{customerId} and foodtruck_numb
 	   	b.booking_number=#{bookingNumber} and m.menu_id=bd.menu_id
 	</select>
 
+<!--  내가 슨 게시물 보기 -->
+<select id="getTotalFreeboardCount" resultType="int">
+	select count(*) from freeboard where id=#{value}
+</select>
+<select id="getTotalbusinessCount" resultType="int">
+	select count(*) from information where id=#{value}
+</select>
+<select id="getTotalqnaCount" resultType="int">
+	select count(*) from qna where id=#{value}
+</select>
+<select id="getSellerBookingListByTruckNumber" resultType="bookingVO" parameterType="String" resultMap="bookingRM">
+	select b.booking_number, b.customer_id, b.menu_id, b.booking_quantity, b.booking_state,
+	to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date
+	from booking b, foodtruck f, menu m 
+	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number=#{value} 
+	and m.menu_id=b.menu_id order by b.booking_number desc
+</select>
 </mapper>
  

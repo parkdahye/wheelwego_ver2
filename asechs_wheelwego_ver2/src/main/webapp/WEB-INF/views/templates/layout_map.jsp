@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Wheel, We go!</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/alertify/themes/alertify.core.css" />
+	<link rel="stylesheet"  type="text/css" href="${pageContext.request.contextPath}/resources/alertify/themes/alertify.default.css" id="toggleCSS" />
+	<script src="${pageContext.request.contextPath}/resources/alertify/lib/alertify.min.js"></script>
 
 
  <!-- jQuery -->
@@ -46,6 +49,7 @@
 	</div>
 	</div>
 	</div>
+	<jsp:include page="../foodtruck/noticePage.jsp"/>
 		<div id="page_footer">
 			<tiles:insertAttribute name="footer" />
 		</div>

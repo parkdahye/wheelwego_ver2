@@ -1,15 +1,16 @@
 package org.asechs.wheelwego.model.vo;
 
 public class BookingDetailVO {
-	 private int bookingNumber;
-	   private String menuId;
-	   private String menuName;
-	   private int menuPrice;
-	   private int bookingQuantity;
-	public BookingDetailVO() {
-		super();
-	}
-	public BookingDetailVO(int bookingNumber, String menuId, String menuName, int menuPrice, int bookingQuantity) {
+   private String bookingNumber;
+   private String menuId;
+   private String menuName;
+   private int menuPrice;
+   private int bookingQuantity;
+   public BookingDetailVO() {
+      super();
+      // TODO Auto-generated constructor stub
+   }
+	public BookingDetailVO(String bookingNumber, String menuId, String menuName, int menuPrice, int bookingQuantity) {
 		super();
 		this.bookingNumber = bookingNumber;
 		this.menuId = menuId;
@@ -17,10 +18,10 @@ public class BookingDetailVO {
 		this.menuPrice = menuPrice;
 		this.bookingQuantity = bookingQuantity;
 	}
-	public int getBookingNumber() {
+	public String getBookingNumber() {
 		return bookingNumber;
 	}
-	public void setBookingNumber(int bookingNumber) {
+	public void setBookingNumber(String bookingNumber) {
 		this.bookingNumber = bookingNumber;
 	}
 	public String getMenuId() {
@@ -52,7 +53,7 @@ public class BookingDetailVO {
 		return "BookingDetailVO [bookingNumber=" + bookingNumber + ", menuId=" + menuId + ", menuName=" + menuName
 				+ ", menuPrice=" + menuPrice + ", bookingQuantity=" + bookingQuantity + "]";
 	}
-	
-	   
-	   
+		
+
 }
+

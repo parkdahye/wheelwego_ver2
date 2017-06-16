@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.asechs.wheelwego.model.FoodTruckService;
 import org.asechs.wheelwego.model.MypageService;
+import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.ListVO;
 import org.asechs.wheelwego.model.vo.MemberVO;
 import org.asechs.wheelwego.model.vo.ReviewVO;
@@ -168,8 +169,57 @@ public class FoodTruckController {
 		}
 		System.out.println(result);
 		return result;
-	
+	}
+	/**
+	 * 현지: 주문하기 btn 클릭 후 주문폼으로 넘어가기
+	 */
+	@RequestMapping("foodtruck/foodtruck_booking_confirm.do")
+	public ModelAndView foodtruck_booking_confirm(BookingVO bvo,HttpServletRequest request){
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("foodtruck/foodtruck_booking_confirm.tiles");
+		MemberVO memberVO=(MemberVO)request.getSession(false).getAttribute("memberVO");
+		mv.addObject("myPoint", mypageService.getMyPoint(memberVO.getId()));   
+		mv.addObject("bvo",bvo);
+		return mv;
+	}
+	/**
+	 * 다혜 : 메뉴 예약하기
+	 * @param bookingVO
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST, value="foodtruck/bookingMenu.do")
+	public ModelAndView bookingMenu(BookingVO bookingVO,HttpServletRequest request){
+		ModelAndView mv=new ModelAndView("foodtruck/foodtruck_booking_confirm_result.tiles");
+		foodTruckService.bookingMenu(bookingVO);
+		String bookingNumber=bookingVO.getBookingNumber();
+		request.getSession(false).setAttribute("bookingNumber", bookingNumber);
+		mv.addObject("bookingVO", bookingVO);
+		return mv;
 	}
 	
+	@RequestMapping("foodtruck/getRecentlyBookingNumberBySellerId.do")
+	@ResponseBody
+	public Object getRecentlybookingNumberBySellerId(String id){
+		int bookingNumber=foodTruckService.getRecentlyBookingNumberBySellerId(id);
+		return bookingNumber;
+	}
+	@RequestMapping("foodtruck/getPreviousBookingNumberBySellerId.do")
+	@ResponseBody
+	public Object getPreviousbookingNumberBySellerId(String id){
+		int bookingNumber=foodTruckService.getPreviousBookingNumberBySellerId(id);
+		return bookingNumber;
+	}
+	@RequestMapping("foodtruck/getBookingStateBybookingNumber.do")
+	@ResponseBody
+	public String getBookingStateBybookingNumber(String bookingNumber,HttpServletRequest request){
+		String state=foodTruckService.getBookingStateBybookingNumber(bookingNumber);
+		if(state.equals("조리완료")){
+			request.getSession(false).removeAttribute("bookingNumber");
+			return "ok";
+		}
+		else
+			return "fail";
+	}
 	
 }

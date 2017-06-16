@@ -15,117 +15,103 @@
 		<ul class="dropdown-menu">
 			<c:forEach items="${requestScope.truckDetailInfo.foodList}" var="foodList">
 				<li>
-				 <a href="" name="menu" value="${foodList.menuName}"><input type="hidden" value="${foodList.menuPrice}">
+				 <a href="" name="menu" value="${foodList.menuName}">
 				 ${foodList.menuName}</a>
 				<input type="hidden" value="${foodList.menuPrice}">
+				<input type="hidden" value="${foodList.menuId}">
 				</li>
 			</c:forEach>
 		</ul>
 	</div>
-	<!--수량 증감 -->
 
-	<form name="form" method="get">
-	<table class="table table-hover" id="testTable" style="width:30%">
-	<thead>
-	<tr>
-	<th>MENU</th>
-	<th>AMOUNT</th>
-	<th>TOTAL</th>
-	</tr>
-	<thead>
-	<tbody>
-	</tbody>
-	</table>
-	</form>
-
+  <form name="form" method="post" id="orderform" action="${pageContext.request.contextPath}/foodtruck/foodtruck_booking_confirm.do">
+   <table class="table table-hover" id="testTable" style="width:30%">
+   <thead>
+   <tr>
+   <th>MENU</th>
+   <th style="width:30%;">AMOUNT</th>
+   <th>TOTAL</th>
+   <th></th>
+   </tr>
+   <thead>
+   <tbody>
+   </tbody>
+   </table>
+   <hr>
+   TOTAL  <span id="total" style="font-weight: bold;"></span><span style="padding-left: 150px;"><input type="button" id="orderBtn" class="btn btn-xs" value="order" style="position: fixed; right:30px"></span>
+   </form>
 </div>
+<script>
+$(document).ready(function(){
+    $("#orderBtn").click(function(){
+        if(confirm("주문하시겠습니까?")){
+        	alert("주문페이지로 이동합니다.");
+        	$("#orderform").submit();
+        } 
+     });  
+}); // ready
 
+</script>
 <script>
 	$(document).ready(function() {
+		var cnt=0;
+		var arr = [''];
 		$("ul.dropdown-menu a").click(function(e){
 			var menu = $(this).attr('value');
-			var price = /* $('input[type=hidden]') */$(this).next().val();
-			alert(menu+" "+price);
+			var price = $(this).next().val();
+			var menuId = $(this).next().next().val();
+			var flag = false;
+			for(var i=0; i<arr.length; i++)	{
+				if(arr[i]==menu){
+					flag=true;
+				}
+			}
+			if(flag==false){
+				arr.push(menu);
+			}
+			else{
+				alert("이미 메뉴를 선택하셨습니다. 수량을 체크해주세요.");
+				return false;
+			}
 			e.preventDefault();
-			$("#testTable > tbody:last-child").append("<tr>"+
-				        "<td>"+menu+"</td>"+
-				        "<td>"+
-				        "<input type=hidden name='sell_price' value='"+price+"'>"+
-				        "<input type='button' value='-' onclick='del()'>"+
-				        "<input type='text' name='amount' value='1' size='1' onchange='change();'>"+
-				        "<input type='button' value='+' onclick='add();'>"+
-				        "</td>"+
-				        "<td><input type='text' name='sum' size='4' readonly></td></tr>"
-			);
-			init();
-/* 		$("#selectedMenu").append(
-		"<table class='table table-hover' style='width:30%'>"+
-		"<thead>"+
-	     "<tr>"+
-	        "<th>MENU</th>"+
-	        "<th>AMOUNT</th>"+
-	        "<th>TOTAL</th>"+
-	      "</tr>"+
-	    "</thead>"+
-	    "<tbody>"+
-	      "<tr>"+
-	        "<td>"+menu+"</td>"+
-	        "<td><button onclick='form_btn(-1)' class='btn btn-link'>-</button>"+
-			"<input type='text' id='text' value='1' size='1'/>"+
-			"<button onclick='form_btn(+1)' class='btn btn-link'>+</button></td>"+
-	        "<td><input type='text' name='sum' size='4' value='"+price+"'readonly></td>"+
-	     "</tr>"+
-	    "</tbody>"+
-	  "</table>"); */
-		 });
-	});
+			 $("#testTable > tbody:last-child").append("<tr>"+
+	                    "<td><input type='hidden' name='bookingDetail["+cnt+"].menuName' value='"+menu+"'>"+menu+"</td>"+
+	                    "<input type='hidden' name='bookingDetail["+cnt+"].menuId' value='"+menuId+"'>"+
+	                    "<td>"+
+	                    "<input type='hidden' class='menuPrice' name='bookingDetail["+cnt+"].menuPrice' value='"+price+"'>"+
+	                    "<input type='number' name='bookingDetail["+cnt+"].bookingQuantity' class='countId' value='1' size='1' style='width:30%;' onclick='change()' min='1'>"+
+	                    "</td>"+
+	                    "<td><input type='text' class='sumId' name='sum' size='4' readonly value="+price+"></td>"+
+	                    "<td>"+
+	                    "<span class='glyphicon glyphicon-remove' role='button'></span></td></tr>");
+
+	       
+				cnt++;
+			 totalPrice();
+
+		 }); //dropdown
+		$("#testTable").on("change",":input[type=number]",function(){
+			var unitPrice=$(this).parent().find(".menuPrice").val();
+			var price=$(this).parent().next().find(":input[name=sum]");
+			var amount=$(this).val();
+			price.val(parseInt(unitPrice)*parseInt(amount));
+
+			totalPrice();
+		});//수량 및 총액계산
+		
+		$("#testTable").on("click",".glyphicon",function(){
+			if(confirm("메뉴를 삭제하시겠습니까?")){
+				$(this).parent().parent().remove();
+				totalPrice();
+			}
+		});
 	
-	//수량 증감
-/* 	function form_btn(n) {
-		var text = document.getElementById("text"); // 폼 선택
-		text_val = parseInt(text.value); // 폼 값을 숫자열로 변환
-		text_val += n; // 계산
-		text.value = text_val; // 계산된 값을 바꾼다
-		if (text_val <= 0) {
-			text.value = 1; // 만약 값이 0 이하면 1로 되돌려준다, 1보다 작은 수는 나타나지 않게하기 위해   
-		}
-	} */ 
-	
-// 수량증감 + 가격
-var sell_price;
-var amount;
-
-function init () {
-	sell_price = document.form.sell_price.value;
-	amount = document.form.amount.value;
-	document.form.sum.value = sell_price;
-	change();
-}
-
-function add () {
-	hm = document.form.amount;
-	sum = document.form.sum;
-	hm.value ++ ;
-
-	sum.value = parseInt(hm.value) * sell_price;
-}
-
-function del () {
-	hm = document.form.amount;
-	sum = document.form.sum;
-		if (hm.value > 1) {
-			hm.value -- ;
-			sum.value = parseInt(hm.value) * sell_price;
-		}
-}
-
-function change () {
-	hm = document.form.amount;
-	sum = document.form.sum;
-
-		if (hm.value < 0) {
-			hm.value = 0;
-		}
-	sum.value = parseInt(hm.value) * sell_price;
-}  
+	}); //ready
+function totalPrice(){
+	var sum_val=0;
+    for(var i=0; i<document.getElementsByName("sum").length; i++){
+   	 sum_val += parseInt(document.getElementsByName("sum")[i].value);
+    }
+    $("#total").text(sum_val);
+	}
 </script>

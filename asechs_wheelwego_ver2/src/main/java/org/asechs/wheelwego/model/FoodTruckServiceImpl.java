@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
 import org.asechs.wheelwego.model.vo.ListVO;
 import org.asechs.wheelwego.model.vo.PagingBean;
@@ -141,4 +142,21 @@ public class FoodTruckServiceImpl implements FoodTruckService {
 	      pagingList.setPagingBean(pagingbean);
 	      return pagingList;
 	   }
+		@Override
+		public void bookingMenu(BookingVO bookingVO) {
+			foodTruckDAO.bookingMenu(bookingVO);
+		}
+
+		@Override
+		public int getRecentlyBookingNumberBySellerId(String id) {
+			return foodTruckDAO.getRecentlyBookingNumberBySellerId(id);
+		}
+		@Override
+		public int getPreviousBookingNumberBySellerId(String id) {
+			return foodTruckDAO.getPreviousBookingNumberBySellerId(id);
+		}
+		@Override
+		public String getBookingStateBybookingNumber(String bookingNumber) {
+			return foodTruckDAO.getBookingStateBybookingNumber(Integer.parseInt(bookingNumber));
+		}
 }

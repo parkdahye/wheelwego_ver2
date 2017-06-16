@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.asechs.wheelwego.model.vo.BookingDetailVO;
+import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
 import org.asechs.wheelwego.model.vo.PagingBean;
 import org.asechs.wheelwego.model.vo.ReviewVO;
@@ -119,4 +121,35 @@ public class FoodTruckDAOImpl implements FoodTruckDAO {
 	public int findWishlistCountByTruckNumber(String foodtruckNumber) {
 		return sqlSessionTemplate.selectOne("foodtruck.findWishlistCountByTruckNumber", foodtruckNumber);
 	}
+	@Override
+	public void bookingMenu(BookingVO bookingVO) {
+		sqlSessionTemplate.insert("foodtruck.bookingMenu", bookingVO);
+		List<BookingDetailVO> bookingDetailList=bookingVO.getBookingDetail();
+		for(int i=0; i<bookingDetailList.size();i++){
+			bookingDetailList.get(i).setBookingNumber(bookingVO.getBookingNumber());
+			sqlSessionTemplate.insert("foodtruck.bookingDetailMenu", bookingDetailList.get(i));
+		}
+	}
+
+	@Override
+	public List<BookingVO> getBookingListBySellerId(String id) {
+		System.out.println("dao"+id);
+		return sqlSessionTemplate.selectList("foodtruck.getBookingListBySellerId", id);
+	}
+
+	@Override
+	public int getRecentlyBookingNumberBySellerId(String id) {
+		return sqlSessionTemplate.selectOne("foodtruck.getRecentlyBookingNumberBySellerId", id);
+	}
+
+	@Override
+	public int getPreviousBookingNumberBySellerId(String id) {
+		return sqlSessionTemplate.selectOne("foodtruck.getPreviousBookingNumberBySellerId", id);
+	}
+
+	@Override
+	public String getBookingStateBybookingNumber(int bookingNumber) {
+		return sqlSessionTemplate.selectOne("foodtruck.getBookingStateBybookingNumber", bookingNumber);
+	}
+
 }

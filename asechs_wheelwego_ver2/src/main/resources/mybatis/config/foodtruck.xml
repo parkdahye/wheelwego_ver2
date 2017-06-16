@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result property="reviewContent" column="review_content"/>
 	<result property="reviewTimeposted" column="review_timeposted"/>
 </resultMap>
+
 <select id="foodtruckList" resultMap="truckRM">
 		select t.*, f.foodtruck_filepath
 		from(select * from foodtruck)t, foodtruckfile f
@@ -177,6 +178,30 @@ values(#{reviewNo},#{foodtruckNumber},#{customerId},#{reviewContent},sysdate,#{g
 <select id="findWishlistCountByTruckNumber" resultType="int">
 select nvl(count(customer_id),0) as wishlist_cnt from foodtruck f, wishlist w
 where f.foodtruck_number=w.foodtruck_number(+) and f.foodtruck_number=#{value} group by f.foodtruck_number
+</select>
+<insert id="bookingMenu" parameterType="bookingVO" >
+	<selectKey order="BEFORE" keyProperty="bookingNumber" resultType="string">
+		select booking_seq.nextval from dual
+	</selectKey>
+	insert into booking(booking_number,customer_id,booking_date) values(#{bookingNumber},#{customerId},sysdate)
+</insert>
+<insert id="bookingDetailMenu" parameterType="bookingDetailVO" >
+insert into booking_detail(booking_number,menu_id,menu_quantity) values(#{bookingNumber},#{menuId},#{bookingQuantity})
+</insert>
+<select id="getRecentlyBookingNumberBySellerId" resultType="int">
+select nvl(max(b.booking_number),0)
+from booking b, foodtruck f, menu m, booking_detail bd
+where bd.menu_id=m.menu_id and m.foodtruck_number=f.foodtruck_number 
+and f.seller_id=#{value} and b.booking_state='결제완료'
+</select>
+<select id="getPreviousBookingNumberBySellerId" resultType="int">
+select nvl(max(b.booking_number),0)
+from booking b, foodtruck f, menu m, booking_detail bd
+where bd.menu_id=m.menu_id and m.foodtruck_number=f.foodtruck_number 
+and f.seller_id=#{value} and b.booking_state='조리완료'
+</select>
+<select id="getBookingStateBybookingNumber" resultType="string">
+	select booking_state from booking where booking_number=#{value}
 </select>
 </mapper>
  

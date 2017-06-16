@@ -1,10 +1,15 @@
 package org.asechs.wheelwego.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+
 import org.asechs.wheelwego.model.vo.BookingDetailVO;
+
+import org.asechs.wheelwego.model.vo.BoardVO;
+
 import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FileVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
@@ -19,6 +24,30 @@ import org.springframework.stereotype.Repository;
 public class MypageDAOImpl implements MypageDAO {
 	@Resource
 	private SqlSessionTemplate sqlSessionTemplate;
+	
+	@Override
+	   public List<BookingVO> getBookingList(int bookingNumber) {
+	      return sqlSessionTemplate.selectList("mypage.getBookingList", bookingNumber);
+	   }
+	@Override
+	   public int getMyPoint(String customerId) {
+	      return sqlSessionTemplate.selectOne("mypage.getMyPoint", customerId);
+	   }
+
+	@Override
+	   public void calPoint(HashMap<String, Integer> pointInfo) {
+	      if (pointInfo.get("point") > 0)
+	      {
+	         System.out.println("양수");
+	         System.out.println(pointInfo);
+	         sqlSessionTemplate.insert("mypage.addPoint", pointInfo);
+	      }
+	      else{
+	         System.out.println("음수");
+	         System.out.println(pointInfo);
+	         sqlSessionTemplate.insert("mypage.minusPoint", pointInfo);
+	      }
+	   }
 
 	@Override
 	public List<WishlistVO> heartWishList(String id){
@@ -162,6 +191,12 @@ public class MypageDAOImpl implements MypageDAO {
 		return sqlSessionTemplate.selectOne("mypage.getWishListFlag", wishlistVO);
 	}
 	@Override
+	public int getTotalFreeboardCount(String id) {
+		return sqlSessionTemplate.selectOne("mypage.getTotalFreeboardCount", id);
+	}
+	
+	@Override
+
 	public void updateBookingState(BookingVO bookingVO) {
 		sqlSessionTemplate.update("mypage.updateBookingState",bookingVO);
 		
@@ -173,5 +208,40 @@ public class MypageDAOImpl implements MypageDAO {
 	@Override
 	public List<BookingDetailVO> getBookingDetailVO(BookingVO bookingVO) {
 		return sqlSessionTemplate.selectList("mypage.getBookingDetailVO",bookingVO);
+	}
+	public void freeboardDeleteInMaypage(String contentNo) {
+		sqlSessionTemplate.delete("board.freeboardDelete", contentNo);
+	}
+	@Override
+	public List<BoardVO> showMyContentByFreeList(PagingBean pagingBean) {
+		return sqlSessionTemplate.selectList("board.showMyContentByFreeList", pagingBean);
+	}
+	public List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber) {
+		return sqlSessionTemplate.selectList("mypage.getSellerBookingListByTruckNumber",foodTruckNumber);
+	}
+	@Override
+	public int getTotalbusinessCount(String id) {
+		return sqlSessionTemplate.selectOne("mypage.getTotalbusinessCount", id);
+	}
+	@Override
+	public List<BoardVO> showMyContentBybusinessList(PagingBean pagingBean) {
+		return sqlSessionTemplate.selectList("board.showMyContentBybusinessList", pagingBean);
+	}
+	@Override
+	public void businessDeleteInMaypage(String contentNo) {
+		sqlSessionTemplate.delete("board.businessDelete", contentNo);
+	}
+	@Override
+	public int getTotalqnaCount(String id) {
+		return sqlSessionTemplate.selectOne("mypage.getTotalqnaCount", id);
+	}
+	@Override
+	public List<BoardVO> showMyContentByqnaList(PagingBean pagingBean) {
+		return sqlSessionTemplate.selectList("board.showMyContentByqnaList", pagingBean);
+	}
+	@Override
+	public void qnaDeleteInMaypage(String contentNo) {
+		sqlSessionTemplate.delete("board.qnaDelete", contentNo);
+
 	}
 }

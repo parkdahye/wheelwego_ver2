@@ -1,8 +1,13 @@
 package org.asechs.wheelwego.model;
 
+import java.util.HashMap;
 import java.util.List;
 
+
 import org.asechs.wheelwego.model.vo.BookingDetailVO;
+
+import org.asechs.wheelwego.model.vo.BoardVO;
+
 import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FileVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
@@ -12,6 +17,12 @@ import org.asechs.wheelwego.model.vo.TruckVO;
 import org.asechs.wheelwego.model.vo.WishlistVO;
 
 public interface MypageDAO {
+	public List<BookingVO> getBookingList(int bookingNumber);
+	
+	void calPoint(HashMap<String, Integer> pointInfo);
+	
+	public int getMyPoint(String customerId);
+	
 	List<WishlistVO> heartWishList(String id);
 	
 	public List<TruckVO> myWishList(String id);
@@ -68,9 +79,30 @@ public interface MypageDAO {
 	
 	public int getWishListFlag(WishlistVO wishlistVO);
 
+	int getTotalFreeboardCount(String id);
+
 	void updateBookingState(BookingVO bookingVO);
 
 	List<BookingVO> getBookingVO(String foodTruckNumber);
 
 	List<BookingDetailVO> getBookingDetailVO(BookingVO bookingVO);
+
+	List<BoardVO> showMyContentByFreeList(PagingBean pagingBean);
+
+	void freeboardDeleteInMaypage(String contentNo);
+
+	List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber);
+
+	int getTotalbusinessCount(String id);
+
+	List<BoardVO> showMyContentBybusinessList(PagingBean pagingBean);
+
+	void businessDeleteInMaypage(String contentNo);
+
+	int getTotalqnaCount(String id);
+
+	List<BoardVO> showMyContentByqnaList(PagingBean pagingBean);
+
+	void qnaDeleteInMaypage(String contentNo);
+
 }
