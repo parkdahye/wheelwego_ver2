@@ -98,8 +98,7 @@ $(document).ready(function(){
 			location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
 		});
 		$("#orderBtn").click(function(){
-			alert("주문내역 확인 페이지");
-			location.href="${pageContext.request.contextPath}/mypage/mypage_customer_order_list.do";
+			location.href="${pageContext.request.contextPath}/afterLogin_mypage/customerBookingList.do?customerId=${sessionScope.memberVO.id}";
 
 		});
 

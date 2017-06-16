@@ -10,6 +10,7 @@ import org.asechs.wheelwego.model.vo.TruckVO;
 import org.asechs.wheelwego.model.vo.WishlistVO;
 
 public interface FoodTruckDAO {
+	String findFoodtruckNameByMenuId(String menuId);
 	List<TruckVO> foodtruckList();
 	List<TruckVO> searchFoodTruckList(String name);
 	int getTruckListTotalContentCountByName(String name);

@@ -25,6 +25,7 @@
 				url:"${pageContext.request.contextPath}/afterLogin_mypage/updateState.do",
 				data:"bookingState=조리중&bookingNumber="+bookingNumber,
 				success:function(bookingResult){
+					button.style.display = "none";
 					location.reload();
 				}
 			});
@@ -45,162 +46,79 @@
 	});//ready
 </script>
 <body>
-
     <!-- Page Content -->
     <div class="container">
 
         <div class="row">
-            <div class="col-md-9" >
-
+        <div class="col-md-1" style="width: 10%"></div>
+            <div class="col-md-9">
                 <div class="row">
-				<c:forEach items="${requestScope.bookingList }" var="bookingList">
-                    <div class="col-sm-4 col-lg-4 col-md-4">
+				<c:forEach items="${requestScope.bookingList }" var="bookingList" varStatus="status">
+                    <div class="col-sm-4 col-lg-4 col-md-4" style="border:1px solid lightgray; height:400px;">
                         <div class="thumbnail">
                             <div class="caption">
-                                <h4 class="pull-right">합계:${totalPrice }원</h4>
-                                <h4><a href="#">예약번호:${bookingList.bookingNumber }</a>
-                                </h4>
+                                <h4 style="color: orange;">예약번호 : ${status.index+1}<%-- ${bookingList.bookingNumber} --%></h4>
                             </div>
                             <div class="table">
                                 <table>
-                               		 <tr class="bookingNumber">
-                                		<td>예약번호</td><td class="bno">${bookingList.bookingNumber }</td>
-                                	</tr>
                                 	<tr class="bookingState">
-                                		<td>주문상태</td><span class="bookingResult"><td class="bstate">${bookingList.bookingState }</td></span>
+                                		<td style="font-weight: bold; padding-bottom: 10px;">주문상태</td><span class="bookingResult"><td class="bstate" style="padding-bottom: 10px;">${bookingList.bookingState}</td></span>
+                                	</tr>
+					<tr>
+                                		<td style="font-weight: bold; padding-bottom: 10px;">주문자</td><td style="padding-bottom: 10px;">${bookingList.customerId}</td>
                                 	</tr>
                                 	<tr>
-                                		<td>주문자</td><td>${bookingList.customerId }</td>
+                                		<td style="font-weight: bold; padding-bottom: 10px;">예약일시</td><td style="padding-bottom: 10px; width:100px;">${bookingList.bookingDate}</td>
                                 	</tr>
                                 	<tr>
-                                		<td>예약일시</td><td>${bookingList.bookingDate}</td>
+                                		<td style="font-weight: bold; width:96px; padding-bottom: 15px;">메뉴명</td>
+                                		<td style="font-weight: bold; width:30px; padding-bottom: 15px;">단가</td>
+                                		<td style="font-weight: bold; width:45px; padding-bottom: 15px;">수량</td>
+                                		<td style="font-weight: bold; width:33px; padding-bottom: 15px;">금액</td>
                                 	</tr>
-                                	<tr>
-                                		<td>메뉴명</td><td>단가</td><td>수량</td><td>금액</td>
-                                	</tr>
+                                	<c:set value="0" var="totalPrice"/>
+                                	<c:set value="0" var="i"/>
                                 	<c:forEach items="${bookingList.bookingDetail }" var="bookingDetail">
-                                	<c:set var="totalPrice"  value="${totalPrice+bookingDetail.menuPrice*bookingDetail.bookingQuantity }"/>
                                 	<tr>
-                                		<td>${bookingDetail.menuName }</td>
-                                		<td>${bookingDetail.menuPrice }</td>
-                                		<td>${bookingDetail.bookingQuantity }</td>
-                                		<td>${bookingDetail.menuPrice*bookingDetail.bookingQuantity }</td>
+                                		<td style=" padding-bottom: 15px;">${bookingDetail.menuName }
+                                		<input type="hidden" name="bookingDetail[${i}].menuId" value="${bookingDetail.menuId}">
+                                		</td>                       		
+                                		<td style=" padding-bottom: 15px;">${bookingDetail.menuPrice }</td>
+                                		<td style=" padding-bottom: 15px;">${bookingDetail.bookingQuantity }
+                                		<input type="hidden" name="bookingDetail[${i}].bookingQuantity" value="${bookingDetail.bookingQuantity}">
+                                		</td>
+                                		<td style=" padding-bottom: 15px;">${bookingDetail.menuPrice*bookingDetail.bookingQuantity }</td>
+                                	<c:set value="${totalPrice+bookingDetail.bookingQuantity*bookingDetail.menuPrice}" var="totalPrice"/>
+	       						 	<c:set value="${i+1}" var="i"/>
                                 	</tr>
                                 	</c:forEach>
                                 	<tr>
-                                		<td><input type="button" class="cookingBtn" value="조리중"></td>
-                                		<td><input type="button" class="finishedCookingBtn" value="조리완료"></td>
+                                	<td width="150px;">
+                                	<h5>TOTAL&nbsp; ${totalPrice}</h5>
+                                	</td>
                                 	</tr>
-                                </table>
-                                
-						        <input type="hidden" class="bookingNumber" value="">
-						        
+                                	<tr>
+                                		<td colspan="2">
+                                		<span>
+                                		<c:choose>
+                                			<c:when test="${bookingList.bookingState=='결제완료'}">
+		                                		<input type="button" onclick="style.display = 'none'" class="cookingBtn" value="조리중">
+                                			</c:when>
+                                			<c:otherwise>
+		                                		<input type="button" class="finishedCookingBtn" value="조리완료">
+                                			</c:otherwise>
+								        </c:choose>
+								        </span>
+								        </td>
+                                	</tr>
+                                </table>              
                             </div>
                         </div>
                     </div>
                     </c:forEach>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$64.99</h4>
-                                <h4><a href="#">Second Product</a>
-                                </h4>
-                                <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                            <div class="ratings">
-                                <p class="pull-right">12 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$74.99</h4>
-                                <h4><a href="#">Third Product</a>
-                                </h4>
-                                <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                            <div class="ratings">
-                                <p class="pull-right">31 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$84.99</h4>
-                                <h4><a href="#">Fourth Product</a>
-                                </h4>
-                                <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                            <div class="ratings">
-                                <p class="pull-right">6 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$94.99</h4>
-                                <h4><a href="#">Fifth Product</a>
-                                </h4>
-                                <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                            <div class="ratings">
-                                <p class="pull-right">18 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <h4><a href="#">Like this template?</a>
-                        </h4>
-                        <p>If you like this template, then check out <a target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this tutorial</a> on how to build a working review system for your online store!</p>
-                        <a class="btn btn-primary" target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">View Tutorial</a>
-                    </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
     <!-- /.container -->
   <%-- <title>Bootstrap Example</title>

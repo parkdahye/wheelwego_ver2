@@ -20,6 +20,11 @@ public class FoodTruckDAOImpl implements FoodTruckDAO {
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	@Override
+	public String findFoodtruckNameByMenuId(String menuId){
+		return sqlSessionTemplate.selectOne("foodtruck.findFoodtruckNameByMenuId", menuId);
+	}
+	
+	@Override
 	public List<TruckVO> foodtruckList() {
 		return sqlSessionTemplate.selectList("foodtruck.foodtruckList");
 	}

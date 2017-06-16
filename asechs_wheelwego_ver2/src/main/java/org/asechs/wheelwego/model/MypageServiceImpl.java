@@ -29,7 +29,12 @@ public class MypageServiceImpl implements MypageService {
    private MypageDAO mypageDAO;
    @Resource
    private FoodTruckDAO foodtruckDAO;
-   
+  
+   @Override
+   public List<BookingVO> customerBookingList(String customerId){
+	   return mypageDAO.customerBookingList(customerId);
+   }
+  
    @Override
    public List<BookingVO> getBookingList(int bookingNumber) {
       return mypageDAO.getBookingList(bookingNumber);

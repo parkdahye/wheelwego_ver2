@@ -24,7 +24,11 @@ import org.springframework.stereotype.Repository;
 public class MypageDAOImpl implements MypageDAO {
 	@Resource
 	private SqlSessionTemplate sqlSessionTemplate;
-	
+
+	@Override
+	public List<BookingVO> customerBookingList(String customerId){
+		return sqlSessionTemplate.selectList("mypage.customerBookingList",customerId);
+	}
 	@Override
 	   public List<BookingVO> getBookingList(int bookingNumber) {
 	      return sqlSessionTemplate.selectList("mypage.getBookingList", bookingNumber);

@@ -16,7 +16,7 @@
         <th>TOTAL</th>
       </tr>
     </thead>
-        <c:set value="0" var="total"/>
+    <c:set value="0" var="total"/>
     <tbody>
    <c:set value="0" var="i"/>
     <c:forEach items="${requestScope.bvo.bookingDetail}" var="bookingList" >

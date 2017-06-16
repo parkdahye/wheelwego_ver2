@@ -17,6 +17,8 @@ import org.asechs.wheelwego.model.vo.TruckVO;
 import org.asechs.wheelwego.model.vo.WishlistVO;
 
 public interface MypageDAO {
+	List<BookingVO> customerBookingList(String customerId);
+	
 	public List<BookingVO> getBookingList(int bookingNumber);
 	
 	void calPoint(HashMap<String, Integer> pointInfo);
