@@ -29,6 +29,7 @@
 				<button type="button" id="wishlistBtn"class="btn btn-warning">단골트럭</button>&nbsp;&nbsp;
 			<button type="button" id="reviewBtn"class="btn btn-warning">MY REVIEW</button>&nbsp;&nbsp;
 			<button type="button" id="contentBtn"class="btn btn-warning">MY CONTENT</button>&nbsp;&nbsp;
+			<button type="button" id="customerBookingListBtn" class="btn btn-warning">나의 주문 내역</button> 
 	</c:otherwise>
 </c:choose>
 </div>
@@ -95,6 +96,10 @@ $(document).ready(function(){
 		$("#sellerBookingListBtn").click(function(){
 			//location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
 			location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
+		});
+		
+		$("#customerBookingListBtn").click(function(){
+			location.href="${pageContext.request.contextPath}/afterLogin_mypage/customerBookingList.do?customerId=${sessionScope.memberVO.id}";
 		});
 
 });

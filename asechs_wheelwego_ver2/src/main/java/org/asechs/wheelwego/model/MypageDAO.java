@@ -105,4 +105,8 @@ public interface MypageDAO {
 
 	void qnaDeleteInMaypage(String contentNo);
 
+	public List<BookingVO> getCustomerBookingVO(String customerId);
+
+	public List<BookingDetailVO> getCustomerBookingDetailVO(BookingVO bookingVO);
+
 }

@@ -244,4 +244,12 @@ public class MypageDAOImpl implements MypageDAO {
 		sqlSessionTemplate.delete("board.qnaDelete", contentNo);
 
 	}
+	@Override
+	public List<BookingVO> getCustomerBookingVO(String customerId) {
+		return sqlSessionTemplate.selectList("mypage.getCustomerBookingVO",customerId);
+	}
+	@Override
+	public List<BookingDetailVO> getCustomerBookingDetailVO(BookingVO bookingVO) {
+		return sqlSessionTemplate.selectList("mypage.getCustomerBookingDetailVO", bookingVO);
+	}
 }

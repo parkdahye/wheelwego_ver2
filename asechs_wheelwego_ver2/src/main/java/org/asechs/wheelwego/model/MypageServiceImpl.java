@@ -336,6 +336,14 @@ public void qnaDeleteInMaypage(String contentNo) {
 	
 
 }
+@Override
+public List<BookingVO> getCustomerBookingVO(String customerId) {
+	return mypageDAO.getCustomerBookingVO(customerId);
+}
+@Override
+public List<BookingDetailVO> getCustomerBookingDetailVO(BookingVO bookingVO) {
+	return mypageDAO.getCustomerBookingDetailVO(bookingVO);
+}
 
 
 

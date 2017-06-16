@@ -316,8 +316,22 @@ public class MypageController {
 	   return "mypage/mypage_seller_booking_list.tiles";
 	   
    }
-
    
+   @RequestMapping("afterLogin_mypage/customerBookingList.do")
+   public String customerBookingList(Model model, HttpServletRequest request){
+	   String customerId=request.getParameter("customerId");
+	   List<BookingVO> customerBookingNumberList=mypageService.getCustomerBookingVO(customerId);
+	   if(customerBookingNumberList.isEmpty()==false){
+		   for(int i=0; i<customerBookingNumberList.size(); i++){
+			   List<BookingDetailVO> customerBookingDetailVO=mypageService.getCustomerBookingDetailVO(customerBookingNumberList.get(i));
+			   customerBookingNumberList.get(i).setBookingDetail(customerBookingDetailVO);
+		   }
+	   }
+	   System.out.println("adslfkjasdfasd0"+customerBookingNumberList);
+	   model.addAttribute("customerBookingList",customerBookingNumberList);
+	   return "mypage/mypage_customer_booking_list.tiles";
+   }
+
    /**
     * 강정호. 조리 상태 업데이트 해주는 메서드
     */
@@ -332,5 +346,36 @@ public class MypageController {
 	   mypageService.updateBookingState(bookingVO);
 	   return bookingVO;
    }
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
 
 }
