@@ -156,5 +156,8 @@ public class FoodTruckDAOImpl implements FoodTruckDAO {
 	public String getBookingStateBybookingNumber(int bookingNumber) {
 		return sqlSessionTemplate.selectOne("foodtruck.getBookingStateBybookingNumber", bookingNumber);
 	}
-
+	 @Override
+	   public List<String> getFoodtruckNumberList(TruckVO gpsInfo) {
+	      return sqlSessionTemplate.selectList("foodtruck.getFoodtruckNumberList", gpsInfo);
+	   }
 }

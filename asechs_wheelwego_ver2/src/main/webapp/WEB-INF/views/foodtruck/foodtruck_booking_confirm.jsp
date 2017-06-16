@@ -19,7 +19,7 @@
         <th>TOTAL</th>
       </tr>
     </thead>
-    <c:set value="0" var="total"/>
+        <c:set value="0" var="total"/>
     <tbody>
    <c:set value="0" var="i"/>
     <c:forEach items="${requestScope.bvo.bookingDetail}" var="bookingList" >
@@ -95,21 +95,31 @@ $(document).ready(function(){
 	   });
 	 
 	$("#orderBtn").click(function(){
-       var point = $("#point").val().trim();
-    	  var totalAmount = ${total} - point;
-     	 $("#resultPoint").val(point);
-    	  $("#resultTotalAmount").val(totalAmount);
-       if (totalAmount == 0)
-      {
-         alert("결제 금액이 0원이기 때문에, 결제를 진행하지 않습니다.")
-         $("#resultPoint").val(point);
-         $("#resultTotalAmount").val(totalAmount);
-         $("#bookingForm").submit();     
-      } 
+	      $.ajax({
+	           type:"POST",
+	           url:"${pageContext.request.contextPath}/afterLogin_foodtruck/checkBooking.do", 
+	           success:function(data){
+	              if (data == "no"){
+	                 alert("선행 주문이 있기 때문에, 결제가 불가능합니다.");
+	                 return false;
+	              }
+	              else{
+	                var point = $("#point").val().trim();
+	                var totalAmount = ${total} - point;
+	                
+	                if (totalAmount == 0)
+	                {
+	                   alert("결제 금액이 0원이기 때문에, 결제를 진행하지 않습니다.")
+	                   $("#resultPoint").val(point);
+	                   $("#resultTotalAmount").val(totalAmount);
+	                   $('#paymentForm').submit();         
+	                }
+	                   
+		  $("#resultPoint").val(point);
+	 	  $("#resultTotalAmount").val(totalAmount);
 		 $("#bookingForm").submit();
-         
-  /*     
-       var IMP = window.IMP; // 생략가능
+            
+/*        var IMP = window.IMP; // 생략가능
       IMP.init('imp65309481'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
       
       IMP.request_pay({
@@ -141,13 +151,13 @@ $(document).ready(function(){
               var msg = '결제에 실패하였습니다.';
               msg += '에러내용 : ' + rsp.error_msg;
               alert(msg);
-          } 
-      });      */
-
-
-});
-
-});
+    	      }//else 
+		  }) ;*///결제
+		  }//else
+ 	 }//success
+ });  //ajax
+}); //orderBtn
+}); //document
 function showKeyCode(event) {
 	event = event || window.event;
 	var keyID = (event.which) ? event.which : event.keyCode;

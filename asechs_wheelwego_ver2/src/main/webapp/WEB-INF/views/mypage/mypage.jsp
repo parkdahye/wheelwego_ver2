@@ -18,7 +18,7 @@
 			<c:otherwise>
 			<button type="button" id="updateTruckBtn"class="btn btn-warning">MY TRUCK 설정</button>&nbsp;&nbsp;
 			<button type="button" id="menuBtn"class="btn btn-warning">MENU</button>&nbsp;&nbsp;
-<!-- 			<button type="button" id="myTruckBtn"class="btn btn-warning">MY TRUCK PAGE</button>&nbsp;&nbsp; -->
+			<button type="button" id="myTruckBtn"class="btn btn-warning">MY TRUCK PAGE</button>&nbsp;&nbsp;
 			
 			<a href="${pageContext.request.contextPath}/afterLogin_mypage/checkTruckGPS.do?sellerId=${sessionScope.memberVO.id}" class="btn btn-warning" role="button">TRUCK 위치 설정</a>&nbsp;&nbsp;
 			<button type="button" id="sellerBookingListBtn" class="btn btn-warning" >온라인 주문현황</button><br>
@@ -40,33 +40,60 @@
 </div>
 
 <script>
+var latitude;
+var longitude;
+var address;
+
 function checkDelete(){
-	if (confirm("정말 탈퇴하시겠습니까?") == true){    //확인
-	    return true;
-	}else{   //취소
-	    return false;
-	}
+if (confirm("정말 탈퇴하시겠습니까?") == true){    //확인
+    return true;
+}else{   //취소
+    return false;
+}
 }
 
+
+
 function geoFindMe() {
-	if (!navigator.geolocation){
-		alert("지오로케이션을 지원하지 않습니다!");
-		return;
-	}
-	  function success(position) {
-	    var latitude  = position.coords.latitude;
-	    var longitude = position.coords.longitude;
-	    location.href = "${pageContext.request.contextPath}/afterLogin_mypage/wishlist.do?id=${sessionScope.memberVO.id}&latitude="+latitude+"&longitude="+longitude;
-	    //location.href = "${pageContext.request.contextPath}/searchFoodTruckByName.do?latitude="+latitude+"&longitude="+longitude+"&name="+searchFoodtruckName;
-	   
-	  };
-	  function error() {
-		  alert("사용자의 위치를 찾을 수 없습니다!");
-	  };
-	  navigator.geolocation.getCurrentPosition(success, error);
+if (!navigator.geolocation){
+   alert("지오로케이션을 지원하지 않습니다!");
+   return;
+}
+  function success(position) {
+    latitude  = position.coords.latitude;
+    longitude = position.coords.longitude;
+    //
+    //location.href = "${pageContext.request.contextPath}/searchFoodTruckByName.do?latitude="+latitude+"&longitude="+longitude+"&name="+searchFoodtruckName;
+    
+    
+   var mapInfo = naver.maps.Service.reverseGeocode({
+        location: new naver.maps.LatLng(latitude, longitude),
+    }, function(status, response) {
+        if (status !== naver.maps.Service.Status.OK) {
+            //return alert('Something wrong!');
+        }
+
+        var result = response.result, // 검색 결과의 컨테이너
+            items = result.items; // 검색 결과의 배열
+            if(items[0].address=="" || items[0].address==null){
+               address = "";
+               //document.getElementById("${truckInfo.foodtruckName}").innerHTML="위치 정보 없음";
+            }else{
+               address = items[0].address;
+               //alert(address);
+               //document.getElementById("${truckInfo.foodtruckName}").innerHTML = items[0].address;
+            }
+    });       
+   
+  };
+  function error() {
+     alert("사용자의 위치를 찾을 수 없습니다!");
+  };
+  navigator.geolocation.getCurrentPosition(success, error);
 }
 
 $(document).ready(function(){
+geoFindMe();
 		$("#deleteAccountBtn").click(function(){
 			if(confirm("계정을 삭제하시겠습니까?")){
 				location.href="${pageContext.request.contextPath}/afterLogin_mypage/checkPasswordForm.do?command=deleteAccount";
@@ -85,11 +112,10 @@ $(document).ready(function(){
 			location.href="${pageContext.request.contextPath}/afterLogin_mypage/myfoodtruck_menuList.do";
 	});
 		$("#myTruckBtn").click(function(){
-			location.href="${pageContext.request.contextPath}/afterLogin_mypage/showMyFoodtruck.do?id=${sessionScope.memberVO.id}";
+			location.href = "${pageContext.request.contextPath}/foodtruck/foodTruckAndMenuDetail.do?foodtruckNo=${truckNumber}"+"&latitude="+latitude+"&longitude="+longitude+"&address="+address;
 	});
 		$("#wishlistBtn").click(function(){
-			geoFindMe();
-			//location.href="${pageContext.request.contextPath}/afterLogin_mypage/wishlist.do?id=${sessionScope.memberVO.id}";
+			location.href = "${pageContext.request.contextPath}/afterLogin_mypage/wishlist.do?id=${sessionScope.memberVO.id}&latitude="+latitude+"&longitude="+longitude;
 	});
 		$("#reviewBtn").click(function(){
 			location.href="${pageContext.request.contextPath}/afterLogin_mypage/showMyReviewList.do?customerId=${sessionScope.memberVO.id}";

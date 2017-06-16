@@ -245,16 +245,12 @@ public class MypageDAOImpl implements MypageDAO {
 
 	}
 	@Override
-
-	public List<BookingVO> getCustomerBookingVO(String customerId) {
-		return sqlSessionTemplate.selectList("mypage.getCustomerBookingVO",customerId);
-	}
-	@Override
-	public List<BookingDetailVO> getCustomerBookingDetailVO(BookingVO bookingVO) {
-		return sqlSessionTemplate.selectList("mypage.getCustomerBookingDetailVO", bookingVO);
-	}
 	public String getBookingNumberByCustomerId(String id) {
 		return sqlSessionTemplate.selectOne("mypage.getBookingNumberListByCustomerId", id);
 
 	}
+	   @Override
+	   public int checkBookingState(String customerId) {
+	      return sqlSessionTemplate.selectOne("mypage.checkBookingState", customerId);
+	   }
 }

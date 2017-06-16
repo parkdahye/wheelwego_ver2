@@ -83,8 +83,6 @@ public interface MypageService {
 
 	void qnaDeleteInMaypage(String contentNo);
 
-	List<BookingVO> getCustomerBookingVO(String customerId);
-
-	List<BookingDetailVO> getCustomerBookingDetailVO(BookingVO bookingVO);
+	int checkBookingState(String id);
 
 }

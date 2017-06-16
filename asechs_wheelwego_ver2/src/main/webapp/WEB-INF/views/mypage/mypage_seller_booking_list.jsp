@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <title>Shop Homepage - Start Bootstrap Template</title>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ 
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -9,12 +9,6 @@
     <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <script>
 	$(document).ready(function(){
 			 $(".cookingBtn").click(function(){
@@ -56,7 +50,7 @@
                     <div class="col-sm-4 col-lg-4 col-md-4" style="border:1px solid lightgray; height:400px;">
                         <div class="thumbnail">
                             <div class="caption">
-                                <h4 style="color: orange;">예약번호 : ${status.index+1}<%-- ${bookingList.bookingNumber} --%></h4>
+                                <h4 style="color: orange;">예약번호 : ${status.index+1}</h4>
                             </div>
                             <div class="table">
                                 <table>
@@ -98,17 +92,11 @@
                                 	</td>
                                 	</tr>
                                 	<tr>
-                                		<td colspan="2">
-                                		<!-- <span> -->
-                                		<%-- <c:choose>
-                                			<c:when test="${bookingList.bookingState=='결제완료'}"> --%>
+                                		<td>
 		                                		<input type="button"  class="cookingBtn" value="조리중">
-                                		<%-- 	</c:when>
-                                			<c:otherwise> --%>
-		                                		<input type="button" class="finishedCookingBtn" value="조리완료">
-                                			<%-- </c:otherwise>
-								        </c:choose> --%>
-								        <!-- </span> -->
+								        </td>
+								        <td>
+								        	<input type="button" class="finishedCookingBtn" value="조리완료">
 								        </td>
                                 	</tr>
                                 </table>              
@@ -120,66 +108,9 @@
             </div>
         </div>
     </div>
-    <!-- /.container -->
-  <%-- <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script>
-	$(document).ready(function(){
-		$(".cookingBtn").click(function(){
-			//alert($(this).parent().parent().children(".no").text());
-			var bookingNumber=$(this).parent().parent().children(".no").text();
-			$.ajax({
-				type:"post",
-				url:"${pageContext.request.contextPath}/afterLogin_mypage/updateState.do",
-				data:"bookingState=결제완료&bookingNumber="+bookingNumber,
-				success:function(bookingResult){
-					var bookingInfo="";
-					bookingInfo="<td>"+bookingResult+"</td>";
-					$(this).parent().parent().children(".bookingState").html(bookingInfo);
-				}
-			});
-		});//click
-	});//ready
-</script>
-<div class="container">
-  <h2>주문 상세내역</h2>
-  <p>판매자에게 하기와 같이 주문이 들어왔습니다</p>            
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>주문 예약 번호</th>
-        <th>고객아이디</th>
-        <th>메뉴번호</th>
-        <th>수량</th>
-        <th>예약시각</th>
-        <th>결제상태</th>
-        <th>상태버튼</th>
-      </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${requestScope.bookingList }" var="bookingList">
-      <tr>
-        <td  class="no">${bookingList.bookingNumber }</td>
-        <td>${bookingList.customerId }</td>
-        <td>${bookingList.menuId }</td>
-        <td>${bookingList.bookingQuantity }</td>
-        <td>${bookingList.bookingDate }</td>
-        <span class="bookingState">
-        <td>${bookingList.bookingState }</td>
-        </span>
-        <td>
-        <input type="button" class="cookingBtn" value="조리중">
-        <input type="hidden" class="bookingNumber" value="${bookingList.menuId }">
-        <input type="button" class="finishedCookingBtn" value="조리완료">
-        </td>
-      </tr>
-      </c:forEach>
-    </tbody>
-  </table>
-</div> --%>
+
+   
+
+    
 
     
