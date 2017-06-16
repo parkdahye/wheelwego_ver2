@@ -107,4 +107,6 @@ public interface MypageDAO {
 
 	void qnaDeleteInMaypage(String contentNo);
 
+	public String getBookingNumberByCustomerId(String id);
+
 }

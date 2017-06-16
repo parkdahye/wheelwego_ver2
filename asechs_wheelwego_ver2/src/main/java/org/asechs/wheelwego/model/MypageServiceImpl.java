@@ -326,14 +326,4 @@ public void qnaDeleteInMaypage(String contentNo) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 }
