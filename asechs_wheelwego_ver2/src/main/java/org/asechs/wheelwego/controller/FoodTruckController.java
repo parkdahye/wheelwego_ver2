@@ -180,6 +180,7 @@ public class FoodTruckController {
 		MemberVO memberVO=(MemberVO)request.getSession(false).getAttribute("memberVO");
 		mv.addObject("myPoint", mypageService.getMyPoint(memberVO.getId()));   
 		mv.addObject("bvo",bvo);
+		System.out.println(mv);
 		return mv;
 	}
 	/**

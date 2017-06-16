@@ -20,8 +20,8 @@
 			<button type="button" id="menuBtn"class="btn btn-warning">MENU</button>&nbsp;&nbsp;
 <!-- 			<button type="button" id="myTruckBtn"class="btn btn-warning">MY TRUCK PAGE</button>&nbsp;&nbsp; -->
 			
-			<a href="${pageContext.request.contextPath}/afterLogin_mypage/checkTruckGPS.do?sellerId=${sessionScope.memberVO.id}" class="btn btn-warning" role="button">TRUCK 위치 설정</a><br>
-			<span style="float:right"><button type="button" id="sellerBookingListBtn" class="btn btn-warning" >온라인 주문현황</button></span><br>
+			<a href="${pageContext.request.contextPath}/afterLogin_mypage/checkTruckGPS.do?sellerId=${sessionScope.memberVO.id}" class="btn btn-warning" role="button">TRUCK 위치 설정</a>&nbsp;&nbsp;
+			<button type="button" id="sellerBookingListBtn" class="btn btn-warning" >온라인 주문현황</button><br>
 			</c:otherwise>
 		</c:choose>
 	</c:when>
@@ -29,6 +29,7 @@
 				<button type="button" id="wishlistBtn"class="btn btn-warning">단골트럭</button>&nbsp;&nbsp;
 			<button type="button" id="reviewBtn"class="btn btn-warning">MY REVIEW</button>&nbsp;&nbsp;
 			<button type="button" id="contentBtn"class="btn btn-warning">MY CONTENT</button>&nbsp;&nbsp;
+			<button type="button" id="orderBtn" class="btn btn-warning">MY ORDER</button>&nbsp;&nbsp;
 	</c:otherwise>
 </c:choose>
 </div>
@@ -95,6 +96,11 @@ $(document).ready(function(){
 		$("#sellerBookingListBtn").click(function(){
 			//location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
 			location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
+		});
+		$("#orderBtn").click(function(){
+			alert("주문내역 확인 페이지");
+			location.href="${pageContext.request.contextPath}/mypage/mypage_customer_order_list.do";
+
 		});
 
 });
