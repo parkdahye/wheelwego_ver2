@@ -65,12 +65,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    select nvl(sum(point), 0) from customerpoint where booking_number in 
    (select booking_number from booking where customer_id = #{value})
 </select>
-<insert id = "addPoint" parameterType="hashmap">
-   insert into customerpoint values (#{bookingNumber}, 'add', #{point}, sysdate)
-</insert>
-<insert id = "minusPoint" parameterType="hashmap">
-   insert into customerpoint values (#{bookingNumber}, 'minus', #{point}, sysdate)
-</insert>
+
+   <insert id="addPoint" parameterType="hashmap">
+      insert into customerpoint values (#{bookingNumber}, 'add', #{point}, sysdate)
+   </insert>
+   <insert id="minusPoint" parameterType="hashmap">
+      insert into customerpoint values(#{bookingNumber}, 'minus', #{point}, sysdate)
+   </insert>
    <select id="heartWishList" resultMap="wishlistRM">
    select * from wishlist where customer_id=#{value}
    </select>

@@ -21,7 +21,9 @@ public interface MypageDAO {
 	
 	public List<BookingVO> getBookingList(int bookingNumber);
 	
-	void calPoint(HashMap<String, Integer> pointInfo);
+	public void minusPoint(HashMap<String, Integer> pointInfo);
+
+	 public void addPoint(HashMap<String, Object> pointInfo);
 	
 	public int getMyPoint(String customerId);
 	
@@ -106,5 +108,7 @@ public interface MypageDAO {
 	List<BoardVO> showMyContentByqnaList(PagingBean pagingBean);
 
 	void qnaDeleteInMaypage(String contentNo);
+
+	public String getBookingNumberByCustomerId(String id);
 
 }
