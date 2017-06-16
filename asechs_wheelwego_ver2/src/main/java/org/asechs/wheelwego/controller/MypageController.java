@@ -326,6 +326,7 @@ public class MypageController {
    public String customerBookingList(Model model, HttpServletRequest request){
 	 String customerId = request.getParameter("customerId");
 	 List<BookingVO> myBookingList = mypageService.customerBookingList(customerId);
+	 System.out.println(myBookingList);
 	 if(myBookingList.isEmpty()==false){
 		 for(int i=0; i<myBookingList.size(); i++){
 			 List<BookingDetailVO> myBookingDetailList = mypageService.getBookingDetailVO(myBookingList.get(i));

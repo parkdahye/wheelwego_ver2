@@ -1,6 +1,11 @@
 select * from foodtruck where seller_id='seller'
+delete from BOOKING where customer_id='jenny9950'
 ----------dbTEST---------------------
-select * from WISHLIST where customer_id='customer01'
+select bd.booking_number,bd.menu_id, bd.menu_quantity, m.menu_name, m.menu_price 
+	   	from booking b, booking_detail bd, menu m
+	   	where b.booking_number=bd.booking_number and 
+	   	b.booking_number=17 and m.menu_id=bd.menu_id
+select * from booking where customer_id='jhji21'
 select * from foodtruck where foodtruck_name='현지트럭'
 select * from foodtruck
 select * from wishlist

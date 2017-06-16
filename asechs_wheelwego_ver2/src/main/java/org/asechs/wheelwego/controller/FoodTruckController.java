@@ -173,7 +173,7 @@ public class FoodTruckController {
 	/**
 	 * 현지: 주문하기 btn 클릭 후 주문폼으로 넘어가기
 	 */
-	@RequestMapping("afterLogin_foodtruck/foodtruck_booking_confirm.do")
+	@RequestMapping(value = "afterLogin_foodtruck/foodtruck_booking_confirm.do", method = RequestMethod.POST)
 	public ModelAndView foodtruck_booking_confirm(BookingVO bvo,HttpServletRequest request){
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("foodtruck/foodtruck_booking_confirm.tiles");
