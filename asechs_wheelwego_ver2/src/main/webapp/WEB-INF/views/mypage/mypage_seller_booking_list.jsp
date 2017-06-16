@@ -17,22 +17,21 @@
     <![endif]-->
     <script>
 	$(document).ready(function(){
-		$(".cookingBtn").click(function(){
-			var bookingNumber=$(this).parent().parent().parent().find(".bookingNumber").children(".bno").text();
+			 $(".cookingBtn").click(function(){
+			var bookingNumber=$(this).parent().parent().parent().find(".bookingState").children(".bno").text();
 			var bookingState=$(this).parent().parent().parent().find(".bookingState").children(".bstate").text();
 			$.ajax({
 				type:"post",
 				url:"${pageContext.request.contextPath}/afterLogin_mypage/updateState.do",
 				data:"bookingState=조리중&bookingNumber="+bookingNumber,
 				success:function(bookingResult){
-					button.style.display = "none";
 					location.reload();
-				}
+				} 
 			});
 		});//click
 		
 		$(".finishedCookingBtn").click(function(){
-			var bookingNumber=$(this).parent().parent().parent().find(".bookingNumber").children(".bno").text();
+			 var bookingNumber=$(this).parent().parent().parent().find(".bookingState").children(".bno").text();
 			var bookingState=$(this).parent().parent().parent().find(".bookingState").children(".bstate").text();
 			$.ajax({
 				type:"post",
@@ -41,7 +40,7 @@
 				success:function(bookingResult){
 					location.reload();
 				}
-			});
+			});  
 		});//click
 	});//ready
 </script>
@@ -63,8 +62,9 @@
                                 <table>
                                 	<tr class="bookingState">
                                 		<td style="font-weight: bold; padding-bottom: 10px;">주문상태</td><span class="bookingResult"><td class="bstate" style="padding-bottom: 10px;">${bookingList.bookingState}</td></span>
+                                		<td class="bno" style="visibility:hidden">${bookingList.bookingNumber}<td>
                                 	</tr>
-					<tr>
+									<tr>
                                 		<td style="font-weight: bold; padding-bottom: 10px;">주문자</td><td style="padding-bottom: 10px;">${bookingList.customerId}</td>
                                 	</tr>
                                 	<tr>
@@ -99,16 +99,16 @@
                                 	</tr>
                                 	<tr>
                                 		<td colspan="2">
-                                		<span>
-                                		<c:choose>
-                                			<c:when test="${bookingList.bookingState=='결제완료'}">
-		                                		<input type="button" onclick="style.display = 'none'" class="cookingBtn" value="조리중">
-                                			</c:when>
-                                			<c:otherwise>
+                                		<!-- <span> -->
+                                		<%-- <c:choose>
+                                			<c:when test="${bookingList.bookingState=='결제완료'}"> --%>
+		                                		<input type="button"  class="cookingBtn" value="조리중">
+                                		<%-- 	</c:when>
+                                			<c:otherwise> --%>
 		                                		<input type="button" class="finishedCookingBtn" value="조리완료">
-                                			</c:otherwise>
-								        </c:choose>
-								        </span>
+                                			<%-- </c:otherwise>
+								        </c:choose> --%>
+								        <!-- </span> -->
 								        </td>
                                 	</tr>
                                 </table>              
