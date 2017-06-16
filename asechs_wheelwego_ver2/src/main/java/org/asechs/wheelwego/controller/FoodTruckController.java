@@ -189,15 +189,20 @@ public class FoodTruckController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST, value="foodtruck/bookingMenu.do")
-	public ModelAndView bookingMenu(BookingVO bookingVO,HttpServletRequest request){
-		ModelAndView mv=new ModelAndView("foodtruck/foodtruck_booking_confirm_result.tiles");
+	public String bookingMenu(BookingVO bookingVO,HttpServletRequest request,String resultPoint,String resultTotalAmount){
 		foodTruckService.bookingMenu(bookingVO);
 		String bookingNumber=bookingVO.getBookingNumber();
 		request.getSession(false).setAttribute("bookingNumber", bookingNumber);
-		mv.addObject("bookingVO", bookingVO);
-		return mv;
+		mypageService.calPoint(resultPoint, resultTotalAmount, Integer.parseInt(bookingNumber));
+		return "redirect:../foodtruck/foodtruck_booking_confirm_result.do";
 	}
-	
+/*	@RequestMapping("foodtruck/foodtruck_booking_confirm_result.do")
+	public ModelAndView bookingConfirmResult(String bookingNumber,HttpServletRequest request){
+		ModelAndView mv=new ModelAndView("foodtruck/foodtruck_booking_confirm_result.tiles");
+		mv.addObject("bookingNumber", bookingNumber);
+		return new ModelAndView("foodtruck/foodtruck_booking_confirm_result.tiles");
+	}
+*/	
 	@RequestMapping("foodtruck/getRecentlyBookingNumberBySellerId.do")
 	@ResponseBody
 	public Object getRecentlybookingNumberBySellerId(String id){

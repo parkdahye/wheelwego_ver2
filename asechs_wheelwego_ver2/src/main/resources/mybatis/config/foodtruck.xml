@@ -198,7 +198,7 @@ and f.seller_id=#{value} and b.booking_state='결제완료'
 select nvl(max(b.booking_number),0)
 from booking b, foodtruck f, menu m, booking_detail bd
 where bd.menu_id=m.menu_id and m.foodtruck_number=f.foodtruck_number 
-and f.seller_id=#{value} and b.booking_state='조리완료'
+and f.seller_id=#{value} <!-- and b.booking_state='조리완료' -->
 </select>
 <select id="getBookingStateBybookingNumber" resultType="string">
 	select booking_state from booking where booking_number=#{value}

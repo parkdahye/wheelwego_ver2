@@ -34,19 +34,14 @@ public class MypageDAOImpl implements MypageDAO {
 	      return sqlSessionTemplate.selectOne("mypage.getMyPoint", customerId);
 	   }
 
-	@Override
-	   public void calPoint(HashMap<String, Integer> pointInfo) {
-	      if (pointInfo.get("point") > 0)
-	      {
-	         System.out.println("양수");
-	         System.out.println(pointInfo);
-	         sqlSessionTemplate.insert("mypage.addPoint", pointInfo);
-	      }
-	      else{
-	         System.out.println("음수");
-	         System.out.println(pointInfo);
-	         sqlSessionTemplate.insert("mypage.minusPoint", pointInfo);
-	      }
+	   @Override
+	   public void minusPoint(HashMap<String, Integer> pointInfo) {
+	      sqlSessionTemplate.insert("mypage.minusPoint", pointInfo);
+	   }
+
+	   @Override
+	   public void addPoint(HashMap<String, Object> pointInfo) {
+	      sqlSessionTemplate.insert("mypage.addPoint", pointInfo);
 	   }
 
 	@Override
