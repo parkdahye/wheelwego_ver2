@@ -105,36 +105,41 @@ public class FoodTruckController {
 	 * @param foodtruck_number
 	 * @return TruckVO
 	 */
-	@RequestMapping("foodtruck/foodTruckAndMenuDetail.do")
-	
-	public ModelAndView foodTruckAndMenuDetail(String foodtruckNo,String reviewPageNo,HttpServletRequest request){
-		System.out.println(foodtruckNo);
-		
-		TruckVO truckDetail = foodTruckService.foodTruckAndMenuDetail(foodtruckNo);
-		ModelAndView mv= new ModelAndView();
-		mv.setViewName("foodtruck/foodtruck_detail.tiles");
-		HttpSession session=request.getSession(false);
-		String id=null;
-		List<WishlistVO> heartWishList=null;
-		if(session != null){
-			MemberVO memberVO=(MemberVO)session.getAttribute("memberVO");
-			if(memberVO != null){
-				id = memberVO.getId();
-				int wishlistFlag=mypageService.getWishListFlag(id, foodtruckNo);
-				mv.addObject("wishlistFlag",wishlistFlag);
-			}
-		}
-		System.out.println(heartWishList);
-		mv.addObject("truckDetailInfo", truckDetail);
-		ListVO reviewList = foodTruckService.getReviewListByTruckNumber(reviewPageNo, foodtruckNo);
-		mv.addObject("reviewlist", reviewList);
-		//mv.addObject("avgGrade",foodTruckService.getAvgGradeByTruckNumber(foodtruckNo));
-		return mv;
-	}
+	   @RequestMapping("foodtruck/foodTruckAndMenuDetail.do")
+	   
+	   public ModelAndView foodTruckAndMenuDetail(String foodtruckNo,String reviewPageNo, String latitude, String longitude, HttpServletRequest request){
+	      TruckVO truckDetail = foodTruckService.foodTruckAndMenuDetail(foodtruckNo);
+	      String bookingPossible = "no";
+	      List<String> foodtruckNumberList = foodTruckService.getFoodtruckNumberList(new TruckVO(Double.parseDouble(latitude), Double.parseDouble(longitude)));
+	      for (int i = 0; i < foodtruckNumberList.size(); i++)
+	      {
+	         if (foodtruckNumberList.get(i).equals(truckDetail.getFoodtruckNumber()))
+	         {
+	            bookingPossible = "ok";
+	            break;
+	         }            
+	      }
+	      ModelAndView mv= new ModelAndView();
+	      mv.setViewName("foodtruck/foodtruck_detail.tiles");
+	      HttpSession session=request.getSession(false);
+	      String id=null;
+	      if(session != null){
+	         MemberVO memberVO=(MemberVO)session.getAttribute("memberVO");
+	         if(memberVO != null){
+	            id = memberVO.getId();
+	            int wishlistFlag=mypageService.getWishListFlag(id, foodtruckNo);
+	            mv.addObject("wishlistFlag",wishlistFlag);
+	         }
+	      }
+	      mv.addObject("truckDetailInfo", truckDetail);
+	      ListVO reviewList = foodTruckService.getReviewListByTruckNumber(reviewPageNo, foodtruckNo);
+	      mv.addObject("reviewlist", reviewList);
+	      mv.addObject("bookingPossible", bookingPossible);
+	      return mv;
+	   }
 	@RequestMapping(value = "afterLogin_foodtruck/registerReview.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String registerReview(ReviewVO reviewVO){
-		System.out.println(reviewVO);
 		foodTruckService.registerReview(reviewVO); // 푸드 트럭 등록
 		return "foodtruck/foodtruck_detail.tiles";
 	}
@@ -175,12 +180,12 @@ public class FoodTruckController {
 	 */
 	@RequestMapping(value = "afterLogin_foodtruck/foodtruck_booking_confirm.do", method = RequestMethod.POST)
 	public ModelAndView foodtruck_booking_confirm(BookingVO bvo,HttpServletRequest request){
+		System.out.println("controller: "+bvo);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("foodtruck/foodtruck_booking_confirm.tiles");
 		MemberVO memberVO=(MemberVO)request.getSession(false).getAttribute("memberVO");
 		mv.addObject("myPoint", mypageService.getMyPoint(memberVO.getId()));   
 		mv.addObject("bvo",bvo);
-		System.out.println(mv);
 		return mv;
 	}
 	/**
@@ -221,5 +226,14 @@ public class FoodTruckController {
 		else
 			return "fail";
 	}
-	
+	   @RequestMapping("afterLogin_foodtruck/checkBooking.do")
+	   @ResponseBody
+	   public String checkBooking(HttpServletRequest request) {
+	      System.out.println("실행됨");
+	      HttpSession session = request.getSession();
+	      MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");      
+	      int count = mypageService.checkBookingState(memberVO.getId());
+	      System.out.println(count);
+	      return (count==0) ? "ok":"no";
+	   }
 }

@@ -14,15 +14,15 @@
             <div class="col-md-9">
                 <div class="row">
 				<c:forEach items="${requestScope.myBookingList}" var="bookingList">
-                    <div class="col-sm-4 col-lg-4 col-md-4" style="border:1px solid lightgray; height:350px;">
+                    <div class="col-sm-4 col-lg-4 col-md-4" style="border:1px solid lightgray; padding-right:10px; height:350px;">
                         <div class="thumbnail">
                             <div class="caption">
                                 <h4 style="color: orange;">예약번호 : ${bookingList.bookingNumber}</h4>
                             </div>
-                            <div class="table">
+                            <div class="table" style="padding: 15px;">
                                 <table>
                                 	<tr class="bookingState">
-                                		<td style="font-weight: bold; padding-bottom: 10px;">주문상태</td><span class="bookingResult"><td class="bstate" style="padding-bottom: 10px;">${bookingList.bookingState }</td></span>
+                                		<td style="font-weight: bold; padding-bottom: 10px;">주문상태</td><td class="bstate" style="padding-bottom: 10px;"><span class="bookingResult">${bookingList.bookingState }</span></td>
                                 	</tr>
                                 	<tr>
                                 		<td style="font-weight: bold; padding-bottom: 10px;">예약일시</td><td style="padding-bottom: 10px; width:100px;">${bookingList.bookingDate}</td>

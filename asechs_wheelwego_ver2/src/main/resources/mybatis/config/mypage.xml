@@ -214,5 +214,8 @@ select count(*) from wishlist where customer_id=#{customerId} and foodtruck_numb
 	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number=#{value} 
 	and m.menu_id=b.menu_id order by b.booking_number desc
 </select>
+   <select id = "checkBookingState" parameterType="string" resultType="int">
+      select count(*) from booking where customer_id = #{value} and booking_state = '결제완료'
+   </select>
 </mapper>
  

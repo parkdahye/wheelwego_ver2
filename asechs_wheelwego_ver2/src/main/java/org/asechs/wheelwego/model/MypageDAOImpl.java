@@ -247,4 +247,8 @@ public class MypageDAOImpl implements MypageDAO {
 	public String getBookingNumberByCustomerId(String id) {
 		return sqlSessionTemplate.selectOne("mypage.getBookingNumberListByCustomerId", id);
 	}
+	   @Override
+	   public int checkBookingState(String customerId) {
+	      return sqlSessionTemplate.selectOne("mypage.checkBookingState", customerId);
+	   }
 }
