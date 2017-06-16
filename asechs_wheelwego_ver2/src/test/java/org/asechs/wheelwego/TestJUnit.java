@@ -11,13 +11,14 @@ import org.asechs.wheelwego.model.MypageService;
 import org.asechs.wheelwego.model.vo.MemberVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/spring-model.xml"})
 public class TestJUnit {
-   @Resource
+  /* @Resource
    private MemberService service;
    @Resource
    private FoodTruckService foodtruckService;
@@ -92,10 +93,13 @@ public class TestJUnit {
          memberVO = new MemberVO(id, password, member_name, postcode, address, addressdetail, phonenumber, member_type);
          service.registerMember(memberVO, businessNumber);
       }   
-   }
+   }*/
+   @Resource
+   private SqlSessionTemplate sqlSessionTemplate;
    
    @Test
    public void test(){
-      registerCustomer();
+    /*  registerCustomer();*/
+	   
    }
 }

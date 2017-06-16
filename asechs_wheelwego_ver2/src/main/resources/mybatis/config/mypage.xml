@@ -35,13 +35,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       <result column="menu_price" property="menuPrice"/>
       <result column="menu_filename" property="fileVO.filepath"/>
    </resultMap>
-   <resultMap type="bookingVO" id="bookingRM">
+   <resultMap type="bookingVO" id="bookingRM" >
+		<!--  <collection property="bookingDetail" javaType="java.lang.ArrayList" column="bookingNumber" ofType="bookingDetailVO" select="selectBookingDetail"/> -->
+		<result property="bookingNumber" column="booking_number"/>
+		<result property="customerId" column="customer_id"/>
+		<result property="bookingDate" column="booking_date"/>
+		<result property="bookingState" column="booking_state"/>
+	</resultMap>
+   <resultMap type="bookingDetailVO" id="bookingDetailRM" extends="bookingRM">
    		<result column="booking_number" property="bookingNumber"/>
-   		<result column="customer_id" property="customerId"/>
    		<result column="menu_id" property="menuId"/>
-   		<result column="booking_quantity" property="bookingQuantity"/>
-   		<result column="booking_date" property="bookingDate"/>
-   		<result column="booking_state" property="bookingState"/>
+   		<result column="menu_name" property="menuName"/>
+   		<result column="menu_price" property="menuPrice"/>
+   		<result column="menu_quantity" property="bookingQuantity"/>
    </resultMap>
    <select id="heartWishList" resultMap="wishlistRM">
    select * from wishlist where customer_id=#{value}
@@ -149,13 +155,27 @@ from review r, foodtruck t where r.customer_id=#{searchWord}  and r.foodtruck_nu
 <select id="getWishListFlag" resultType="int" parameterType="wishlistVO">
 select count(*) from wishlist where customer_id=#{customerId} and foodtruck_number=#{foodtruckNumber}
 </select>
-<select id="getSellerBookingListByTruckNumber" resultType="bookingVO" parameterType="String" resultMap="bookingRM">
-	select b.booking_number, b.customer_id, b.menu_id, b.booking_quantity, b.booking_state,
-	to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date
-	from booking b, foodtruck f, menu m 
-	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number=#{value} 
-	and m.menu_id=b.menu_id order by b.booking_number desc
-</select>
+
+<update id="updateBookingState" parameterType="bookingVO">
+	update booking set booking_state=#{bookingState} where booking_number=#{bookingNumber}
+</update>
+
+   <select id="selectBookingDetail" resultType="bookingDetailVO">
+   		select booking_number as bd.bookingNumber , menu_id as bd.menuId , menu_quantity as bd.bookingQuantity, m.menu_price 
+   		from booking_detail bd, menu m where bd.booking_number=#{value} and bd.menu_id=m.menu_id
+   </select>
+<!-- 강정호 임시 작성 -->
+	<select id="getBookingVO" parameterType="String" resultMap="bookingRM">
+		select distinct b.booking_number, b.customer_id, to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date, b.booking_state 
+	   	from booking b, foodtruck f, menu m
+	   	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number=#{value} order by b.booking_number desc
+	</select>
+	<select id="getBookingDetailVO" parameterType="bookingVO" resultMap="bookingDetailRM">
+		select bd.booking_number ,bd.menu_id, bd.menu_quantity, m.menu_name, m.menu_price 
+	   	from booking b, booking_detail bd, menu m
+	   	where b.booking_number=bd.booking_number and 
+	   	b.booking_number=#{bookingNumber} and m.menu_id=bd.menu_id
+	</select>
 
 </mapper>
  

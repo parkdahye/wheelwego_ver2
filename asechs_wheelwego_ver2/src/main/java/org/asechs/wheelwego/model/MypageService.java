@@ -2,6 +2,7 @@ package org.asechs.wheelwego.model;
 
 import java.util.List;
 
+import org.asechs.wheelwego.model.vo.BookingDetailVO;
 import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
 import org.asechs.wheelwego.model.vo.ListVO;
@@ -51,7 +52,11 @@ public interface MypageService {
 	
 	public int getWishListFlag(String customerId, String foodtruckNumber);
 
-	List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber);
+	void updateBookingState(BookingVO bookingVO);
+
+	List<BookingVO> getBookingVO(String foodTruckNumber);
+
+	List<BookingDetailVO> getBookingDetailVO(BookingVO bookingVO);
 
 
 }

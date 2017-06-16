@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.asechs.wheelwego.model.vo.BookingDetailVO;
 import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FileVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
@@ -161,7 +162,16 @@ public class MypageDAOImpl implements MypageDAO {
 		return sqlSessionTemplate.selectOne("mypage.getWishListFlag", wishlistVO);
 	}
 	@Override
-	public List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber) {
-		return sqlSessionTemplate.selectList("mypage.getSellerBookingListByTruckNumber",foodTruckNumber);
+	public void updateBookingState(BookingVO bookingVO) {
+		sqlSessionTemplate.update("mypage.updateBookingState",bookingVO);
+		
+	}
+	@Override
+	public List<BookingVO> getBookingVO(String foodTruckNumber) {
+		return sqlSessionTemplate.selectList("mypage.getBookingVO", foodTruckNumber);
+	}
+	@Override
+	public List<BookingDetailVO> getBookingDetailVO(BookingVO bookingVO) {
+		return sqlSessionTemplate.selectList("mypage.getBookingDetailVO",bookingVO);
 	}
 }

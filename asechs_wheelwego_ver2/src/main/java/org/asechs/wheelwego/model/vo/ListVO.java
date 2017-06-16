@@ -12,6 +12,8 @@ public class ListVO {
 	private List<BoardVO> boardList;
 	private List<TruckVO> truckList;
 	private List<ReviewVO> reviewList;
+	private List<BookingVO> bookingNumberList;
+	private List<BookingVO> bookingMenuList;
 	private PagingBean pagingBean;
 
 	public ListVO() {
@@ -30,8 +32,15 @@ public class ListVO {
 		this.truckList = truckList;
 		this.pagingBean = pagingBean;
 	}
+	
 
 
+
+	public ListVO(List<BookingVO> bookingNumberList, List<BookingVO> bookingMenuList) {
+		super();
+		this.bookingNumberList = bookingNumberList;
+		this.bookingMenuList = bookingMenuList;
+	}
 
 	/*	public ListVO(List<TruckVO> truckList, PagingBean pagingBean) {
 		super();
@@ -73,12 +82,32 @@ public class ListVO {
 	public void setReviewList(List<ReviewVO> reviewList) {
 		this.reviewList = reviewList;
 	}
+	
+
+	public List<BookingVO> getBookingNumberList() {
+		return bookingNumberList;
+	}
+
+	public void setBookingNumberList(List<BookingVO> bookingNumberList) {
+		this.bookingNumberList = bookingNumberList;
+	}
+
+	public List<BookingVO> getBookingMenuList() {
+		return bookingMenuList;
+	}
+
+	public void setBookingMenuList(List<BookingVO> bookingMenuList) {
+		this.bookingMenuList = bookingMenuList;
+	}
 
 	@Override
 	public String toString() {
 		return "ListVO [boardList=" + boardList + ", truckList=" + truckList + ", reviewList=" + reviewList
-				+ ", pagingBean=" + pagingBean + "]";
+				+ ", bookingNumberList=" + bookingNumberList + ", bookingMenuList=" + bookingMenuList + ", pagingBean="
+				+ pagingBean + "]";
 	}
+
+	
 
 
 }

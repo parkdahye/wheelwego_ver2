@@ -89,7 +89,7 @@ $(document).ready(function(){
 	});
 		$("#sellerBookingListBtn").click(function(){
 			//location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
-			location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=seller01";
+			location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
 		});
 });
 </script>

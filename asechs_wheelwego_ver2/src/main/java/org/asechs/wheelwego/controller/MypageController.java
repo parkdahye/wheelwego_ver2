@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.asechs.wheelwego.model.MemberService;
 import org.asechs.wheelwego.model.MypageService;
+import org.asechs.wheelwego.model.vo.BookingDetailVO;
 import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
 import org.asechs.wheelwego.model.vo.ListVO;
@@ -250,11 +251,34 @@ public class MypageController {
    public String sellerBookingList(Model model, HttpServletRequest request){
 	   String sellerId=request.getParameter("sellerId");
 	   String foodTruckNumber=mypageService.findtruckNumberBySellerId(sellerId);
-	   List<BookingVO> bookingList=mypageService.getSellerBookingListByTruckNumber(foodTruckNumber);
-	   model.addAttribute("bookingList", bookingList);
+	   List<BookingVO> bookingNumberList=mypageService.getBookingVO(foodTruckNumber);
+
+	   
+	   if(bookingNumberList.isEmpty()==false){
+		   for(int i=0; i<bookingNumberList.size(); i++){
+			   List<BookingDetailVO> bookingDetailVO=mypageService.getBookingDetailVO(bookingNumberList.get(i));
+			   bookingNumberList.get(i).setBookingDetail(bookingDetailVO);
+		   }
+	   }
+	   model.addAttribute("bookingList", bookingNumberList);
 	   return "mypage/mypage_seller_booking_list.tiles";
+	   
    }
    
+   /**
+    * 강정호. 조리 상태 업데이트 해주는 메서드
+    */
+   @RequestMapping(value="afterLogin_mypage/updateState.do",method=RequestMethod.POST)
+   @ResponseBody
+   public BookingVO updateBookingState(HttpServletRequest request){
+	   String bookingState=request.getParameter("bookingState");
+	   int bookingNumber=Integer.parseInt(request.getParameter("bookingNumber"));
+	   BookingVO bookingVO=new BookingVO();
+	   bookingVO.setBookingState(bookingState);
+	   bookingVO.setBookingNumber(bookingNumber);
+	   mypageService.updateBookingState(bookingVO);
+	   return bookingVO;
+   }
    
    
    

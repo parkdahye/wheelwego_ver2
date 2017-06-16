@@ -110,18 +110,26 @@ create table menu(
 drop table menu;
 -------------------------------------------------------------------------------
 create table booking(
-    booking_number varchar2(100) not null,
+    booking_number number not null,
     customer_id varchar2(100) not null,
-    menu_id varchar2(100) not null,
-    booking_quantity number not null,
     booking_date date not null,
     booking_state varchar2(100) not null,
     constraint booking_id_fk foreign key(customer_id) references customer(customer_id) on delete cascade ,
-    constraint booking_menu_fk foreign key(menu_id) references menu(menu_id) on delete cascade,
-    CONSTRAINT booking_PK PRIMARY KEY(booking_number, customer_id, menu_id)
+    CONSTRAINT booking_PK PRIMARY KEY(booking_number)
 );
 -------------------------------------------------------------------------------
 drop table booking;
+-------------------------------------------------------------------------------
+create table booking_detail(
+   booking_number number not null,
+   menu_id varchar2(100) not null,
+   menu_quantity number not null,
+   constraint bookingdetail_bookingnumber_fk foreign key(booking_number) references booking(booking_number) on delete cascade,
+   constraint bookingdetail_menuid_fk foreign key(menu_id) references menu(menu_id) on delete cascade,
+   CONSTRAINT bookingdetail_PK PRIMARY KEY(booking_number, menu_id)
+);
+-------------------------------------------------------------------------------
+drop table booking_detail;
 -------------------------------------------------------------------------------
 create table customerpoint(
     point_id varchar2(100) primary key,
