@@ -62,15 +62,14 @@ $(document).ready(function(){
          var price = $(this).next().val();
          var menuId = $(this).next().next().val();
          var flag = false;
-         var id = "${sessionScope.memberVO.id}";
-         
+         var id = "${sessionScope.memberVO.id}";     
          if(id==""){
              alert("로그인이 필요합니다.");
           }
           else if(${sessionScope.memberVO.memberType=='seller'}){
              alert("일반회원 전용 서비스입니다.");
-          }
-        else{
+          }else{
+        	  
          for(var i=0; i<arr.length; i++)   {
             if(arr[i]==menu){
                flag=true;
@@ -105,6 +104,7 @@ $(document).ready(function(){
             cnt++;
           totalPrice();
           }
+
        }); //dropdown
       $("#testTable").on("change",":input[type=number]",function(){
          var unitPrice=$(this).parent().find(".menuPrice").val();
