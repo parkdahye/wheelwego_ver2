@@ -55,7 +55,7 @@ $.ajax({
 	if(memberId!=""&&memberType=="customer"){
 		customerBookingNumber="${sessionScope.bookingNumber}";
 	       if(customerBookingNumber !="" && customerBookingNumber!=null){ //bookingNumber가 있으면
-				alert(customerBookingNumber);		
+				//alert(customerBookingNumber);		
 	    	  var customerTimer=setInterval(customerAjaxCall, 1000);
 	       }
  

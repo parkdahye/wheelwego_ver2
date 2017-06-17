@@ -34,7 +34,7 @@
 
 			<button type="button" id="contentBtn"class="btn btn-warning">MY CONTENT</button>&nbsp;&nbsp;
 			<button type="button" id="orderBtn" class="btn btn-warning">MY ORDER</button>&nbsp;&nbsp;
-
+			<button type="button" id="pointBtn" class="btn btn-warning">MY POINT</button>&nbsp;&nbsp;
 	</c:otherwise>
 </c:choose>
 </div>
@@ -135,6 +135,8 @@ geoFindMe();
 		$("#orderBtn").click(function(){
 			location.href="${pageContext.request.contextPath}/afterLogin_mypage/customerBookingList.do?customerId=${sessionScope.memberVO.id}";
 		});
-
+		$("#pointBtn").click(function(){
+			location.href="${pageContext.request.contextPath}/afterLogin_mypage/showMyPointList.do?customerId=${sessionScope.memberVO.id}";
+		});
 });
 </script>

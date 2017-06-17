@@ -6,11 +6,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-
-import org.asechs.wheelwego.model.vo.BookingDetailVO;
-
 import org.asechs.wheelwego.model.vo.BoardVO;
-
+import org.asechs.wheelwego.model.vo.BookingDetailVO;
 import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FileManager;
 import org.asechs.wheelwego.model.vo.FileVO;
@@ -330,6 +327,18 @@ public void qnaDeleteInMaypage(String contentNo) {
 @Override
 public int checkBookingState(String customerId) {
    return mypageDAO.checkBookingState(customerId);
+}
+
+@Override
+public ListVO getPointListById(String id, String nowPage) {
+	ListVO pointList=new ListVO();
+	if(nowPage==null)
+		nowPage="1";
+	int totalList= mypageDAO.getTotalPointCountById(id);
+	PagingBean pagingBean=new PagingBean(Integer.parseInt(nowPage), totalList, id);
+	pointList.setPointList(mypageDAO.getPointListById(pagingBean));
+	pointList.setPagingBean(pagingBean);
+	return pointList;
 }
 
 

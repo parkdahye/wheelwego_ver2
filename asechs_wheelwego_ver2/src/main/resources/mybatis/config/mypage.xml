@@ -49,6 +49,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		<result column="menu_price" property="menuPrice"/>
    		<result column="menu_quantity" property="bookingQuantity"/>
    </resultMap>
+      <resultMap type="pointVO" id="pointRM" >
+   		<result column="booking_number" property="bookingNumber"/>
+   		<result column="foodtruck_name" property="foodtruckName"/>
+   		<result column="point_type" property="pointType"/>
+   		<result column="point_date" property="pointDate"/>
+   </resultMap>
 <select id="customerBookingList" resultMap="bookingRM">
   select * from booking where customer_id = #{value}
 </select>
@@ -230,5 +236,15 @@ select count(*) from wishlist where customer_id=#{customerId} and foodtruck_numb
    <select id = "checkBookingState" parameterType="string" resultType="int">
       select count(*) from booking where customer_id = #{value} and booking_state = '결제완료'
    </select>
+<select id="getTotalPointCountById" resultType="int">
+select nvl(count(*),0)
+from booking b, customerpoint c where b.booking_number=c.booking_number and b.customer_id=#{value}
+</select>
+<select id="getPointListById" parameterType="pagingBean" resultMap="pointRM">
+select booking_number,foodtruck_name, point_type,point,point_date from(
+select row_number() over(order by c.point_date desc) as rnum,f.foodtruck_name,c.booking_number, c.point_type,c.point, to_char(c.point_date,'YYYY.MM.DD') as point_date 
+from booking b, customerpoint c,booking_detail bd, foodtruck f, menu m where b.booking_number=c.booking_number and b.customer_id=#{searchWord} and b.booking_number=bd.booking_number and bd.menu_id=m.menu_id and m.foodtruck_number=f.foodtruck_number
+) where rnum between #{startRowNumber} and #{endRowNumber}
+</select>
 </mapper>
  

@@ -85,4 +85,6 @@ public interface MypageService {
 
 	int checkBookingState(String id);
 
+	ListVO getPointListById(String id, String nowPage);
+
 }

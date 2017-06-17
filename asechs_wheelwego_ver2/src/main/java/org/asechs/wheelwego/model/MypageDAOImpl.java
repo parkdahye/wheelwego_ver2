@@ -5,15 +5,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-
-import org.asechs.wheelwego.model.vo.BookingDetailVO;
-
 import org.asechs.wheelwego.model.vo.BoardVO;
-
+import org.asechs.wheelwego.model.vo.BookingDetailVO;
 import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FileVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
 import org.asechs.wheelwego.model.vo.PagingBean;
+import org.asechs.wheelwego.model.vo.PointVO;
 import org.asechs.wheelwego.model.vo.ReviewVO;
 import org.asechs.wheelwego.model.vo.TruckVO;
 import org.asechs.wheelwego.model.vo.WishlistVO;
@@ -253,4 +251,12 @@ public class MypageDAOImpl implements MypageDAO {
 	   public int checkBookingState(String customerId) {
 	      return sqlSessionTemplate.selectOne("mypage.checkBookingState", customerId);
 	   }
+	@Override
+	public int getTotalPointCountById(String id) {
+		return sqlSessionTemplate.selectOne("mypage.getTotalPointCountById", id);
+	}
+	@Override
+	public List<PointVO> getPointListById(PagingBean pagingBean) {
+		return sqlSessionTemplate.selectList("mypage.getPointListById", pagingBean);
+	}
 }

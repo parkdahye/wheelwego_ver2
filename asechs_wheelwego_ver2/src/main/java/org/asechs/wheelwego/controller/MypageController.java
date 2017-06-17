@@ -368,9 +368,22 @@ public class MypageController {
 	   mypageService.updateBookingState(bookingVO);
 	   return bookingVO;
    }
-
-   
-   
+   /**
+    * 포인트적립내역보기
+    * @param id
+    * @param nowPage
+    * @return
+    */
+   @RequestMapping("afterLogin_mypage/showMyPointList.do")
+   public ModelAndView showMyPointList(String customerId, String nowPage){
+	   System.out.println(customerId);
+	   ListVO pointList=mypageService.getPointListById(customerId, nowPage);
+	   ModelAndView mv=new ModelAndView("mypage/mypage_point_list.tiles");
+	   mv.addObject("pointList", pointList);
+	   int point=mypageService.getMyPoint(customerId);
+	   mv.addObject("myPoint", point);
+	   return mv;
+   }
    
    
    
