@@ -24,11 +24,12 @@ import org.springframework.stereotype.Repository;
 public class MypageDAOImpl implements MypageDAO {
 	@Resource
 	private SqlSessionTemplate sqlSessionTemplate;
-
+	//현지
 	@Override
 	public List<BookingVO> customerBookingList(String customerId){
 		return sqlSessionTemplate.selectList("mypage.customerBookingList",customerId);
 	}
+	//현지
 	@Override
 	   public List<BookingVO> getBookingList(int bookingNumber) {
 	      return sqlSessionTemplate.selectList("mypage.getBookingList", bookingNumber);
@@ -246,6 +247,7 @@ public class MypageDAOImpl implements MypageDAO {
 	@Override
 	public String getBookingNumberByCustomerId(String id) {
 		return sqlSessionTemplate.selectOne("mypage.getBookingNumberListByCustomerId", id);
+
 	}
 	   @Override
 	   public int checkBookingState(String customerId) {

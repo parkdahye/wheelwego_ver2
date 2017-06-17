@@ -108,9 +108,10 @@ public interface MypageDAO {
 	List<BoardVO> showMyContentByqnaList(PagingBean pagingBean);
 
 	void qnaDeleteInMaypage(String contentNo);
-
+	
 	public String getBookingNumberByCustomerId(String id);
 
 	int checkBookingState(String customerId);
+
 
 }

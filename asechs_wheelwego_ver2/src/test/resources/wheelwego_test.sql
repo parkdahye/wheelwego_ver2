@@ -641,20 +641,32 @@ select row_number() over(order by review_timeposted desc) as rnum,review_no,food
    	
    		-- bookingNumber 가져오는 sql 구문
    	select distinct b.booking_number
-   	from booking b, foodtruck f, menu m
-   	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number='80나0008'
+   	from booking b, foodtruck f, menu m, booking_detail bd 
+   	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number='80나0037' and bd.menu_id=m.menu_id and b.booking_number=bd.booking_number
    	
    	--bookingNumber를 이용해서 메뉴 내역 가져오는 메서드
+   	-- and bd.booking_number=2 이것이 없으면 다른 창업주에게 주문한 것도 내가 다 받아올 수있음. 실험용으로 좋음
    	select b.customer_id, b.booking_date, b.booking_state, bd.menu_id, bd.menu_quantity
    	, m.menu_name, m.menu_price 
    	from booking b, booking_detail bd, menu m
    	where b.booking_number=bd.booking_number and 
-   	b.booking_number=2 and m.menu_id=bd.menu_id
+   	b.booking_number=2 and bd.booking_number=2
    	
    	-- booking_detail과 menu 테이블 이용해서 bookingDetailVO 가져오기
    	select bd.menu_id, m.menu_name, m.menu_price, bd.menu_quantity 
    	from booking_detail bd, menu m
    	where bd.menu_id=m.menu_id and bd.booking_number=2
+   	
+   	--customerBookingNumberList 가져오는 sql 구문
+   	select distinct b.booking_number, b.customer_id, to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date, b.booking_state 
+   	from booking b, booking_detail bd
+   	where b.booking_number=bd.booking_number
+   	and b.customer_id='customer'
+   	order by b.booking_number desc
+   	
+   	select bd.menu_id, m.menu_name, m.menu_price, bd.menu_quantity 
+   	from booking_detail bd, menu m, booking b
+   	where bd.menu_id=m.menu_id and b.customer_id='customer' and b.booking_number=bd.booking_number and b.booking_number=8
 	
 -------------------------------------------------------------------------------
 

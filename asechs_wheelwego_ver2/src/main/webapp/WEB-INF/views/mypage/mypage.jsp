@@ -28,8 +28,13 @@
 	<c:otherwise>
 				<button type="button" id="wishlistBtn"class="btn btn-warning">단골트럭</button>&nbsp;&nbsp;
 			<button type="button" id="reviewBtn"class="btn btn-warning">MY REVIEW</button>&nbsp;&nbsp;
+			<!-- 강정호가 만든 버튼 잠시 주석처리. 밑에 현지가 만든 버튼 사용할 것임 -->
+			<!-- <button type="button" id="contentBtn"class="btn btn-warning">MY CONTENT</button>&nbsp;&nbsp;
+			<button type="button" id="customerBookingListBtn" class="btn btn-warning">나의 주문 내역</button>  -->
+
 			<button type="button" id="contentBtn"class="btn btn-warning">MY CONTENT</button>&nbsp;&nbsp;
 			<button type="button" id="orderBtn" class="btn btn-warning">MY ORDER</button>&nbsp;&nbsp;
+
 	</c:otherwise>
 </c:choose>
 </div>
@@ -123,9 +128,12 @@ geoFindMe();
 			//location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
 			location.href="${pageContext.request.contextPath}/afterLogin_mypage/sellerBookingList.do?sellerId=${sessionScope.memberVO.id}";
 		});
+		//강정호가 만든 소비자 주문 확인 내역 보는 버튼 잠시 주석. 밑에 만든 현지것으로 대신함
+		/* $("#customerBookingListBtn").click(function(){
+			location.href="${pageContext.request.contextPath}/afterLogin_mypage/customerBookingList.do?customerId=${sessionScope.memberVO.id}"; */
+
 		$("#orderBtn").click(function(){
 			location.href="${pageContext.request.contextPath}/afterLogin_mypage/customerBookingList.do?customerId=${sessionScope.memberVO.id}";
-
 		});
 
 });
