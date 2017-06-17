@@ -305,13 +305,14 @@ public class MypageController {
    @RequestMapping("afterLogin_mypage/sellerBookingList.do")
    public String sellerBookingList(Model model, HttpServletRequest request){
 	   String sellerId=request.getParameter("sellerId");
+	   String pageNo=request.getParameter("pageNo");
 	   String foodTruckNumber=mypageService.findtruckNumberBySellerId(sellerId);
-	   List<BookingVO> bookingNumberList=mypageService.getBookingVO(foodTruckNumber);
-
-	   if(bookingNumberList.isEmpty()==false){
-		   for(int i=0; i<bookingNumberList.size(); i++){
-			   List<BookingDetailVO> bookingDetailVO=mypageService.getBookingDetailVO(bookingNumberList.get(i));
-			   bookingNumberList.get(i).setBookingDetail(bookingDetailVO);
+	   ListVO bookingNumberList=mypageService.getBookingVO(foodTruckNumber, pageNo);
+	   
+	   if(bookingNumberList.getBookingNumberList().isEmpty()==false){
+		   for(int i=0; i<bookingNumberList.getBookingNumberList().size(); i++){
+			   List<BookingDetailVO> bookingDetailVO=mypageService.getBookingDetailVO(bookingNumberList.getBookingNumberList().get(i));
+			   bookingNumberList.getBookingNumberList().get(i).setBookingDetail(bookingDetailVO);
 		   }
 	   }
 	   model.addAttribute("bookingList", bookingNumberList);
@@ -338,22 +339,6 @@ public class MypageController {
 	 System.out.println(myBookingList);
 	 return "mypage/mypage_customer_order_list.tiles";
    }
-
-   //강정호가 만든 customerBookingList 임시로 주석처리함. 왜냐하면 현지가 위에 먼저 만들어놓았음.
-   /*@RequestMapping("afterLogin_mypage/customerBookingList.do")
-   public String customerBookingList(Model model, HttpServletRequest request){
-	   String customerId=request.getParameter("customerId");
-	   List<BookingVO> customerBookingNumberList=mypageService.getCustomerBookingVO(customerId);
-	   if(customerBookingNumberList.isEmpty()==false){
-		   for(int i=0; i<customerBookingNumberList.size(); i++){
-			   List<BookingDetailVO> customerBookingDetailVO=mypageService.getCustomerBookingDetailVO(customerBookingNumberList.get(i));
-			   customerBookingNumberList.get(i).setBookingDetail(customerBookingDetailVO);
-		   }
-	   }
-	   System.out.println("adslfkjasdfasd0"+customerBookingNumberList);
-	   model.addAttribute("customerBookingList",customerBookingNumberList);
-	   return "mypage/mypage_customer_booking_list.tiles";
-   }*/
 
    /**
     * 강정호. 조리 상태 업데이트 해주는 메서드

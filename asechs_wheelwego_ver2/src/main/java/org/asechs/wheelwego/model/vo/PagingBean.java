@@ -57,13 +57,11 @@ public class PagingBean {
 	private TruckVO gpsInfo;
 	
 	private String customerId;
-
-	@Override
-	public String toString() {
-		return "PagingBean [nowPage=" + nowPage + ", contentNumberPerPage=" + contentNumberPerPage
-				+ ", pageNumberPerPageGroup=" + pageNumberPerPageGroup + ", totalContents=" + totalContents
-				+ ", searchWord=" + searchWord + ", gpsInfo=" + gpsInfo + ", customerId=" + customerId + "]";
-	}
+	
+	/**
+	 * 예약 내역 가져올 때 쓸 foodTruck_number
+	 */
+	private String foodTruckNumber;
 
 	public String getCustomerId() {
 		return customerId;
@@ -281,4 +279,22 @@ public class PagingBean {
 	public void setGpsInfo(TruckVO gpsInfo) {
 		this.gpsInfo = gpsInfo;
 	}
+
+	public String getFoodTruckNumber() {
+		return foodTruckNumber;
+	}
+
+	public void setFoodTruckNumber(String foodTruckNumber) {
+		this.foodTruckNumber = foodTruckNumber;
+	}
+
+	@Override
+	public String toString() {
+		return "PagingBean [nowPage=" + nowPage + ", contentNumberPerPage=" + contentNumberPerPage
+				+ ", pageNumberPerPageGroup=" + pageNumberPerPageGroup + ", totalContents=" + totalContents
+				+ ", searchWord=" + searchWord + ", gpsInfo=" + gpsInfo + ", customerId=" + customerId
+				+ ", foodTruckNumber=" + foodTruckNumber + "]";
+	}
+	
+	
 }

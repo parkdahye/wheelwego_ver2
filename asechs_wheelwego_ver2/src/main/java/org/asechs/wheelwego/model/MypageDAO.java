@@ -87,8 +87,10 @@ public interface MypageDAO {
 	int getTotalFreeboardCount(String id);
 
 	void updateBookingState(BookingVO bookingVO);
-
+	
 	List<BookingVO> getBookingVO(String foodTruckNumber);
+
+	List<BookingVO> getBookingVO(PagingBean pagingBean);
 
 	List<BookingDetailVO> getBookingDetailVO(BookingVO bookingVO);
 
@@ -96,7 +98,7 @@ public interface MypageDAO {
 
 	void freeboardDeleteInMaypage(String contentNo);
 
-	List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber);
+	//List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber);
 
 	int getTotalbusinessCount(String id);
 
@@ -113,6 +115,8 @@ public interface MypageDAO {
 	public String getBookingNumberByCustomerId(String id);
 
 	int checkBookingState(String customerId);
+
+	int getTotalBookingCount(String foodTruckNumber);
 
 	int getTotalPointCountById(String id);
 
