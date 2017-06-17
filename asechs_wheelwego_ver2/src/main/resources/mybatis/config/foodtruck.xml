@@ -210,6 +210,12 @@ and f.seller_id=#{value} <!-- and b.booking_state='조리완료' -->
 <select id="getFoodtruckNumberList" resultType="string" parameterType="truckVO">
    select foodtruck_number from foodtruck where (latitude between #{latitude}-0.009 and #{latitude}+0.009) and (longitude between #{longitude}-0.012 and #{longitude}+0.012)
 </select>
+<select id="getPreviousBookingNumberByCustomerId" resultType="string">
+select nvl(max(b.booking_number),0)
+from booking b, foodtruck f, menu m, booking_detail bd
+where bd.menu_id=m.menu_id and m.foodtruck_number=f.foodtruck_number 
+and b.customer_id=#{value} and b.booking_state='결제완료'
+</select>
 </mapper>
  
 

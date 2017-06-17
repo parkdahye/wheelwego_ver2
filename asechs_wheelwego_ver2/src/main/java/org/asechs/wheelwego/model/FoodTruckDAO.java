@@ -37,6 +37,7 @@ public interface FoodTruckDAO {
 	int getPreviousBookingNumberBySellerId(String id);
 	String getBookingStateBybookingNumber(int bookingNumber);
 	List<String> getFoodtruckNumberList(TruckVO gpsInfo);
+	String getPreviousBookingNumberByCustomerId(String id);
 
 
 }

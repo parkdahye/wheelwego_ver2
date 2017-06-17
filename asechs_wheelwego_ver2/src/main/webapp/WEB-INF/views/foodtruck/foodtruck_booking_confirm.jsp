@@ -8,7 +8,7 @@
 <div class="container col-sm-6">
  <h2>주문 내역</h2><br>
  <c:set var="memberInfo" value="${sessionScope.memberVO}"></c:set>
- <form id="bookingForm" action="${pageContext.request.contextPath}/foodtruck/bookingMenu.do" method="post">
+ <form id="bookingForm" action="${pageContext.request.contextPath}/afterLogin_foodtruck/bookingMenu.do" method="post">
  <input type="hidden" name="customerId" value="${sessionScope.memberVO.id}">
   <table class="table table-hover">
     <thead>
@@ -56,7 +56,7 @@
 <span style="font-weight: bold;"  id = "totalAmount">최종결제금액 : ${total}</span>
 <br><br>
 </div>
-      <input type = "hidden" name = "result Point" id = "resultPoint" value = "">
+      <input type = "hidden" name = "resultPoint" id = "resultPoint" value = "">
       <input type = "hidden" name = "resultTotalAmount" id = "resultTotalAmount" value = "">
  </form>
 <div align="right">
@@ -109,17 +109,17 @@ $(document).ready(function(){
 	                
 	                if (totalAmount == 0)
 	                {
-	                   alert("결제 금액이 0원이기 때문에, 결제를 진행하지 않습니다.")
+	                   alert("결제 금액이 0원이기 때문에, 결제를 진행하지 않습니다.");
 	                   $("#resultPoint").val(point);
 	                   $("#resultTotalAmount").val(totalAmount);
-	                   $('#paymentForm').submit();         
+	                   $('#bookingForm').submit();         
 	                }
 	                   
-		  $("#resultPoint").val(point);
+/* 		  $("#resultPoint").val(point);
 	 	  $("#resultTotalAmount").val(totalAmount);
-		 $("#bookingForm").submit();
+		 $("#bookingForm").submit(); */
             
-/*        var IMP = window.IMP; // 생략가능
+        var IMP = window.IMP; // 생략가능
       IMP.init('imp65309481'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
       
       IMP.request_pay({
@@ -152,7 +152,7 @@ $(document).ready(function(){
               msg += '에러내용 : ' + rsp.error_msg;
               alert(msg);
     	      }//else 
-		  }) ;*///결제
+		  }) ;//결제
 		  }//else
  	 }//success
  });  //ajax

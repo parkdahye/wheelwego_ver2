@@ -34,8 +34,7 @@ public class TestJUnit {
 
    @Test
    public void test(){
-	
-	   
-	   
+	  //System.out.println(foodtruckService.findFoodtruckNameByMenuId("75"));
+	  System.out.println(foodtruckService.getPreviousBookingNumberByCustomerId("java"));
    }
 }

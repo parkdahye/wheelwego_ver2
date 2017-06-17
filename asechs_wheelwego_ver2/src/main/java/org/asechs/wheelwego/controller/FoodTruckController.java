@@ -194,7 +194,7 @@ public class FoodTruckController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST, value="foodtruck/bookingMenu.do")
+	@RequestMapping(method = RequestMethod.POST, value="afterLogin_foodtruck/bookingMenu.do")
 	public String bookingMenu(BookingVO bookingVO,HttpServletRequest request,String resultPoint,String resultTotalAmount){
 		foodTruckService.bookingMenu(bookingVO);
 		String bookingNumber=bookingVO.getBookingNumber();
@@ -203,19 +203,19 @@ public class FoodTruckController {
 		return "redirect:../foodtruck/foodtruck_booking_confirm_result.do";
 	}
 
-	@RequestMapping("foodtruck/getRecentlyBookingNumberBySellerId.do")
+	@RequestMapping("afterLogin_foodtruck/getRecentlyBookingNumberBySellerId.do")
 	@ResponseBody
 	public Object getRecentlybookingNumberBySellerId(String id){
 		int bookingNumber=foodTruckService.getRecentlyBookingNumberBySellerId(id);
 		return bookingNumber;
 	}
-	@RequestMapping("foodtruck/getPreviousBookingNumberBySellerId.do")
+	@RequestMapping("afterLogin_foodtruck/getPreviousBookingNumberBySellerId.do")
 	@ResponseBody
 	public Object getPreviousbookingNumberBySellerId(String id){
 		int bookingNumber=foodTruckService.getPreviousBookingNumberBySellerId(id);
 		return bookingNumber;
 	}
-	@RequestMapping("foodtruck/getBookingStateBybookingNumber.do")
+	@RequestMapping("afterLogin_foodtruck/getBookingStateBybookingNumber.do")
 	@ResponseBody
 	public String getBookingStateBybookingNumber(String bookingNumber,HttpServletRequest request){
 		String state=foodTruckService.getBookingStateBybookingNumber(bookingNumber);
@@ -236,4 +236,14 @@ public class FoodTruckController {
 	      System.out.println(count);
 	      return (count==0) ? "ok":"no";
 	   }
+	   
+		@RequestMapping("afterLogin_foodtruck/getPreviousBookingNumberByCustomerId.do")
+		@ResponseBody
+		public String getPreviousBookingNumberByCustomerId(String id){
+			String bookingNumber=foodTruckService.getPreviousBookingNumberByCustomerId(id);
+			return bookingNumber;
+		}
+	   
+	   
+	   
 }

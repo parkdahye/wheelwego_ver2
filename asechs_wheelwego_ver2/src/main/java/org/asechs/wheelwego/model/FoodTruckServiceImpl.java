@@ -167,4 +167,9 @@ public class FoodTruckServiceImpl implements FoodTruckService {
 		   public List<String> getFoodtruckNumberList(TruckVO gpsInfo) {
 		      return foodTruckDAO.getFoodtruckNumberList(gpsInfo);
 		   }
+
+		@Override
+		public String getPreviousBookingNumberByCustomerId(String id) {
+			return foodTruckDAO.getPreviousBookingNumberByCustomerId(id);
+		}
 }

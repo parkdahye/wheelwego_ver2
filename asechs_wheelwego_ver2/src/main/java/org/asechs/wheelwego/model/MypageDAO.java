@@ -12,6 +12,7 @@ import org.asechs.wheelwego.model.vo.BookingVO;
 import org.asechs.wheelwego.model.vo.FileVO;
 import org.asechs.wheelwego.model.vo.FoodVO;
 import org.asechs.wheelwego.model.vo.PagingBean;
+import org.asechs.wheelwego.model.vo.PointVO;
 import org.asechs.wheelwego.model.vo.ReviewVO;
 import org.asechs.wheelwego.model.vo.TruckVO;
 import org.asechs.wheelwego.model.vo.WishlistVO;
@@ -116,6 +117,10 @@ public interface MypageDAO {
 	int checkBookingState(String customerId);
 
 	int getTotalBookingCount(String foodTruckNumber);
+
+	int getTotalPointCountById(String id);
+
+	List<PointVO> getPointListById(PagingBean pagingBean);
 
 
 }
