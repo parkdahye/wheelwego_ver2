@@ -15,7 +15,7 @@ public class ListVO {
 	private List<BookingVO> bookingNumberList;
 	private List<BookingVO> bookingMenuList;
 	private PagingBean pagingBean;
-
+	private List<PointVO> pointList;
 	public ListVO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -48,8 +48,17 @@ public class ListVO {
 		this.pagingBean = pagingBean;
 	}
 */
+	
 	public List<BoardVO> getBoardList() {
 		return boardList;
+	}
+
+	public List<PointVO> getPointList() {
+		return pointList;
+	}
+
+	public void setPointList(List<PointVO> pointList) {
+		this.pointList = pointList;
 	}
 
 	public void setBoardList(List<BoardVO> boardList) {
@@ -104,10 +113,7 @@ public class ListVO {
 	public String toString() {
 		return "ListVO [boardList=" + boardList + ", truckList=" + truckList + ", reviewList=" + reviewList
 				+ ", bookingNumberList=" + bookingNumberList + ", bookingMenuList=" + bookingMenuList + ", pagingBean="
-				+ pagingBean + "]";
+				+ pagingBean + ", pointList=" + pointList + "]";
 	}
-
-	
-
 
 }

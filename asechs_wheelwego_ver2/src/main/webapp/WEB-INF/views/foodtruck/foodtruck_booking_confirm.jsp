@@ -56,7 +56,7 @@
 <span style="font-weight: bold;"  id = "totalAmount">최종결제금액 : ${total}</span>
 <br><br>
 </div>
-      <input type = "hidden" name = "result Point" id = "resultPoint" value = "">
+      <input type = "hidden" name = "resultPoint" id = "resultPoint" value = "">
       <input type = "hidden" name = "resultTotalAmount" id = "resultTotalAmount" value = "">
  </form>
 <div align="right">
@@ -109,10 +109,10 @@ $(document).ready(function(){
 	                
 	                if (totalAmount == 0)
 	                {
-	                   alert("결제 금액이 0원이기 때문에, 결제를 진행하지 않습니다.")
+	                   alert("결제 금액이 0원이기 때문에, 결제를 진행하지 않습니다.");
 	                   $("#resultPoint").val(point);
 	                   $("#resultTotalAmount").val(totalAmount);
-	                   $('#paymentForm').submit();         
+	                   $('#bookingForm').submit();         
 	                }
 	                   
 /* 		  $("#resultPoint").val(point);
