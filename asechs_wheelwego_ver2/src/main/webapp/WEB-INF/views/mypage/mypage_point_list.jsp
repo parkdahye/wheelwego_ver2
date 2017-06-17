@@ -43,7 +43,7 @@
   </table>
   </c:when>
         <c:otherwise>
-         등록된 리뷰가 없습니다.
+         	포인트 내역이 존재하지 않습니다.
       </c:otherwise>
    </c:choose>
 </div>
