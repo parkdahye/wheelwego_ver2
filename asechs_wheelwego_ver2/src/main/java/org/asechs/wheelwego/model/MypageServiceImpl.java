@@ -28,9 +28,29 @@ public class MypageServiceImpl implements MypageService {
    private FoodTruckDAO foodtruckDAO;
   
    @Override
-   public List<BookingVO> customerBookingList(String customerId){
-	   return mypageDAO.customerBookingList(customerId);
-   }
+   public ListVO customerBookingList(String pageNo, String customerId) {
+	      System.out.println("customerId : " + customerId);
+	      int totalCount = mypageDAO.getCustomerBookingListCount(customerId);
+	      System.out.println("totalCount" + totalCount);
+
+
+	      PagingBean pagingBean = null;
+
+	      if (pageNo == null)
+	         pagingBean = new PagingBean(totalCount);
+	      else
+	         pagingBean = new PagingBean(totalCount, Integer.parseInt(pageNo));
+	      
+	      pagingBean.setContentNumberPerPage(6);
+	      pagingBean.setCustomerId(customerId);
+	      
+	      ListVO listVO = new ListVO();
+	      listVO.setPagingBean(pagingBean);
+	      
+	      listVO.setBookingMenuList(mypageDAO.customerBookingList(pagingBean));
+	      System.out.println("listVO" + listVO);
+	      return listVO;
+	   }
   
    @Override
    public List<BookingVO> getBookingList(int bookingNumber) {

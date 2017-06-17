@@ -55,9 +55,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		<result column="point_type" property="pointType"/>
    		<result column="point_date" property="pointDate"/>
    </resultMap>
-<select id="customerBookingList" resultMap="bookingRM">
-  select * from booking where customer_id = #{value}
+   
+      <select id = "getCustomerBookingListCount" resultType="int">
+         select count(*) from booking where customer_id = #{value}
+   </select>
+   <select id="customerBookingList" resultMap="bookingRM" parameterType="pagingBean">
+     select t.* from
+      (SELECT b.*, row_number() over(order by booking_date desc) as rnum
+      from booking b where customer_id = #{customerId})t
+      where rnum between #{startRowNumber} and #{endRowNumber} order by booking_date desc
 </select>
+
    <select  id = "getBookingList" resultMap="bookingRM">
    select b.*, bd.menu_id, bd.menu_quantity, m.menu_price
    from booking b, booking_detail bd, menu m
