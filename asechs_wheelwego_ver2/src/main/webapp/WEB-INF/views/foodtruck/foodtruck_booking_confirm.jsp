@@ -115,11 +115,11 @@ $(document).ready(function(){
 	                   $('#paymentForm').submit();         
 	                }
 	                   
-		  $("#resultPoint").val(point);
+/* 		  $("#resultPoint").val(point);
 	 	  $("#resultTotalAmount").val(totalAmount);
-		 $("#bookingForm").submit();
+		 $("#bookingForm").submit(); */
             
-/*        var IMP = window.IMP; // 생략가능
+        var IMP = window.IMP; // 생략가능
       IMP.init('imp65309481'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
       
       IMP.request_pay({
@@ -152,7 +152,7 @@ $(document).ready(function(){
               msg += '에러내용 : ' + rsp.error_msg;
               alert(msg);
     	      }//else 
-		  }) ;*///결제
+		  }) ;//결제
 		  }//else
  	 }//success
  });  //ajax

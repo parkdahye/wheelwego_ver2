@@ -1,5 +1,6 @@
 select * from foodtruck where seller_id='seller'
-delete from BOOKING where customer_id='jenny9950'
+delete from BOOKING where customer_id='customer01'
+
 ----------dbTEST---------------------
 select bd.booking_number,bd.menu_id, bd.menu_quantity, m.menu_name, m.menu_price 
 	   	from booking b, booking_detail bd, menu m
