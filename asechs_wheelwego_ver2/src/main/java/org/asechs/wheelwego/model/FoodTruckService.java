@@ -27,4 +27,5 @@ public interface FoodTruckService {
 	int getPreviousBookingNumberBySellerId(String id);
 	String getBookingStateBybookingNumber(String bookingNumber);
 	List<String> getFoodtruckNumberList(TruckVO truckVO);
+	String getPreviousBookingNumberByCustomerId(String id);
 }

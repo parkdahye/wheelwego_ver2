@@ -9,17 +9,17 @@ $(document).ready(function(){
 	var memberId="${sessionScope.memberVO.id}";
 	var memberType="${sessionScope.memberVO.memberType}";
 	var customerBookingNumber=""; //customer
-	
-	function customerAjaxCall(){
+	 var customerTimer="";
+		function customerAjaxCall(){
 			$.ajax({	
 				method:"post",
-				url:"${pageContext.request.contextPath}/foodtruck/getBookingStateBybookingNumber.do",
+				url:"${pageContext.request.contextPath}/afterLogin_foodtruck/getBookingStateBybookingNumber.do",
 				data:"bookingNumber="+customerBookingNumber,
 				success:function(state){
 						if(state=="ok"){		
 						//alert(state);
-						alertify.log("주문하신 음식이 나왔습니다!");
-						clearInterval(customerTimer);
+							alertify.log("주문하신 음식이 나왔습니다!");
+							clearInterval(customerTimer);
 					}  
 				}
 			});
@@ -27,7 +27,7 @@ $(document).ready(function(){
 function sellerAjaxCall(){
 $.ajax({
 		method:"post",
-		url:"${pageContext.request.contextPath}/foodtruck/getRecentlyBookingNumberBySellerId.do",
+		url:"${pageContext.request.contextPath}/afterLogin_foodtruck/getRecentlyBookingNumberBySellerId.do",
 		data:"id="+memberId,
 		success:function(result){
 			if(parseInt(result)>parseInt(bookingNumber)){		
@@ -42,7 +42,7 @@ $.ajax({
 		//alert("seller ajax통신 시작");
 	$.ajax({
 		method:"post",
-		url:"${pageContext.request.contextPath}/foodtruck/getPreviousBookingNumberBySellerId.do",
+		url:"${pageContext.request.contextPath}/afterLogin_foodtruck/getPreviousBookingNumberBySellerId.do",
 		data:"id=${sessionScope.memberVO.id}",
 		success:function(result){
 				//alert("이전 예약번호"+result);
@@ -53,12 +53,19 @@ $.ajax({
 	setInterval(sellerAjaxCall, 1000);
 }//seller
 	if(memberId!=""&&memberType=="customer"){
-		customerBookingNumber="${sessionScope.bookingNumber}";
-	       if(customerBookingNumber !="" && customerBookingNumber!=null){ //bookingNumber가 있으면
-				//alert(customerBookingNumber);		
-	    	  var customerTimer=setInterval(customerAjaxCall, 1000);
-	       }
- 
+		$.ajax({
+			method:"post",
+			url:"${pageContext.request.contextPath}/afterLogin_foodtruck/getPreviousBookingNumberByCustomerId.do",
+			data:"id=${sessionScope.memberVO.id}",
+			success:function(result){
+					customerBookingNumber=result;
+		if(customerBookingNumber !="" && customerBookingNumber!=null &&customerBookingNumber!=0){ //bookingNumber가 있으면
+			//alert(customerBookingNumber);		
+    	   customerTimer=setInterval(customerAjaxCall, 1000);
+       }
+				}
+			});
+		//alert(customerBookingNumber);		
 	}//customer
 });	
 </Script>

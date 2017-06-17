@@ -8,7 +8,7 @@
 <div class="container col-sm-6">
  <h2>주문 내역</h2><br>
  <c:set var="memberInfo" value="${sessionScope.memberVO}"></c:set>
- <form id="bookingForm" action="${pageContext.request.contextPath}/foodtruck/bookingMenu.do" method="post">
+ <form id="bookingForm" action="${pageContext.request.contextPath}/afterLogin_foodtruck/bookingMenu.do" method="post">
  <input type="hidden" name="customerId" value="${sessionScope.memberVO.id}">
   <table class="table table-hover">
     <thead>

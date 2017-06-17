@@ -45,7 +45,7 @@ public class MypageServiceImpl implements MypageService {
    public void calPoint(String usePoint, String totalAmount, int bookingNumber) {
 	   System.out.println("service : "+usePoint);
       int _usePoint = 0;
-      if (usePoint!=null)
+      if (usePoint!=null &&usePoint!="")
       {
          _usePoint = Integer.parseInt(usePoint);
          minusPoint(_usePoint, bookingNumber);

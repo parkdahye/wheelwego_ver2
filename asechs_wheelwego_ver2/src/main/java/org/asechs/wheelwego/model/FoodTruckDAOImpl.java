@@ -160,4 +160,9 @@ public class FoodTruckDAOImpl implements FoodTruckDAO {
 	   public List<String> getFoodtruckNumberList(TruckVO gpsInfo) {
 	      return sqlSessionTemplate.selectList("foodtruck.getFoodtruckNumberList", gpsInfo);
 	   }
+
+	@Override
+	public String getPreviousBookingNumberByCustomerId(String id) {
+		return sqlSessionTemplate.selectOne("foodtruck.getPreviousBookingNumberByCustomerId", id);
+	}
 }
