@@ -11,6 +11,7 @@ $(document).ready(function(){
 	var customerBookingNumber=""; //customer
 	 var customerTimer="";
 		function customerAjaxCall(){
+			//alert("통신시작");
 			$.ajax({	
 				method:"post",
 				url:"${pageContext.request.contextPath}/afterLogin_foodtruck/getBookingStateBybookingNumber.do",
@@ -59,10 +60,10 @@ $.ajax({
 			data:"id=${sessionScope.memberVO.id}",
 			success:function(result){
 					customerBookingNumber=result;
-		if(customerBookingNumber !="" && customerBookingNumber!=null &&customerBookingNumber!=0){ //bookingNumber가 있으면
-			//alert(customerBookingNumber);		
-    	   customerTimer=setInterval(customerAjaxCall, 1000);
-       }
+					if(customerBookingNumber !="" && customerBookingNumber!=null &&customerBookingNumber!=0){ //bookingNumber가 있으면
+						//alert(customerBookingNumber);		
+			    	   customerTimer=setInterval(customerAjaxCall, 1000);
+			       }
 				}
 			});
 		//alert(customerBookingNumber);		
