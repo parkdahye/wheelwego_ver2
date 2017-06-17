@@ -315,6 +315,7 @@ public class MypageController {
 		   }
 	   }
 	   model.addAttribute("bookingList", bookingNumberList);
+	   model.addAttribute("truckNumber", foodTruckNumber);
 	   return "mypage/mypage_seller_booking_list.tiles";
 	   
    }
