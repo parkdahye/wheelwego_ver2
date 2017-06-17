@@ -27,7 +27,7 @@
                                 		<td style="font-weight: bold; padding-bottom: 10px;">주문상태</td><td class="bstate" style="padding-bottom: 10px;"><span class="bookingResult">${bookingList.bookingState }</span></td>
                                 	</tr>
                                 	<tr>
-                                		<td style="font-weight: bold; padding-bottom: 10px;">예약일시</td><td style="padding-bottom: 10px; width:100px;">${bookingList.bookingDate}</td>
+                                		<td style="font-weight: bold; padding-bottom: 10px;">예약일시</td><td style="padding-bottom: 10px; width:70%;">${bookingList.bookingDate}</td>
                                 	</tr>
                                 	<tr>
                                 		<td style="font-weight: bold; width:96px; padding-bottom: 15px;">메뉴명</td>
