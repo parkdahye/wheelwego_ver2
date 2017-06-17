@@ -280,10 +280,34 @@ public void updateBookingState(BookingVO bookingVO) {
 	mypageDAO.updateBookingState(bookingVO);
 	
 }
-@Override
+/*@Override
 public List<BookingVO> getBookingVO(String foodTruckNumber) {
+	//List<BookingVO> list=mypageDAO.getBookingVO
 	return mypageDAO.getBookingVO(foodTruckNumber);
+}*/
+
+@Override
+public ListVO getBookingVO(String foodTruckNumber, String pageNo) {
+	List<BookingVO> list=mypageDAO.getBookingVO(foodTruckNumber);
+	int totalCount=list.size();
+
+	PagingBean pagingBean = null;
+	if (pageNo == null){
+		pagingBean = new PagingBean(totalCount, 1);
+		pagingBean.setContentNumberPerPage(9);
+	}else{
+		pagingBean = new PagingBean(totalCount, Integer.parseInt(pageNo));
+		pagingBean.setContentNumberPerPage(9);
+	}
+	
+	pagingBean.setFoodTruckNumber(foodTruckNumber);
+	ListVO listVO=new ListVO();
+	listVO.setBookingNumberList(mypageDAO.getBookingVO(pagingBean));
+	listVO.setPagingBean(pagingBean);
+	return listVO;
 }
+
+
 @Override
 public List<BookingDetailVO> getBookingDetailVO(BookingVO bookingVO) {
 	return mypageDAO.getBookingDetailVO(bookingVO);
@@ -293,9 +317,9 @@ public void freeboardDeleteInMaypage(String contentNo) {
 	mypageDAO.freeboardDeleteInMaypage(contentNo);
 	
 }
-public List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber) {
+/*public List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber) {
 	return mypageDAO.getSellerBookingListByTruckNumber(foodTruckNumber);
-}
+}*/
 @Override
 public ListVO showMyContentBybusinessList(String id, String contentPageNo) {
 	 if(contentPageNo==null)
@@ -331,6 +355,8 @@ public void qnaDeleteInMaypage(String contentNo) {
 public int checkBookingState(String customerId) {
    return mypageDAO.checkBookingState(customerId);
 }
+
+
 
 
 }

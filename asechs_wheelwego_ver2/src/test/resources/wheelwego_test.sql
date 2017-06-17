@@ -602,9 +602,60 @@ select row_number() over(order by review_timeposted desc) as rnum,review_no,food
 	insert into booking_detail(booking_number,menu_id, menu_quantity)
 	values(5,'125',5)
 						insert into booking(booking_number, customer_id, booking_date, booking_state)
-	values(6,'customer06',sysdate, '결제완료');
+	values(22,'customer05',sysdate, '결제완료');
+						insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(23,'customer06',sysdate, '결제완료');
+						insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(24,'customer07',sysdate, '결제완료');
+						insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(25,'customer08',sysdate, '결제완료');
+						insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(26,'customer09',sysdate, '결제완료');
+						insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(27,'customer10',sysdate, '결제완료');
+						insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(28,'customer11',sysdate, '결제완료');
+						insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(29,'customer12',sysdate, '결제완료');
+						insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(30,'customer14',sysdate, '결제완료');
+							insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(31,'customer15',sysdate, '결제완료');
+							insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(32,'customer16',sysdate, '결제완료');
+							insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(33,'customer17',sysdate, '결제완료');
+							insert into booking(booking_number, customer_id, booking_date, booking_state)
+	values(34,'customer18',sysdate, '결제완료');
+	
 		insert into booking_detail(booking_number,menu_id, menu_quantity)
-	values(6,'123',6)
+	values(22,'123',6);
+			insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(23,'123',6);
+			insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(24,'123',6);
+			insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(25,'123',6);
+			insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(26,'123',6);
+			insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(27,'123',6);
+			insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(28,'123',6);
+			insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(29,'123',6);
+			insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(30,'123',6);
+		insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(31,'123',6);
+		insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(32,'123',6);
+		insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(33,'123',6);
+		insert into booking_detail(booking_number,menu_id, menu_quantity)
+	values(34,'123',6);
+
+	
 	insert into booking_detail(booking_number,menu_id, menu_quantity)
 	values(6,'124',6)
 	insert into booking_detail(booking_number,menu_id, menu_quantity)
@@ -667,6 +718,28 @@ select row_number() over(order by review_timeposted desc) as rnum,review_no,food
    	from booking_detail bd, menu m, booking b
    	where bd.menu_id=m.menu_id and b.customer_id='customer' and b.booking_number=bd.booking_number and b.booking_number=8
 	
+   	select count(*) from booking b, foodtruck f, menu m 
+   	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number='80나0061'
+   	
+   	select distinct b.booking_number, b.customer_id, to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date, b.booking_state 
+	   	from booking b, foodtruck f, menu m , booking_detail bd
+	   	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number='80나0051'
+	   	
+	   	select distinct b.booking_number, b.customer_id,  b.booking_date, b.booking_state 
+	   	from(SELECT row_number() over(order by booking_number desc) as rnum, booking_number, customer_id, 
+	   	to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date, booking_state from booking)b, foodtruck f, menu m
+	   	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number='80나0061' and rnum between 1 and 9
+	   
+   			select distinct b.booking_number, b.customer_id, b.booking_date, b.booking_state 
+	   	from(SELECT row_number() over(order by booking_number desc) as rnum, booking_number, customer_id, 
+	   	to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date, booking_state from booking)b, foodtruck f, menu m
+	   	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number='80나0061' and rnum between 1 and 9
+
+	   	select distinct b.booking_number, b.customer_id, to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date, b.booking_state  
+	   	from booking b, foodtruck f, menu m, booking_detail bd 
+	   	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number='80나0037'
+	   	 and bd.menu_id=m.menu_id and b.booking_number=bd.booking_number
+	   	
 -------------------------------------------------------------------------------
 
 update foodtruck set latitude=37.402403,longitude=127.106248 where foodtruck_number='80나0001';

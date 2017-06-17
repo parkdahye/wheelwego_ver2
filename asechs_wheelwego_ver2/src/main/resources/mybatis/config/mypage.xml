@@ -185,18 +185,31 @@ select count(*) from wishlist where customer_id=#{customerId} and foodtruck_numb
    		from booking_detail bd, menu m where bd.booking_number=#{value} and bd.menu_id=m.menu_id
    </select>
 <!-- 강정호 임시 작성 -->
-	<select id="getBookingVO" parameterType="String" resultMap="bookingRM">
-		select distinct b.booking_number, b.customer_id, to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date, b.booking_state 
-	   	from booking b, foodtruck f, menu m<!-- , booking_detail bd  -->
+	<select id="getBookingVOCount" parameterType="String" resultMap="bookingRM">
+		select distinct b.booking_number, b.customer_id, to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date, b.booking_state  
+	   	from booking b, foodtruck f, menu m, booking_detail bd 
 	   	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number=#{value}
-	   	 <!-- and bd.menu_id=m.menu_id and b.booking_number=bd.booking_number -->  order by b.booking_number asc
+	   	 and bd.menu_id=m.menu_id and b.booking_number=bd.booking_number
 	</select>
+	
+	<select id="getBookingVO" parameterType="pagingBean" resultMap="bookingRM">
+		select distinct b.booking_number, b.customer_id, b.booking_date, b.booking_state 
+	   	from(SELECT row_number() over(order by booking_number desc) as rnum, booking_number, customer_id, 
+	   	to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date, booking_state from booking)b, foodtruck f, menu m, booking_detail bd 
+	   	where f.foodtruck_number=m.foodtruck_number and f.foodtruck_number=#{foodTruckNumber} and rnum between #{startRowNumber} and #{endRowNumber}
+	   	 and bd.menu_id=m.menu_id and b.booking_number=bd.booking_number
+	</select>
+	
 	<select id="getBookingDetailVO" parameterType="bookingVO" resultMap="bookingDetailRM">
 		select bd.booking_number,bd.menu_id, bd.menu_quantity, m.menu_name, m.menu_price 
 	   	from booking b, booking_detail bd, menu m
 	   	where b.booking_number=bd.booking_number and 
 	   	b.booking_number=#{bookingNumber} and m.menu_id=bd.menu_id
 	</select>
+	<select id="getTotalBookingCount" parameterType="String" resultType="Integer">
+		select count(*) from booking b, foodtruck f where f.foodtruck_number=#{value}
+	</select>
+	
 	<select id="getCustomerBookingVO" parameterType="String" resultMap="bookingRM">
 		select distinct b.booking_number, b.customer_id, to_char(booking_date,'YYYY.MM.DD HH.MM.SS') as booking_date, b.booking_state 
 	   	from booking b, booking_detail bd

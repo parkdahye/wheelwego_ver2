@@ -201,9 +201,16 @@ public class MypageDAOImpl implements MypageDAO {
 		sqlSessionTemplate.update("mypage.updateBookingState",bookingVO);
 		
 	}
+	
 	@Override
 	public List<BookingVO> getBookingVO(String foodTruckNumber) {
-		return sqlSessionTemplate.selectList("mypage.getBookingVO", foodTruckNumber);
+		System.out.println("getBookingVO 푸드트럭 넘버"+foodTruckNumber);
+		return sqlSessionTemplate.selectList("mypage.getBookingVOCount", foodTruckNumber);
+	}
+	
+	@Override
+	public List<BookingVO> getBookingVO(PagingBean pagingBean) {
+		return sqlSessionTemplate.selectList("mypage.getBookingVO", pagingBean);
 	}
 	@Override
 	public List<BookingDetailVO> getBookingDetailVO(BookingVO bookingVO) {
@@ -216,9 +223,9 @@ public class MypageDAOImpl implements MypageDAO {
 	public List<BoardVO> showMyContentByFreeList(PagingBean pagingBean) {
 		return sqlSessionTemplate.selectList("board.showMyContentByFreeList", pagingBean);
 	}
-	public List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber) {
+	/*public List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber) {
 		return sqlSessionTemplate.selectList("mypage.getSellerBookingListByTruckNumber",foodTruckNumber);
-	}
+	}*/
 	@Override
 	public int getTotalbusinessCount(String id) {
 		return sqlSessionTemplate.selectOne("mypage.getTotalbusinessCount", id);
@@ -253,4 +260,9 @@ public class MypageDAOImpl implements MypageDAO {
 	   public int checkBookingState(String customerId) {
 	      return sqlSessionTemplate.selectOne("mypage.checkBookingState", customerId);
 	   }
+	@Override
+	public int getTotalBookingCount(String foodTruckNumber) {
+		return sqlSessionTemplate.selectOne("mypage.getTotalBookingCount", foodTruckNumber);
+	}
+
 }

@@ -1,5 +1,7 @@
 package org.asechs.wheelwego;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.asechs.wheelwego.model.BoardDAO;
@@ -8,10 +10,9 @@ import org.asechs.wheelwego.model.FoodTruckService;
 import org.asechs.wheelwego.model.MemberService;
 import org.asechs.wheelwego.model.MypageDAO;
 import org.asechs.wheelwego.model.MypageService;
-import org.asechs.wheelwego.model.vo.MemberVO;
+import org.asechs.wheelwego.model.vo.BookingVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -33,6 +34,8 @@ public class TestJUnit {
 
    @Test
    public void test(){
-	  System.out.println(foodtruckService.findFoodtruckNameByMenuId("75"));
+	
+	   
+	   
    }
 }

@@ -65,15 +65,17 @@ public interface MypageService {
 
 	ListVO showMyContentByFreeList(String id, String contentPageNo);
 
-	void updateBookingState(BookingVO bookingVO);
+	void updateBookingState(BookingVO bookingVO);//강정호. 결제완료->조리중->조리상태 바꿔주는 메서드
 
-	List<BookingVO> getBookingVO(String foodTruckNumber);
+	//List<BookingVO> getBookingVO(String foodTruckNumber);
+	
+	//List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber);//강정호. 
+	
+	ListVO getBookingVO(String foodTruckNumber, String pageNo);//강정호. 페이징빈을 적용하여 창업주의 주문내역 가져옴
 
-	List<BookingDetailVO> getBookingDetailVO(BookingVO bookingVO);
+	List<BookingDetailVO> getBookingDetailVO(BookingVO bookingVO);//강정호. 해당 예약 번호에 대한 주문 메뉴 내역 불러옴
 
 	void freeboardDeleteInMaypage(String contentNo);
-
-	List<BookingVO> getSellerBookingListByTruckNumber(String foodTruckNumber);
 
 	ListVO showMyContentBybusinessList(String id, String contentPageNo);
 
