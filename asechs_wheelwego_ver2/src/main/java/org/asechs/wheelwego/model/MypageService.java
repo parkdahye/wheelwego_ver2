@@ -11,7 +11,7 @@ import org.asechs.wheelwego.model.vo.TruckVO;
 import org.asechs.wheelwego.model.vo.WishlistVO;
 
 public interface MypageService {
-	List<BookingVO> customerBookingList(String customerId);
+	ListVO customerBookingList(String pageNo, String customerId);
 	
 	List<BookingVO> getBookingList(int bookingNumber);
 	

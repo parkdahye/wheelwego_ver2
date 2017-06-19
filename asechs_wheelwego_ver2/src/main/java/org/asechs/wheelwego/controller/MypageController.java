@@ -325,20 +325,22 @@ public class MypageController {
     * 정현지 : 사용자 마이페이지 - 나의 주문내역 리스트
     */
    @RequestMapping("afterLogin_mypage/customerBookingList.do")
-   public String customerBookingList(Model model, HttpServletRequest request){
-	 String customerId = request.getParameter("customerId");
-	 List<BookingVO> myBookingList = mypageService.customerBookingList(customerId);
-	 System.out.println(myBookingList);
-	 if(myBookingList.isEmpty()==false){
-		 for(int i=0; i<myBookingList.size(); i++){
-			 List<BookingDetailVO> myBookingDetailList = mypageService.getBookingDetailVO(myBookingList.get(i));
-			 myBookingList.get(i).setBookingDetail(myBookingDetailList);
-		 }
-	 }	 
-	 model.addAttribute("myBookingList", myBookingList);
-	 System.out.println(myBookingList);
-	 return "mypage/mypage_customer_order_list.tiles";
-   }
+   public String customerBookingList(Model model, String customerId, String pageNo){
+	    ListVO listVO = mypageService.customerBookingList(pageNo, customerId);
+	    List<BookingVO> myBookingList = listVO.getBookingMenuList();
+	    
+	    if (myBookingList.isEmpty() == false){
+	       for(int i=0; i<myBookingList.size(); i++){
+	          List<BookingDetailVO> myBookingDetailList = mypageService.getBookingDetailVO(myBookingList.get(i));
+	          myBookingList.get(i).setBookingDetail(myBookingDetailList);
+	       }
+	    }      
+	    
+	    System.out.println(myBookingList);
+	    model.addAttribute("myBookingList", myBookingList);
+	    model.addAttribute("listVO", listVO);
+	    return "mypage/mypage_customer_order_list.tiles";
+	   }
 
    /**
     * 강정호. 조리 상태 업데이트 해주는 메서드

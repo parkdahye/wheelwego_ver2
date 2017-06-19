@@ -24,8 +24,8 @@ public class MypageDAOImpl implements MypageDAO {
 	private SqlSessionTemplate sqlSessionTemplate;
 	//현지
 	@Override
-	public List<BookingVO> customerBookingList(String customerId){
-		return sqlSessionTemplate.selectList("mypage.customerBookingList",customerId);
+	public List<BookingVO> customerBookingList(PagingBean pagingBean){
+		return sqlSessionTemplate.selectList("mypage.customerBookingList",pagingBean);
 	}
 	//현지
 	@Override
@@ -270,4 +270,9 @@ public class MypageDAOImpl implements MypageDAO {
 	public List<PointVO> getPointListById(PagingBean pagingBean) {
 		return sqlSessionTemplate.selectList("mypage.getPointListById", pagingBean);
 	}
+	
+	   @Override
+	   public int getCustomerBookingListCount(String customerId) {
+	      return sqlSessionTemplate.selectOne("mypage.getCustomerBookingListCount", customerId);
+	   }
 }

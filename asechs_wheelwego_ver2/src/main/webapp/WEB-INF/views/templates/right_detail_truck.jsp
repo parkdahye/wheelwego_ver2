@@ -69,6 +69,7 @@ $(document).ready(function(){
           else if("${sessionScope.memberVO.memberType}"=='seller'){
              alert("일반회원 전용 서비스입니다.");
           }
+         
           else{
 
          for(var i=0; i<arr.length; i++)   {

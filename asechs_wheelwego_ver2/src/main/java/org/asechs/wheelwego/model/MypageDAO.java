@@ -18,7 +18,7 @@ import org.asechs.wheelwego.model.vo.TruckVO;
 import org.asechs.wheelwego.model.vo.WishlistVO;
 
 public interface MypageDAO {
-	List<BookingVO> customerBookingList(String customerId);
+	List<BookingVO> customerBookingList(PagingBean pagingBean);
 	
 	public List<BookingVO> getBookingList(int bookingNumber);
 	
@@ -121,6 +121,8 @@ public interface MypageDAO {
 	int getTotalPointCountById(String id);
 
 	List<PointVO> getPointListById(PagingBean pagingBean);
+	
+	public int getCustomerBookingListCount(String customerId);
 
 
 }

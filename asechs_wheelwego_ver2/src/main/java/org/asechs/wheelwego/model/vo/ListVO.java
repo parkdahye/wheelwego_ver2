@@ -13,6 +13,7 @@ public class ListVO {
 	private List<TruckVO> truckList;
 	private List<ReviewVO> reviewList;
 	private List<BookingVO> bookingNumberList;
+	private List<BookingVO> bookingMenuList;
 	private PagingBean pagingBean;
 	private List<PointVO> pointList;
 	public ListVO() {
@@ -90,6 +91,15 @@ public class ListVO {
 
 	public void setBookingNumberList(List<BookingVO> bookingNumberList) {
 		this.bookingNumberList = bookingNumberList;
+	}
+	
+
+	public List<BookingVO> getBookingMenuList() {
+		return bookingMenuList;
+	}
+
+	public void setBookingMenuList(List<BookingVO> bookingMenuList) {
+		this.bookingMenuList = bookingMenuList;
 	}
 
 	@Override
